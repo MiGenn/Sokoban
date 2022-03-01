@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{915dced7-8e60-4f5f-803d-98ae981df636}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinapiException.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Window.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WindowClass.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinapiException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Window.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WindowClass.h" />
+  </ItemGroup>
+</Project>
