@@ -1,0 +1,95 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "EditorMenu.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian (Russia) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "EditorMenu.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian (Russia) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_EDITOR_MENU MENU
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Create",                      ID_FILE_CREATE
+        MENUITEM "Load",                        ID_FILE_LOAD
+        MENUITEM "Save                 Ctrl+S", ID_FILE_SAVE
+    END
+    POPUP "Game Objects"
+    BEGIN
+        MENUITEM "Wall",                        ID_GAMEOBJECTS_WALL
+        MENUITEM "Road",                        ID_GAMEOBJECTS_ROAD
+        MENUITEM "Cross",                       ID_GAMEOBJECTS_CROSS
+        MENUITEM "Barrel",                      ID_GAMEOBJECTS_BARREL
+        MENUITEM "Character",                   ID_GAMEOBJECTS_CHARACTER
+    END
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

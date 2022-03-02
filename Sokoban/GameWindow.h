@@ -17,6 +17,8 @@ public:
 private:
 	LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam) override;
 
+	void OnClose();
+
 	class Class : public WindowClass
 	{
 	public:

@@ -34,11 +34,17 @@ LRESULT GameWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_CLOSE:
-		PostQuitMessage(0);
-		break;
+		OnClose();
+		return 0;
 	}
 
 	return DefWindowProc(m_handle, message, wParam, lParam);
+}
+
+void GameWindow::OnClose()
+{
+	PostQuitMessage(0);
+	DestroyWindow(m_handle);
 }
 
 const GameWindow::Class GameWindow::Class::gameWindow;

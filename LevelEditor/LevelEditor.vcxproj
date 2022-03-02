@@ -157,6 +157,10 @@
   <ItemGroup>
     <ClInclude Include="Editor.h" />
     <ClInclude Include="EditorWindow.h" />
+    <ClInclude Include="EditorMenu.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LevelEditor.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

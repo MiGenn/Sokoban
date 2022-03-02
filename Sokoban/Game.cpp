@@ -27,7 +27,9 @@ void Game::Simulate()
 	//[currentSceneName]
 
 	if (m_window.keyboard.IsKeyPressed('Q'))
-		m_window.graphics.Test();
+	{
+		//m_window.graphics.Test();
+	}
 }
 
 void Game::Render()

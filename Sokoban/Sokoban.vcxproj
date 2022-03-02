@@ -155,32 +155,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameWindow.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="Entity2D.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Graphics2D.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="RectangleCollider.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SpriteRenderInfo.cpp" />
-    <ClCompile Include="Transform2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Entity2D.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Graphics2D.h" />
     <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="RectangleCollider.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SpriteRenderInfo.h" />
-    <ClInclude Include="Transform2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
