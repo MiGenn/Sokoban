@@ -21,6 +21,14 @@ LRESULT GameWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
+	case WM_LBUTTONDOWN:
+		mouse.OnLeftButtonPressed();
+		return 0;
+
+	case WM_MOUSEMOVE:
+		mouse.OnMouseMove(MAKEPOINTS(lParam));
+		return 0;
+
 	case WM_KEYDOWN:
 		keyboard.OnKeyDown(static_cast<unsigned char>(wParam), (lParam & 0x40000000));
 		return 0;

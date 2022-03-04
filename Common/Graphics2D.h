@@ -10,11 +10,13 @@ class Graphics2D
 {
 public:
 	static constexpr COLORREF chroma{ RGB(102, 0, 51) };
+	static constexpr int tileSize{ 24 };
 
 	Graphics2D(Window* renderWindow);
 	Graphics2D(const Graphics2D&) = delete;
-	Graphics2D& operator=(const Graphics2D&) = delete;
 	~Graphics2D();
+
+	Graphics2D& operator=(const Graphics2D&) = delete;
 
 	void Test();
 
@@ -27,8 +29,8 @@ public:
 
 private:
 	static constexpr int m_mainLayerIndex{ 0 };
-	Window* m_renderWindow;
 	Vector2i m_layersSize;
+	Window* m_renderWindow;
 
 	class RenderLayer
 	{

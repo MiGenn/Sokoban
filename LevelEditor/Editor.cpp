@@ -8,6 +8,8 @@ Editor::Editor() :
 
 int Editor::Run()
 {
+
+
 	while (true)
 	{
 		if (auto exitCode = RetrieveAndRouteMessages())

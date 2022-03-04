@@ -9,6 +9,7 @@ public:
 
 	Window(int width, int height);
 	Window(const Window&) = delete;
+
 	Window& operator=(const Window&) = delete;
 
 	void Resize(int width, int height);

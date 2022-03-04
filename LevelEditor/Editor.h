@@ -7,6 +7,7 @@ class Editor final : public Application
 public:
 	Editor();
 	Editor(const Editor&) = delete;
+
 	Editor& operator=(const Editor&) = delete;
 
 	int Run() override;

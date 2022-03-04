@@ -9,6 +9,7 @@ public:
 protected:
 	Application() = default;
 	Application(const Application&) = delete;
+
 	Application& operator=(const Application&) = delete;
 
 	virtual std::optional<int> RetrieveAndRouteMessages();

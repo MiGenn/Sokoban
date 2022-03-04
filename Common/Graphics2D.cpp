@@ -56,9 +56,9 @@ void Graphics2D::Present()
 
 void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 {
-	int renderLayerIndex = renderInfo.GetLayerNumber();
-	if (DoesNotLayerExist(renderLayerIndex))
-		AddNewLayer(renderLayerIndex);
+	int layerIndex{ renderInfo.GetLayerIndex() };
+	if (DoesNotLayerExist(layerIndex))
+		AddNewLayer(layerIndex);
 
 	////////
 }
@@ -98,7 +98,7 @@ void Graphics2D::AddNewLayer(int layerIndex)
 	}
 
 	if (layerIndex == layersCount)
-		m_layers.emplace_back(CreateCompatibleLayer());
+		m_layers.push_back(CreateCompatibleLayer());
 	else if (m_layers[layerIndex] == nullptr)
 		m_layers[layerIndex] = CreateCompatibleLayer();
 

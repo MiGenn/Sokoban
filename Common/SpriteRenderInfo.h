@@ -1,19 +1,18 @@
 #pragma once
-#include "Window.h"
-#include "Component.h"
+#include "BitmapLoader.h"
 
-class SpriteRenderInfo : public Component
+class SpriteRenderInfo
 {
 public:
-	SpriteRenderInfo(HBITMAP sprite, int layerIndex);
+	SpriteRenderInfo(HBITMAP bitmap, int layerIndex);
 	SpriteRenderInfo(const SpriteRenderInfo&) = delete;
+
 	SpriteRenderInfo& operator=(const SpriteRenderInfo&) = delete;
 
-	void Update() override final;
-	int GetLayerNumber() const;
+	int GetLayerIndex() const;
 	HBITMAP GetSprite() const;
 
 private:
-	HBITMAP m_sprite;
+	HBITMAP m_bitmap;
 	int m_targetLayerIndex = 0;
 };

@@ -6,10 +6,13 @@ Game::Game() :
 
 }
 
+Game::~Game()
+{
+	delete m_currentLevel;
+}
+
 int Game::Run()
 {
-	//LoadScene();
-
 	while (true)
 	{
 		if (auto exitCode = RetrieveAndRouteMessages())
@@ -24,16 +27,35 @@ int Game::Run()
 
 void Game::Simulate()
 {
-	//[currentSceneName]
-
-	if (m_window.keyboard.IsKeyPressed('Q'))
+	switch (m_state)
 	{
-		//m_window.graphics.Test();
+	case Game::GameState::MainMenu:
+		SimulateMainMenu();
+		break;
+
+	case Game::GameState::EscMenu:
+		break;
+
+	case Game::GameState::Level:
+		break;
 	}
 }
 
 void Game::Render()
 {
+	switch (m_state)
+	{
+	case Game::GameState::MainMenu:
+		RenderMainMenu();
+		break;
+
+	case Game::GameState::EscMenu:
+		break;
+
+	case Game::GameState::Level:
+		break;
+	}
+
 	/*for (auto& entity : scenes[currentSceneName]->entities)
 	{
 		auto renderInfo = static_cast<SpriteRenderInfo*>(entity.components[Entity2D::renderInfoIndex]);
@@ -42,4 +64,14 @@ void Game::Render()
 	}*/
 
 	m_window.graphics.Present();
+}
+
+void Game::SimulateMainMenu()
+{
+
+}
+
+void Game::RenderMainMenu()
+{
+	//m_window.graphics.RenderSprite();
 }

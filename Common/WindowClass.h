@@ -9,8 +9,9 @@ public:
 protected:
 	WindowClass(const wchar_t* name);
 	WindowClass(const WindowClass&) = delete;
-	WindowClass& operator=(const WindowClass&) = delete;
 	virtual ~WindowClass();
+
+	WindowClass& operator=(const WindowClass&) = delete;
 
 	static LRESULT SetupMessageHandling(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 
