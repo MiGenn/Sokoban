@@ -45,6 +45,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Button.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Loader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ResourceInterface.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ResourceManager.h" />

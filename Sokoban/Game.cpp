@@ -8,11 +8,15 @@ Game::Game() :
 
 Game::~Game()
 {
-	delete m_currentLevel;
+	//delete m_currentLevel;
 }
 
 int Game::Run()
 {
+	test = new TiledEntity(
+		{ ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Barrel.bmp"), 
+		{ 100, 100 }, { { 0,0 }, { 24, 24} }, 1}, false);
+
 	while (true)
 	{
 		if (auto exitCode = RetrieveAndRouteMessages())
@@ -63,6 +67,8 @@ void Game::Render()
 			m_window.graphics.RenderSprite(renderInfo);	
 	}*/
 
+	m_window.graphics.RenderSprite(test->GetRenderInfo());
+
 	m_window.graphics.Present();
 }
 
@@ -73,5 +79,5 @@ void Game::SimulateMainMenu()
 
 void Game::RenderMainMenu()
 {
-	//m_window.graphics.RenderSprite();
+
 }

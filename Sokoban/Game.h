@@ -29,6 +29,8 @@ private:
 	Level* m_currentLevel;
 	//Character m_character;
 
+	TiledEntity* test;
+
 	void Simulate();
 	void Render();
 

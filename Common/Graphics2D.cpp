@@ -1,4 +1,6 @@
 #include "Graphics2D.h"
+
+#include <cmath>
 #include "DeviceContextWrapper.h"
 
 Graphics2D::Graphics2D(Window* renderWindow) :
@@ -14,29 +16,6 @@ Graphics2D::~Graphics2D()
 {
 	for (auto layer : m_layers)
 		delete layer;
-}
-
-void Graphics2D::Test()
-{
-	HBITMAP bitmap{ (HBITMAP)LoadImage(NULL,
-		L"C:\\Users\\User\\source\\repos\\Sokoban\\Sokoban\\Textures\\Test.bmp",
-		IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE) };
-	if (!bitmap)
-		throw LAST_EXCEPTION();
-	
-	HDC destinationContext{ m_layers[1]->GetMemoryContext() };
-	HDC sourceContext{ CreateCompatibleDC(destinationContext) };
-	HGDIOBJ initialBitmap{ SelectObject(sourceContext, bitmap) };
-
-	if (!TransparentBlt(destinationContext, 0, 0, 256, 256,
-		sourceContext, 0, 0, 256, 256, static_cast<UINT>(chroma)))
-		throw LAST_EXCEPTION();
-
-	RenderRect(0, { 0, 0, 256, 256 }, RGB(255, 0, 0));
-
-	SelectObject(sourceContext, initialBitmap);
-	DeleteDC(sourceContext);
-	DeleteObject(bitmap);
 }
 
 void Graphics2D::Fill(int layerIndex, COLORREF color)
@@ -60,7 +39,15 @@ void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 	if (DoesNotLayerExist(layerIndex))
 		AddNewLayer(layerIndex);
 
-	////////
+	HDC destinationContext{ m_layers[layerIndex]->GetMemoryContext() };
+	HDC sourceContext{ CreateCompatibleDC(destinationContext) };
+	HGDIOBJ initialBitmap{ SelectObject(sourceContext, renderInfo.GetBitmap()) };
+
+	MergeContexes(destinationContext, renderInfo.GetPosition(),
+		sourceContext, renderInfo.GetBoundingBox(), 10.f);
+
+	SelectObject(sourceContext, initialBitmap);
+	DeleteDC(sourceContext);
 }
 
 void Graphics2D::RenderRect(int layerIndex, const RECT& rect, COLORREF color)
@@ -110,6 +97,16 @@ Graphics2D::RenderLayer* Graphics2D::CreateCompatibleLayer()
 	return new RenderLayer(m_renderWindow->GetDeviceContext().Get(), m_layersSize);
 }
 
+void Graphics2D::MergeContexes(HDC destinationContext, Vector2i destinationPosition, 
+	 HDC sourceContext, Box2i boundingBox, float scale)
+{
+	if (!TransparentBlt(destinationContext, destinationPosition.x, destinationPosition.y, 
+		round(boundingBox.size.x * scale), round(boundingBox.size.y * scale),
+		sourceContext, boundingBox.position.x, boundingBox.position.y,
+		boundingBox.size.x, boundingBox.size.y, (UINT)(chroma)))
+		throw LAST_EXCEPTION();
+}
+
 void Graphics2D::MergeLayers()
 {
 	int layersCount{ static_cast<int>(m_layers.size()) };
@@ -122,9 +119,8 @@ void Graphics2D::MergeLayers()
 		if (m_layers[i] != nullptr && m_layers[i]->IsUsed())
 		{
 			RenderLayer* const sourceLayer{ m_layers[i] };
-			if (!TransparentBlt(destinationLayer->GetMemoryContext(), 0, 0, m_layersSize.x, m_layersSize.y,
-				sourceLayer->GetMemoryContext(), 0, 0, m_layersSize.x, m_layersSize.y, static_cast<UINT>(chroma)))
-				throw LAST_EXCEPTION();
+			MergeContexes(destinationLayer->GetMemoryContext(), { 0, 0 }, sourceLayer->GetMemoryContext(), 
+				{ { 0, 0 }, { m_layersSize.x, m_layersSize.y } }, 1.f);
 		}
 	}
 }

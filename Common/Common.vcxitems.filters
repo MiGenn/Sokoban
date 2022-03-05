@@ -129,6 +129,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderInfo.h">
       <Filter>Header Files\Game\TileEntity</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelSaver.cpp">

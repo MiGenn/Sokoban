@@ -4,5 +4,5 @@
 class TileRenderInfo final : public SpriteRenderInfo
 {
 public:
-	TileRenderInfo(const ResourceInterface& bitmapInterface, int layerIndex);
+	TileRenderInfo(const ResourceInterface& bitmapInterface, Vector2i position, Box2i boundingBox, int layerIndex);
 };

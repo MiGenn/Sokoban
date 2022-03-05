@@ -17,8 +17,6 @@ public:
 
 	Graphics2D& operator=(const Graphics2D&) = delete;
 
-	void Test();
-
 	void Present();
 	void RenderSprite(const SpriteRenderInfo& renderInfo);
 	void RenderRect(int layerIndex, const RECT& rect, COLORREF color);
@@ -56,6 +54,8 @@ private:
 	bool DoesNotLayerExist(int layerIndex);
 	void AddNewLayer(int layerIndex);
 	RenderLayer* CreateCompatibleLayer();
+	void MergeContexes(HDC destinationContext, Vector2i destinationPosition,
+		HDC sourceContext, Box2i boundingBox, float scale);
 	void MergeLayers();
 
 	void ClearLayer(int layerIndex);

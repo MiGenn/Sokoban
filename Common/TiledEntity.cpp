@@ -20,5 +20,8 @@ const TileRenderInfo& TiledEntity::GetRenderInfo() const
 
 bool TiledEntity::IsCollision(Vector2i otherTilePosition) const
 {
-	return TileCollisionDetector::IsCollision(m_position, otherTilePosition);
+	if (m_isCollidable)
+		return TileCollisionDetector::IsCollision(m_position, otherTilePosition);
+	
+	return false;
 }
