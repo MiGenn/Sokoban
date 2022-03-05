@@ -1,46 +1,61 @@
 #include "Resource.h"
+#include "ResourceInterface.h"
 
 Resource::Resource(const std::wstring& relativePath, 
 	const std::wstring& fullName, Loader& loader, Unloader* unloader) :
 	m_relativePath(relativePath), m_fullName(fullName),
-	m_resource(loader(relativePath + fullName)), m_unloader(unloader)
+	m_actualResource(loader(relativePath + fullName)), m_unloader(unloader)
 {
-	
-}
 
-Resource::Resource(const Resource&& resource) : 
-	m_referencesCount(resource.m_referencesCount),
-	m_relativePath(resource.m_relativePath),
-	m_fullName(resource.m_fullName),
-	m_resource(resource.m_resource)
-{
-	m_resource = nullptr;
 }
 
 Resource::~Resource()
 {
-	(*m_unloader)(m_resource);
-	delete m_unloader;
+	if (m_unloader)
+	{
+		(*m_unloader)(m_actualResource);
+		delete m_unloader;
+	}
 }
 
-const std::wstring& Resource::GetFullName()
+bool Resource::operator==(const Resource& resource) const
+{
+	return m_actualResource == resource.m_actualResource;
+}
+
+bool Resource::operator!=(const Resource& resource) const
+{
+	return !((*this) == resource);
+}
+
+const std::wstring& Resource::GetFullName() const
 {
 	return m_fullName;
 }
 
-const std::wstring& Resource::GetRelativePath()
+const std::wstring& Resource::GetRelativePath() const
 {
 	return m_relativePath;
 }
 
-void* Resource::Get()
+ResourceInterface Resource::GetInterface()
+{
+	return { this };
+}
+
+void Resource::AddReference()
 {
 	++m_referencesCount;
-
-	return m_resource;
 }
 
 void Resource::Release()
 {
 	--m_referencesCount;
+	if (m_referencesCount == 0)
+	{
+		this->~Resource();
+		m_unloader = nullptr;
+
+		ResourceManager::OnRelease(*this);
+	}
 }

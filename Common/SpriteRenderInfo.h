@@ -1,10 +1,12 @@
 #pragma once
 #include "BitmapLoader.h"
+#include "ResourceInterface.h"
+#include "Vector2D.h"
 
 class SpriteRenderInfo
 {
 public:
-	SpriteRenderInfo(HBITMAP bitmap, int layerIndex);
+	SpriteRenderInfo(ResourceInterface& bitmapInterface, Vector2i size, int layerIndex);
 	SpriteRenderInfo(const SpriteRenderInfo&) = delete;
 
 	SpriteRenderInfo& operator=(const SpriteRenderInfo&) = delete;
@@ -12,7 +14,8 @@ public:
 	int GetLayerIndex() const;
 	HBITMAP GetSprite() const;
 
-private:
-	HBITMAP m_bitmap;
+private:  
+	ResourceInterface m_bitmapInterface;
+	Vector2i m_size;
 	int m_targetLayerIndex = 0;
 };

@@ -1,27 +1,36 @@
 #pragma once
+#include "ResourceManager.h"
 #include "Loader.h"
 #include "Unloader.h"
+
+class ResourceInterface;
 
 class Resource final
 {
 public:
-	Resource(const std::wstring& relativePath, const std::wstring& fullName, Loader& loader, Unloader* unloader);
-	Resource(const Resource&& resource);
-	~Resource();
+	friend class ResourceManager;
+	friend class ResourceInterface;
 
-	const std::wstring& GetFullName();
-	const std::wstring& GetRelativePath();
+	bool operator==(const Resource& resource) const;
+	bool operator!=(const Resource& resource) const;
 
-	void* Get();
-	void Release();
+	const std::wstring& GetFullName() const;
+	const std::wstring& GetRelativePath() const;
+
+	ResourceInterface GetInterface();
 
 private:
 	Unloader* m_unloader;
 
-	void* m_resource;
+	void* m_actualResource;
 	std::wstring m_relativePath;
 	std::wstring m_fullName;
 	int m_referencesCount = 0;
 
-	std::wstring m_pathAndName;
+	Resource(const std::wstring& relativePath, const std::wstring& fullName, 
+		Loader& loader, Unloader* unloader);
+	~Resource();
+
+	void AddReference();
+	void Release();
 };

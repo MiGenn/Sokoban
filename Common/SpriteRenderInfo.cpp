@@ -1,9 +1,9 @@
 #include "SpriteRenderInfo.h"
 
-SpriteRenderInfo::SpriteRenderInfo(HBITMAP bitmap, int layerIndex)
+SpriteRenderInfo::SpriteRenderInfo(ResourceInterface& bitmapInterface, Vector2i size, int layerIndex) :
+    m_bitmapInterface(bitmapInterface), m_size(size), m_targetLayerIndex(layerIndex)
 {
-    m_bitmap = bitmap;
-    m_targetLayerIndex = layerIndex;
+
 }
 
 int SpriteRenderInfo::GetLayerIndex() const
@@ -13,5 +13,5 @@ int SpriteRenderInfo::GetLayerIndex() const
 
 HBITMAP SpriteRenderInfo::GetSprite() const
 {
-    return m_bitmap;
+    return reinterpret_cast<HBITMAP>(m_bitmapInterface.Get());
 }
