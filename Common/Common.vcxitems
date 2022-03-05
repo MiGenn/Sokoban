@@ -23,12 +23,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ResourceInterface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ResourceManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TileCollisionDetector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelSaver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)TileCollider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.cpp" />
@@ -48,12 +48,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ResourceInterface.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ResourceManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TileCollisionDetector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LevelSaver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyException.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TileCollider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LevelLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h" />

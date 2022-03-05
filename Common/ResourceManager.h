@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "WinapiException.h"
 #include "BitmapUnloader.h"
 #include "BitmapLoader.h"
 #include "ResourceInterface.h"

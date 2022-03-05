@@ -2,7 +2,7 @@
 #include <string>
 #include "TiledEntity.h"
 
-class Level
+class Level final
 {
 public:
 	static const std::string relativePath;

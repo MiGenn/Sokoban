@@ -1,5 +1,7 @@
 #include "MyException.h"
 
+#include <sstream>
+
 MyException::MyException(int line, const char* file)
 {
 	std::stringstream ss;

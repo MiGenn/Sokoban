@@ -1,5 +1,7 @@
 #include "WinapiException.h"
 
+#include <sstream>
+
 WinapiException::WinapiException(int line, const char* file, HRESULT errorCode) :
 	MyException(line, file)
 {

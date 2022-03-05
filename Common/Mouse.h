@@ -1,8 +1,8 @@
 #pragma once
 #include "Vector2D.h"
-#include "windows.h"
+#include "WinapiException.h"
 
-class Mouse
+class Mouse final
 {
 public:
 	friend class GameWindow;

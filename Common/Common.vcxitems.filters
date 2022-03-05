@@ -16,12 +16,6 @@
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{9088b131-8876-4f4b-b74c-b5dc63f35dbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Utilities">
-      <UniqueIdentifier>{89c161b2-99a6-42ba-816f-f1cd13e40626}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utilities">
-      <UniqueIdentifier>{cf30ad96-b518-4308-a1ad-b49640a0700f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{f1aa41e5-608b-4b9b-9d5f-27c1db10d03b}</UniqueIdentifier>
     </Filter>
@@ -37,17 +31,29 @@
     <Filter Include="Header Files\Game\ResourceManagment">
       <UniqueIdentifier>{f79bdf81-b186-45e1-8427-dc5833c5520d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Others">
-      <UniqueIdentifier>{9765a677-fe61-4c6b-a58e-23dc5de7ab4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Others">
-      <UniqueIdentifier>{a302f1f4-7028-4442-97c5-f37084d55ecb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Graphics">
+    <Filter Include="Header Files\Game\Graphics">
       <UniqueIdentifier>{671da2dc-60bb-4c6d-bc28-4b6337562e06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Graphics">
+    <Filter Include="Source Files\Game\Graphics">
       <UniqueIdentifier>{252666b5-cbf7-4ce5-8d76-34b5f4789635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{cf30ad96-b518-4308-a1ad-b49640a0700f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{89c161b2-99a6-42ba-816f-f1cd13e40626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\GUI">
+      <UniqueIdentifier>{853ee319-f98a-4c8a-b9d7-71ada29597f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\GUI">
+      <UniqueIdentifier>{27b70feb-1997-47fe-bd3b-4712d6bc0348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\TileEntity">
+      <UniqueIdentifier>{a302f1f4-7028-4442-97c5-f37084d55ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\TileEntity">
+      <UniqueIdentifier>{9765a677-fe61-4c6b-a58e-23dc5de7ab4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,16 +88,10 @@
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntity.h">
-      <Filter>Header Files\Game\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TileCollider.h">
-      <Filter>Header Files\Game\Others</Filter>
+      <Filter>Header Files\Game\TileEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Button.h">
-      <Filter>Header Files\Game\Others</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h">
       <Filter>Header Files\Game\ResourceManagment</Filter>
@@ -115,13 +115,19 @@
       <Filter>Header Files\Game\ResourceManagment</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics2D.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Game\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Game\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Button.h">
+      <Filter>Header Files\Game\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TileCollisionDetector.h">
+      <Filter>Header Files\Game\TileEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderInfo.h">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Game\TileEntity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,16 +159,10 @@
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntity.cpp">
-      <Filter>Source Files\Game\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TileCollider.cpp">
-      <Filter>Source Files\Game\Others</Filter>
+      <Filter>Source Files\Game\TileEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
       <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Button.cpp">
-      <Filter>Source Files\Game\Others</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp">
       <Filter>Source Files\Game\ResourceManagment</Filter>
@@ -186,13 +186,19 @@
       <Filter>Source Files\Game\ResourceManagment</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics2D.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderInfo.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Game\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Game\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Button.cpp">
+      <Filter>Source Files\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TileCollisionDetector.cpp">
+      <Filter>Source Files\Game\TileEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderInfo.cpp">
+      <Filter>Source Files\Game\TileEntity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

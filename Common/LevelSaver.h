@@ -1,7 +1,7 @@
 #pragma once
 #include "Level.h"
 
-class LevelSaver
+class LevelSaver final
 {
 public:
 	static void Save(const Level& level, std::string name);

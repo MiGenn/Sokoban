@@ -1,5 +1,4 @@
 #pragma once
-#include "windows.h"
 #include "Unloader.h"
 
 class BitmapUnloader final : public Unloader

@@ -1,8 +1,7 @@
 #pragma once
-#include "string"
 #include "Level.h"
 
-class LevelLoader
+class LevelLoader final
 {
 public:
 	static Level* Load(std::string name);

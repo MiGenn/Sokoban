@@ -4,7 +4,7 @@
 #include "MyException.h"
 #include "windows.h"
 
-class WinapiException : public MyException
+class WinapiException final : public MyException
 {
 public:
 	WinapiException(int line, const char* file, HRESULT errorCode);

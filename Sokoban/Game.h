@@ -1,9 +1,8 @@
 #pragma once
-#include <string>
 #include "Application.h"
+#include "GameWindow.h"
 #include "Level.h"
 #include "LevelLoader.h"
-#include "GameWindow.h"
 
 class Game final : public Application
 {

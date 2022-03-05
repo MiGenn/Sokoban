@@ -1,6 +1,6 @@
 #pragma once
 
-class Menu
+class Menu final
 {
 public:
 	Menu();

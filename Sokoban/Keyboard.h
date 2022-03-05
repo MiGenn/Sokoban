@@ -1,7 +1,7 @@
 #pragma once
 #include <bitset>
 
-class Keyboard
+class Keyboard final
 {
 public:
 	friend class GameWindow;

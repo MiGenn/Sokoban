@@ -1,6 +1,6 @@
 #include "SpriteRenderInfo.h"
 
-SpriteRenderInfo::SpriteRenderInfo(ResourceInterface& bitmapInterface, Vector2i size, int layerIndex) :
+SpriteRenderInfo::SpriteRenderInfo(const ResourceInterface& bitmapInterface, Vector2i size, int layerIndex) :
     m_bitmapInterface(bitmapInterface), m_size(size), m_targetLayerIndex(layerIndex)
 {
 

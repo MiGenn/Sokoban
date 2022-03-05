@@ -1,7 +1,7 @@
 #pragma once
 #include "SpriteRenderInfo.h"
 
-class Button
+class Button final
 {
 public:
 

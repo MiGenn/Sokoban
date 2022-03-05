@@ -1,7 +1,7 @@
 #pragma once
 #include "Resource.h"
 
-class ResourceInterface
+class ResourceInterface final
 {
 public:
 	friend class Resource;

@@ -1,7 +1,7 @@
 #pragma once
 
 template<typename T>
-class Vector2D
+class Vector2D final
 {
 public:
 	T x = T();
