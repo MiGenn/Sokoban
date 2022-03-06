@@ -73,22 +73,17 @@ void Game::SimulateLevel()
 	if (!m_currentLevel)
 		throw std::runtime_error("There is no loaded level!");
 
-	static Vector2i translation;
+	m_currentLevel->characterPointer->Update(m_window.keyboard);
 
-	if (m_window.keyboard.IsKeyPressed('W'))
-		translation += Vector2i(0, -1);
+	if (m_currentLevel->characterPointer->GetLastTranslation() != Vector2i())
+	{
+		m_collisionManager.Manage(*m_currentLevel);
 
-	if (m_window.keyboard.IsKeyPressed('S'))
-		translation += Vector2i(0, 1);
-
-	if (m_window.keyboard.IsKeyPressed('A'))
-		translation += Vector2i(-1, 0);
-
-	if (m_window.keyboard.IsKeyPressed('D'))
-		translation += Vector2i(1, 0);
-
-	if (translation != Vector2i())
-		m_levelCollisionManager.Manage(*m_currentLevel);
+		if (CountDeliveredBarrels() == m_currentLevel->barrelsPointers.size())
+		{
+			// win
+		}
+	}
 }
 
 void Game::RenderMainMenu()
@@ -98,8 +93,25 @@ void Game::RenderMainMenu()
 
 void Game::RenderLevel()
 {
-	m_window.graphics.RenderSprite(m_currentLevel->character->GetRenderInfo());
-
 	for (auto entity : m_currentLevel->entities)
 		m_window.graphics.RenderSprite(entity->GetRenderInfo());
+}
+
+int Game::CountDeliveredBarrels()
+{
+	int deliveredBarrelsCount{ 0 };
+	for (auto barrel : m_currentLevel->barrelsPointers)
+	{
+		auto barrelPosition{ barrel->GetPosition() };
+		for (auto cross : m_currentLevel->crossesPointers)
+		{
+			if (barrelPosition == cross->GetPosition())
+			{
+				++deliveredBarrelsCount;
+				break;
+			}
+		}
+	}
+
+	return deliveredBarrelsCount;
 }

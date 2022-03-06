@@ -3,7 +3,7 @@
 #include "GameWindow.h"
 #include "Level.h"
 #include "LevelLoader.h"
-#include "LevelCollisionManager.h"
+#include "CollisionManager.h"
 
 class Game final : public Application
 {
@@ -27,7 +27,7 @@ private:
 	GameWindow m_window;
 
 	GameState m_state = GameState::MainMenu;
-	LevelCollisionManager m_levelCollisionManager;
+	CollisionManager m_collisionManager;
 	// Menu
 	Level* m_currentLevel = nullptr;
 
@@ -39,4 +39,6 @@ private:
 
 	void RenderMainMenu();
 	void RenderLevel();
+
+	int CountDeliveredBarrels();
 };

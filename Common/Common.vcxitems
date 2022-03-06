@@ -20,6 +20,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Button.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelUnloader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Loader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Button.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LevelUnloader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Loader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h" />

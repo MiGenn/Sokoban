@@ -27,10 +27,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>Source Files\ApplicationModules</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelCollisionManager.cpp">
+    <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files\ApplicationModules</Filter>
     </ClCompile>
     <ClCompile Include="GameWindow.cpp">
@@ -44,10 +41,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Header Files\ApplicationModules</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelCollisionManager.h">
+    <ClInclude Include="CollisionManager.h">
       <Filter>Header Files\ApplicationModules</Filter>
     </ClInclude>
     <ClInclude Include="GameWindow.h">

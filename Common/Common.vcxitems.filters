@@ -153,6 +153,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h">
+      <Filter>Header Files\ApplicationModules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -232,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp">
       <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
+      <Filter>Source Files\ApplicationModules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

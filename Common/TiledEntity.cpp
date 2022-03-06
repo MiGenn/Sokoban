@@ -19,7 +19,7 @@ bool TiledEntity::operator==(const TiledEntity& otherEntity)
 
 bool TiledEntity::operator!=(const TiledEntity& otherEntity)
 {
-	return !(this == &otherEntity);
+	return !(*this == otherEntity);
 }
 
 bool TiledEntity::IsCollidable() const

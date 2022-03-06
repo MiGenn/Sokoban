@@ -6,7 +6,7 @@ class TiledEntity
 public:
 	static const int tileSize{ 24 };
 
-	TiledEntity(const TileRenderInfo& renderInfo, 
+	TiledEntity( const TileRenderInfo& renderInfo, 
 		Vector2i position, bool isCollidable, bool isMovable);
 
 	bool operator==(const TiledEntity& otherEntity);
