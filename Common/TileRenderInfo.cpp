@@ -3,8 +3,8 @@
 #include "TiledEntity.h"
 
 TileRenderInfo::TileRenderInfo(const ResourceInterface& bitmapInterface, 
-	Vector2i position, Box2i boundingBox, int layerIndex) :
-	SpriteRenderInfo(bitmapInterface, position, boundingBox, layerIndex)
+	Box2i boundingBox, int layerIndex) :
+	SpriteRenderInfo(bitmapInterface, Vector2i(), boundingBox, layerIndex)
 {
 
 }

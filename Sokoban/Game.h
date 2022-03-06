@@ -27,7 +27,7 @@ private:
 	GameWindow m_window;
 
 	GameState m_state = GameState::MainMenu;
-	LevelCollisionManager m_collisionManager;
+	LevelCollisionManager m_levelCollisionManager;
 	// Menu
 	Level* m_currentLevel = nullptr;
 

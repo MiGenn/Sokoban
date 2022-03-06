@@ -5,9 +5,6 @@ class Character : public TiledEntity
 {
 public:
 	Character(const TileRenderInfo& renderInfo);
-	Character(const Character&) = delete;
-
-	Character& operator=(const Character&) = delete;
 
 	Vector2i GetPreviousPosition() const;
 	void Move(Vector2i translation) override;

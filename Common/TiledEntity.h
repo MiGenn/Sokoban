@@ -7,12 +7,10 @@ public:
 	static const int tileSize{ 24 };
 
 	TiledEntity(const TileRenderInfo& renderInfo, 
-		bool isCollidable, bool isMovable);
-	TiledEntity(const TiledEntity&) = delete;
+		Vector2i position, bool isCollidable, bool isMovable);
 
 	bool operator==(const TiledEntity& otherEntity);
 	bool operator!=(const TiledEntity& otherEntity);
-	TiledEntity& operator=(const TiledEntity&) = delete;
 
 	void SetPosition(Vector2i newPosition);
 	const TileRenderInfo& GetRenderInfo() const;
@@ -25,7 +23,7 @@ public:
 
 private:
 	Vector2i m_position;
-	TileRenderInfo m_renderInfo;
+	mutable TileRenderInfo m_renderInfo;
 
 	bool m_isCollidable = false;
 	bool m_isMovable = false;

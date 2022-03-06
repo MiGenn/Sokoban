@@ -3,14 +3,13 @@
 #include <stdexcept>
 #include "TileCollisionDetector.h"
 
-TiledEntity::TiledEntity(const TileRenderInfo& renderInfo, 
-	bool isCollidable, bool isMovable) :
-	m_renderInfo(renderInfo), m_isCollidable(isCollidable), m_isMovable(isMovable)
+TiledEntity::TiledEntity(const TileRenderInfo& renderInfo,
+	Vector2i position, bool isCollidable, bool isMovable) :
+	m_renderInfo(renderInfo), m_position(position), 
+	m_isCollidable(isCollidable), m_isMovable(isMovable)
 {
 	if (isMovable && !isCollidable)
 		throw std::runtime_error("Incorrect parameters!");
-
-	m_position = renderInfo.GetPosition();
 }
 
 bool TiledEntity::operator==(const TiledEntity& otherEntity)
@@ -40,6 +39,8 @@ void TiledEntity::SetPosition(Vector2i newPosition)
 
 const TileRenderInfo& TiledEntity::GetRenderInfo() const
 {
+	m_renderInfo.SetPosition(m_position);
+
 	return m_renderInfo;
 }
 

@@ -150,6 +150,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
       <Filter>Header Files\ApplicationModules</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -226,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
       <Filter>Source Files\ApplicationModules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

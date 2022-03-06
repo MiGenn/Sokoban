@@ -34,6 +34,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderInfo.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Unloader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinapiException.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LevelLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderInfo.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Unloader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h" />

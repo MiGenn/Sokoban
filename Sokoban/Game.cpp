@@ -88,7 +88,7 @@ void Game::SimulateLevel()
 		translation += Vector2i(1, 0);
 
 	if (translation != Vector2i())
-		m_collisionManager.Manage(*m_currentLevel);
+		m_levelCollisionManager.Manage(*m_currentLevel);
 }
 
 void Game::RenderMainMenu()
@@ -98,5 +98,8 @@ void Game::RenderMainMenu()
 
 void Game::RenderLevel()
 {
+	m_window.graphics.RenderSprite(m_currentLevel->character->GetRenderInfo());
 
+	for (auto entity : m_currentLevel->entities)
+		m_window.graphics.RenderSprite(entity->GetRenderInfo());
 }

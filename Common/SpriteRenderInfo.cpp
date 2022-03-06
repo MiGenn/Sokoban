@@ -5,7 +5,12 @@ SpriteRenderInfo::SpriteRenderInfo(const ResourceInterface& bitmapInterface,
     m_bitmapInterface(bitmapInterface), m_position(position), 
     m_boundingBox(boundingBox), m_targetLayerIndex(layerIndex)
 {
+    m_bitmapInterface.EnableAutoRelease();
+}
 
+void SpriteRenderInfo::SetPosition(Vector2i newPosition)
+{
+    m_position = newPosition;
 }
 
 HBITMAP SpriteRenderInfo::GetBitmap() const

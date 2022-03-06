@@ -10,6 +10,8 @@ public:
 	SpriteRenderInfo(const ResourceInterface& bitmapInterface, 
 		Vector2i position, Box2i boundingBox, int layerIndex);
 
+	void SetPosition(Vector2i newPosition);
+
 	HBITMAP GetBitmap() const;
 	int GetLayerIndex() const;
 	Box2i GetBoundingBox() const;
