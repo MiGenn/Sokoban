@@ -14,6 +14,7 @@ public:
 	bool operator!=(const TiledEntity& otherEntity);
 	TiledEntity& operator=(const TiledEntity&) = delete;
 
+	void SetPosition(Vector2i newPosition);
 	const TileRenderInfo& GetRenderInfo() const;
 	Vector2i GetPosition() const; 
 	bool IsCollision(const TiledEntity& otherTiledEntity) const;

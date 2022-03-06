@@ -11,6 +11,7 @@ public:
 
 	Vector2i GetPreviousPosition() const;
 	void Move(Vector2i translation) override;
+	void RevertToPreviousPosition();
 
 private:
 	Vector2i m_previousPosition;

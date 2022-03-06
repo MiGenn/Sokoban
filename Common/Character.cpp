@@ -16,3 +16,8 @@ void Character::Move(Vector2i translation)
 	m_previousPosition = GetPosition();
 	TiledEntity::Move(translation);
 }
+
+void Character::RevertToPreviousPosition()
+{
+	SetPosition(m_previousPosition);
+}

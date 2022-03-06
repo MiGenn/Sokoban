@@ -33,6 +33,11 @@ bool TiledEntity::IsMovable() const
 	return m_isMovable;
 }
 
+void TiledEntity::SetPosition(Vector2i newPosition)
+{
+	m_position = newPosition;
+}
+
 const TileRenderInfo& TiledEntity::GetRenderInfo() const
 {
 	return m_renderInfo;

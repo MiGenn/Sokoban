@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <stdexcept>
+
 Game::Game() :
 	m_window(1280, 720)
 {
@@ -68,6 +70,9 @@ void Game::SimulateMainMenu()
 
 void Game::SimulateLevel()
 {
+	if (!m_currentLevel)
+		throw std::runtime_error("There is no loaded level!");
+
 	static Vector2i translation;
 
 	if (m_window.keyboard.IsKeyPressed('W'))
@@ -83,7 +88,7 @@ void Game::SimulateLevel()
 		translation += Vector2i(1, 0);
 
 	if (translation != Vector2i())
-		m_collisionManager.Update();
+		m_collisionManager.Manage(*m_currentLevel);
 }
 
 void Game::RenderMainMenu()

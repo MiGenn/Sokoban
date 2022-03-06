@@ -4,10 +4,11 @@
 class LevelCollisionManager
 {
 public:
-	void SetLevel(Level* level);
-
-	void Update();
+	void Manage(Level& level);
 
 private:
 	Level* m_level = nullptr;
+
+	TiledEntity* GetEntityCollidingWithCharacter(const Level& level) const;
+	bool IsEntityInCollision(const Level& level, const TiledEntity& entity) const;
 };
