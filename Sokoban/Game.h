@@ -3,6 +3,7 @@
 #include "GameWindow.h"
 #include "Level.h"
 #include "LevelLoader.h"
+#include "LevelCollisionManager.h"
 
 class Game final : public Application
 {
@@ -23,18 +24,19 @@ private:
 		Level
 	};
 
-	GameState m_state = GameState::MainMenu;
 	GameWindow m_window;
 
-	Level* m_currentLevel;
-	//Character m_character;
-
-	TiledEntity* test;
+	GameState m_state = GameState::MainMenu;
+	LevelCollisionManager m_collisionManager;
+	// Menu
+	Level* m_currentLevel = nullptr;
 
 	void Simulate();
 	void Render();
 
 	void SimulateMainMenu();
+	void SimulateLevel();
 
 	void RenderMainMenu();
+	void RenderLevel();
 };

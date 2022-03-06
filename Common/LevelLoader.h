@@ -1,11 +1,9 @@
 #pragma once
 #include "Level.h"
+#include "Loader.h"
 
-class LevelLoader final
+class LevelLoader final : public Loader
 {
 public:
-	static Level* Load(std::string name);
-
-private:
-
+	void* operator()(const std::wstring& relativeFullPath) const;
 };

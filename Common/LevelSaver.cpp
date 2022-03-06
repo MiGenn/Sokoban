@@ -5,7 +5,7 @@
 
 void LevelSaver::Save(const Level& level, std::string name)
 {
-    std::ofstream levelFile(Level::relativePath + name + Level::extension, std::ios::binary);
+    std::ofstream levelFile(Level::LevelFolderRelativePath + name + Level::LevelFileExtension, std::ios::binary);
 
     for (auto& entity : level.entities)
     {

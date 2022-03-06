@@ -1,17 +1,17 @@
 #pragma once
 #include <string>
-#include "TiledEntity.h"
+#include "Character.h"
 
 class Level final
 {
 public:
-	static const std::string relativePath;
-	static const std::string extension;
+	static const std::string LevelFolderRelativePath;
+	static const std::string LevelFileExtension;
 
-	Vector2i characterStartPosition;
-	std::vector<TiledEntity> entities;
+	Character* character;
+	std::vector<TiledEntity*> entities;
 
-	Level() = default;
+	Level();
 	Level(const Level&) = delete;
 
 	Level& operator=(const Level&) = delete;

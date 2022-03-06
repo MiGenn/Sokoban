@@ -1,4 +1,5 @@
 #include "Resource.h"
+
 #include "ResourceInterface.h"
 
 Resource::Resource(const std::wstring& relativePath, 

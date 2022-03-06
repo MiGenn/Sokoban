@@ -55,15 +55,21 @@
     <Filter Include="Header Files\Game\TileEntity">
       <UniqueIdentifier>{9765a677-fe61-4c6b-a58e-23dc5de7ab4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Loaders%255cUnloaders">
+      <UniqueIdentifier>{c95b703a-8dd3-49f5-8f39-508533a161f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Loaders%255cUnloaders">
+      <UniqueIdentifier>{edba0271-c082-4304-bd0d-e638df58a030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ApplicationModules">
+      <UniqueIdentifier>{f0e078ef-3037-45ed-9b9b-6aee2993162c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ApplicationModules">
+      <UniqueIdentifier>{80a0dc8a-1948-42c3-b2c0-f4b5a80c5034}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h">
-      <Filter>Header Files\Game\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LevelLoader.h">
-      <Filter>Header Files\Game\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LevelSaver.h">
       <Filter>Header Files\Game\Level</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h">
@@ -90,9 +96,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntity.h">
       <Filter>Header Files\Game\TileEntity</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h">
       <Filter>Header Files\Game\ResourceManagment</Filter>
     </ClInclude>
@@ -100,18 +103,6 @@
       <Filter>Header Files\Game\ResourceManagment</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ResourceManager.h">
-      <Filter>Header Files\Game\ResourceManagment</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Loader.h">
-      <Filter>Header Files\Game\ResourceManagment</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Unloader.h">
-      <Filter>Header Files\Game\ResourceManagment</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUnloader.h">
-      <Filter>Header Files\Game\ResourceManagment</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapLoader.h">
       <Filter>Header Files\Game\ResourceManagment</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics2D.h">
@@ -132,14 +123,35 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Loader.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Unloader.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapLoader.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUnloader.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LevelLoader.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LevelSaver.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LevelUnloader.h">
+      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
+      <Filter>Header Files\Game\TileEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
+      <Filter>Header Files\ApplicationModules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)LevelSaver.cpp">
-      <Filter>Source Files\Game\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)LevelLoader.cpp">
-      <Filter>Source Files\Game\Level</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
       <Filter>Source Files\Game\Level</Filter>
     </ClCompile>
@@ -164,9 +176,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntity.cpp">
       <Filter>Source Files\Game\TileEntity</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp">
       <Filter>Source Files\Game\ResourceManagment</Filter>
     </ClCompile>
@@ -174,18 +183,6 @@
       <Filter>Source Files\Game\ResourceManagment</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ResourceManager.cpp">
-      <Filter>Source Files\Game\ResourceManagment</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUnloader.cpp">
-      <Filter>Source Files\Game\ResourceManagment</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapLoader.cpp">
-      <Filter>Source Files\Game\ResourceManagment</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Loader.cpp">
-      <Filter>Source Files\Game\ResourceManagment</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Unloader.cpp">
       <Filter>Source Files\Game\ResourceManagment</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics2D.cpp">
@@ -202,6 +199,33 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderInfo.cpp">
       <Filter>Source Files\Game\TileEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LevelSaver.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LevelLoader.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Unloader.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Loader.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUnloader.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapLoader.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LevelUnloader.cpp">
+      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
+      <Filter>Source Files\Game\TileEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
+      <Filter>Source Files\ApplicationModules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -101,7 +101,7 @@ void Graphics2D::MergeContexes(HDC destinationContext, Vector2i destinationPosit
 	 HDC sourceContext, Box2i boundingBox, float scale)
 {
 	if (!TransparentBlt(destinationContext, destinationPosition.x, destinationPosition.y, 
-		round(boundingBox.size.x * scale), round(boundingBox.size.y * scale),
+		(int)round(boundingBox.size.x * scale), (int)round(boundingBox.size.y * scale),
 		sourceContext, boundingBox.position.x, boundingBox.position.y,
 		boundingBox.size.x, boundingBox.size.y, (UINT)(chroma)))
 		throw LAST_EXCEPTION();

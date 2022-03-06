@@ -1,11 +1,26 @@
 #include "TiledEntity.h"
 
+#include <stdexcept>
 #include "TileCollisionDetector.h"
 
-TiledEntity::TiledEntity(const TileRenderInfo& renderInfo, bool isCollidable) :
-	m_isCollidable(isCollidable), m_renderInfo(renderInfo)
+TiledEntity::TiledEntity(const TileRenderInfo& renderInfo, 
+	bool isCollidable, bool isMovable) :
+	m_renderInfo(renderInfo), m_isCollidable(isCollidable), m_isMovable(isMovable)
 {
+	if (isMovable && !isCollidable)
+		throw std::runtime_error("Incorrect parameters!");
 
+	m_position = renderInfo.GetPosition();
+}
+
+bool TiledEntity::operator==(const TiledEntity& otherEntity)
+{
+	return this == &otherEntity;
+}
+
+bool TiledEntity::operator!=(const TiledEntity& otherEntity)
+{
+	return !(this == &otherEntity);
 }
 
 bool TiledEntity::IsCollidable() const
@@ -13,15 +28,31 @@ bool TiledEntity::IsCollidable() const
 	return m_isCollidable;
 }
 
+bool TiledEntity::IsMovable() const
+{
+	return m_isMovable;
+}
+
 const TileRenderInfo& TiledEntity::GetRenderInfo() const
 {
 	return m_renderInfo;
 }
 
-bool TiledEntity::IsCollision(Vector2i otherTilePosition) const
+Vector2i TiledEntity::GetPosition() const
 {
-	if (m_isCollidable)
-		return TileCollisionDetector::IsCollision(m_position, otherTilePosition);
+	return m_position;
+}
+
+bool TiledEntity::IsCollision(const TiledEntity& otherTiledEntity) const
+{
+	if (m_isCollidable && otherTiledEntity.m_isCollidable)
+		return TileCollisionDetector::IsCollision(m_position, otherTiledEntity.m_position);
 	
 	return false;
+}
+
+void TiledEntity::Move(Vector2i translation)
+{
+	if (m_isMovable)
+		m_position += translation;
 }

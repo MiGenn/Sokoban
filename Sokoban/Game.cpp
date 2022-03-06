@@ -8,15 +8,11 @@ Game::Game() :
 
 Game::~Game()
 {
-	//delete m_currentLevel;
+	delete m_currentLevel;
 }
 
 int Game::Run()
 {
-	test = new TiledEntity(
-		{ ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Barrel.bmp"), 
-		{ 100, 100 }, { { 0,0 }, { 24, 24} }, 1}, false);
-
 	while (true)
 	{
 		if (auto exitCode = RetrieveAndRouteMessages())
@@ -41,6 +37,7 @@ void Game::Simulate()
 		break;
 
 	case Game::GameState::Level:
+		SimulateLevel();
 		break;
 	}
 }
@@ -57,17 +54,9 @@ void Game::Render()
 		break;
 
 	case Game::GameState::Level:
+		RenderLevel();
 		break;
 	}
-
-	/*for (auto& entity : scenes[currentSceneName]->entities)
-	{
-		auto renderInfo = static_cast<SpriteRenderInfo*>(entity.components[Entity2D::renderInfoIndex]);
-		if (renderInfo != nullptr && renderInfo.IsEnabled())
-			m_window.graphics.RenderSprite(renderInfo);	
-	}*/
-
-	m_window.graphics.RenderSprite(test->GetRenderInfo());
 
 	m_window.graphics.Present();
 }
@@ -77,7 +66,32 @@ void Game::SimulateMainMenu()
 
 }
 
+void Game::SimulateLevel()
+{
+	static Vector2i translation;
+
+	if (m_window.keyboard.IsKeyPressed('W'))
+		translation += Vector2i(0, -1);
+
+	if (m_window.keyboard.IsKeyPressed('S'))
+		translation += Vector2i(0, 1);
+
+	if (m_window.keyboard.IsKeyPressed('A'))
+		translation += Vector2i(-1, 0);
+
+	if (m_window.keyboard.IsKeyPressed('D'))
+		translation += Vector2i(1, 0);
+
+	if (translation != Vector2i())
+		m_collisionManager.Update();
+}
+
 void Game::RenderMainMenu()
+{
+
+}
+
+void Game::RenderLevel()
 {
 
 }

@@ -3,9 +3,9 @@
 #include <fstream>
 #include "TiledEntity.h"
 
-Level* LevelLoader::Load(std::string name)
+void* LevelLoader::operator()(const std::wstring& relativeFullPath) const
 {
-    std::ifstream levelFile(Level::relativePath + name + Level::extension, std::ios::binary);
+    std::ifstream levelFile(relativeFullPath, std::ios::binary);
     Level* const level{ new Level() };
 
     while (!levelFile.eof())

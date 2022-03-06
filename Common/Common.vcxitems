@@ -18,7 +18,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUnloader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Button.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LevelUnloader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Loader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ResourceInterface.cpp" />
@@ -43,7 +45,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUnloader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Button.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LevelUnloader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Loader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h" />
