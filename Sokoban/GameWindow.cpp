@@ -1,20 +1,26 @@
 #include "GameWindow.h"
 
-GameWindow::GameWindow(int width, int height) : 
-	Window(width, height), graphics(this)
+GameWindow::GameWindow(Vector2i size) NOEXCEPT_WHEN_NDEBUG:
+	Window(size), graphics(this)
 {
 	constexpr DWORD windowStyle{ WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_VISIBLE };
 
-	RECT windowRect{ 0, 0, width, height };
+	RECT windowRect{ 0, 0, size.x, size.y };
 	if (!AdjustWindowRect(&windowRect, windowStyle, false))
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
 
 	m_handle = CreateWindow(Class::gameWindow.GetName(), L"Sokoban", windowStyle, CW_USEDEFAULT, CW_USEDEFAULT,
 		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
 		nullptr, nullptr, GetModuleHandle(nullptr), this);
 
 	if (!m_handle)
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
+}
+
+void GameWindow::Resize(Vector2i size)
+{
+	Window::Resize(size);
+	graphics.ResizeLayers(size);
 }
 
 LRESULT GameWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
@@ -49,7 +55,7 @@ LRESULT GameWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(m_handle, message, wParam, lParam);
 }
 
-void GameWindow::OnClose()
+void GameWindow::OnClose() noexcept
 {
 	PostQuitMessage(0);
 	DestroyWindow(m_handle);
@@ -65,5 +71,5 @@ GameWindow::Class::Class() : WindowClass(L"SokobanGame")
 	wcex.lpfnWndProc = SetupMessageHandling;
 
 	if (!RegisterClassEx(&wcex))
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
 }

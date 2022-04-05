@@ -1,25 +1,26 @@
 #pragma once
 #include "WinapiException.h"
 #include "Vector2D.h"
+#include "BuildInfo.h"
 
 class Window
 {
 public:
 	friend class WindowClass;
 
-	Window(int width, int height);
+	Window(Vector2i size) NOEXCEPT_WHEN_NDEBUG;
 	Window(const Window&) = delete;
 
 	Window& operator=(const Window&) = delete;
 
-	void Resize(int width, int height);
-	class DeviceContextWrapper GetDeviceContext();
-	HWND GetHandle() const;
-	Vector2i GetSize() const;
+	virtual void Resize(Vector2i size);
+	class DeviceContextWrapper GetDeviceContext() noexcept;
+	HWND GetHandle() const noexcept;
+	Vector2i GetSize() const noexcept;
 
 protected:
-	int m_width, m_height;
-	HWND m_handle;
+	Vector2i m_size;
+	HWND m_handle{ NULL };
 
 	virtual LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 };

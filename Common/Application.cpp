@@ -1,4 +1,5 @@
 #include "Application.h"
+
 #include "windows.h"
 
 std::optional<int> Application::RetrieveAndRouteMessages()

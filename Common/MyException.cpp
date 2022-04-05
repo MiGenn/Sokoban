@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-MyException::MyException(int line, const char* file)
+MyException::MyException(int line, const char* file) noexcept
 {
 	std::stringstream ss;
 	ss << "FILE: " << file << '\n' <<
@@ -11,12 +11,12 @@ MyException::MyException(int line, const char* file)
 	m_origin = ss.str();
 }
 
-const char* MyException::what() const
+const char* MyException::what() const noexcept
 {
 	return m_whatBuffer.c_str();
 }
 
-const std::string& MyException::GetOrigin() const
+const std::string& MyException::GetOrigin() const noexcept
 {
 	return m_origin;
 }

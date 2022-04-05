@@ -1,15 +1,16 @@
 #pragma once
 #include "Window.h"
+#include "BuildInfo.h"
 
 class WindowClass
 {
 public:
-	const wchar_t* GetName() const;
+	const wchar_t* GetName() const noexcept;
 
 protected:
-	WindowClass(const wchar_t* name);
+	WindowClass(const wchar_t* name) NOEXCEPT_WHEN_NDEBUG;
 	WindowClass(const WindowClass&) = delete;
-	virtual ~WindowClass();
+	virtual ~WindowClass() noexcept;
 
 	WindowClass& operator=(const WindowClass&) = delete;
 

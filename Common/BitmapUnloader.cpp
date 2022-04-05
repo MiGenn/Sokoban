@@ -4,5 +4,6 @@
 
 void BitmapUnloader::operator()(void* resource) const
 {
-	DeleteObject(resource);
+	if (!DeleteObject(resource))
+		throw WINAPI_LAST_EXCEPTION();
 }

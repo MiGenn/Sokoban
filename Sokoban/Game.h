@@ -10,7 +10,6 @@ class Game final : public Application
 public:
 	Game();
 	Game(const Game&) = delete;
-	~Game();
 
 	Game& operator=(const Game&) = delete;
 
@@ -29,7 +28,7 @@ private:
 	GameState m_state = GameState::MainMenu;
 	CollisionManager m_collisionManager;
 	// Menu
-	Level* m_currentLevel = nullptr;
+	std::unique_ptr<Level> m_currentLevel;
 
 	void Simulate();
 	void Render();

@@ -1,16 +1,13 @@
 #include "Game.h"
 
 #include <stdexcept>
+#include <cassert>
+#include "IBinarySerializable.h"
 
 Game::Game() :
-	m_window(1280, 720)
+	m_window({ 1280, 720 })
 {
 
-}
-
-Game::~Game()
-{
-	delete m_currentLevel;
 }
 
 int Game::Run()
@@ -70,12 +67,11 @@ void Game::SimulateMainMenu()
 
 void Game::SimulateLevel()
 {
-	if (!m_currentLevel)
-		throw std::runtime_error("There is no loaded level!");
+	assert(m_currentLevel.get() != nullptr);
+	
+	m_currentLevel->GetCharacter().Update(m_window.keyboard);
 
-	m_currentLevel->characterPointer->Update(m_window.keyboard);
-
-	if (m_currentLevel->characterPointer->GetLastTranslation() != Vector2i())
+	if (m_currentLevel->GetCharacter().GetLastTranslation() != Vector2i())
 	{
 		m_collisionManager.Manage(*m_currentLevel);
 
@@ -93,7 +89,7 @@ void Game::RenderMainMenu()
 
 void Game::RenderLevel()
 {
-	for (auto entity : m_currentLevel->entities)
+	for (auto& entity : *m_currentLevel)
 		m_window.graphics.RenderSprite(entity->GetRenderInfo());
 }
 

@@ -12,15 +12,17 @@ public:
 	Keyboard keyboard;
 	Graphics2D graphics;
 
-	GameWindow(int width, int height);
+	GameWindow(Vector2i size) NOEXCEPT_WHEN_NDEBUG;
 	GameWindow(const GameWindow&) = delete;
 
 	GameWindow& operator=(const GameWindow&) = delete;
 
+	void Resize(Vector2i size) override;
+
 private:
 	LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam) override;
 
-	void OnClose();
+	void OnClose() noexcept;
 
 	class Class : public WindowClass
 	{

@@ -1,34 +1,36 @@
 #include "Window.h"
-#include "DeviceContextWrapper.h"
+
 #include <iomanip>
+#include <cassert>
+#include "DeviceContextWrapper.h"
 
-Window::Window(int width, int height) : 
-	m_handle(nullptr)
+Window::Window(Vector2i size) NOEXCEPT_WHEN_NDEBUG :
+	m_size(size)
 {
-	m_width = width;
-	m_height = height;
+	assert(size.x > 0 && size.y > 0);
 }
 
-void Window::Resize(int width, int height)
+void Window::Resize(Vector2i size)
 {
-	if (!SetWindowPos(m_handle, nullptr, NULL, NULL, width, height, SWP_NOMOVE | SWP_NOZORDER))
-		throw LAST_EXCEPTION();
+	assert(size.x > 0 && size.y > 0);
 
-	m_width = width;
-	m_height = height;
+	if (!SetWindowPos(m_handle, nullptr, NULL, NULL, size.x, size.y, SWP_NOMOVE | SWP_NOZORDER))
+		throw WINAPI_LAST_EXCEPTION();
+	
+	m_size = size;
 }
 
-HWND Window::GetHandle() const
+HWND Window::GetHandle() const noexcept
 {
 	return m_handle;
 }
 
-DeviceContextWrapper Window::GetDeviceContext()
+DeviceContextWrapper Window::GetDeviceContext() noexcept
 {
 	return { this };
 }
 
-Vector2i Window::GetSize() const
+Vector2i Window::GetSize() const noexcept
 {
-	return { m_width, m_height };
+	return m_size;
 }

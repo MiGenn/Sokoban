@@ -25,18 +25,18 @@ void CollisionManager::Manage(Level& level)
 
 TiledEntity* CollisionManager::GetEntityCollidingWithCharacter(const Level& level) const
 {
-	for (auto entity : level.entities)
-		if (level.characterPointer->IsCollision(*entity))
-			return entity;
+	//for (auto entity : level.entities)
+	//	if (level.characterPointer->IsCollision(*entity))
+	//		return entity;
 
 	return nullptr;
 }
 
 bool CollisionManager::IsEntityInCollision(const Level& level, const TiledEntity& entity) const
 {
-	for (auto otherEntity : level.entities)
-		if (entity.IsCollision(*otherEntity) && entity != *otherEntity)
-			return true;
+	//for (auto otherEntity : level.entities)
+	//	if (entity.IsCollision(*otherEntity) && entity != *otherEntity)
+	//		return true;
 
 	return false;
 }

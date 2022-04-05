@@ -7,13 +7,13 @@
 class WinapiException final : public MyException
 {
 public:
-	WinapiException(int line, const char* file, HRESULT errorCode);
+	WinapiException(int line, const char* file, HRESULT errorCode) noexcept;
 
-	const char* GetType() const override;
+	const char* GetType() const noexcept override;
 
 private:
-	static std::string TranslateErrorCode(HRESULT errorCode);
+	static std::string TranslateErrorCode(HRESULT errorCode) noexcept;
 };
 
-#define EXCEPTION(errorCode) WinapiException(__LINE__, __FILE__, errorCode)
-#define LAST_EXCEPTION() WinapiException(__LINE__, __FILE__, GetLastError())
+#define WINAPI_EXCEPTION(errorCode) WinapiException(__LINE__, __FILE__, errorCode)
+#define WINAPI_LAST_EXCEPTION() WinapiException(__LINE__, __FILE__, GetLastError())

@@ -5,5 +5,5 @@
 class LevelLoader final : public Loader
 {
 public:
-	void* operator()(const std::wstring& relativeFullPath) const;
+	void* operator()(const std::wstring& relativeFullPath) const override;
 };

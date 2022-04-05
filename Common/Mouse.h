@@ -8,13 +8,13 @@ public:
 	friend class GameWindow;
 	friend class EditorWindow;
 
-	bool IsLeftButtonPressed();
-	Vector2i GetPosition();
+	bool IsLeftButtonPressed() noexcept;
+	Vector2i GetPosition() noexcept;
 
 private:
 	Vector2i m_position;
 	bool m_isLeftButtonPressed;
 
-	void OnLeftButtonPressed();
-	void OnMouseMove(POINTS position);
+	void OnLeftButtonPressed() noexcept;
+	void OnMouseMove(POINTS position) noexcept;
 };

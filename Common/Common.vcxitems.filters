@@ -49,23 +49,44 @@
     <Filter Include="Header Files\Game\GUI">
       <UniqueIdentifier>{27b70feb-1997-47fe-bd3b-4712d6bc0348}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\TileEntity">
-      <UniqueIdentifier>{a302f1f4-7028-4442-97c5-f37084d55ecb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\TileEntity">
-      <UniqueIdentifier>{9765a677-fe61-4c6b-a58e-23dc5de7ab4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Loaders%255cUnloaders">
-      <UniqueIdentifier>{c95b703a-8dd3-49f5-8f39-508533a161f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Loaders%255cUnloaders">
-      <UniqueIdentifier>{edba0271-c082-4304-bd0d-e638df58a030}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ApplicationModules">
       <UniqueIdentifier>{f0e078ef-3037-45ed-9b9b-6aee2993162c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ApplicationModules">
       <UniqueIdentifier>{80a0dc8a-1948-42c3-b2c0-f4b5a80c5034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\ResourceManagment\Loaders%255cUnloaders">
+      <UniqueIdentifier>{c95b703a-8dd3-49f5-8f39-508533a161f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\ResourceManagment\Loaders%255cUnloaders">
+      <UniqueIdentifier>{edba0271-c082-4304-bd0d-e638df58a030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Convenient classes">
+      <UniqueIdentifier>{348501df-736c-42b0-9f01-fce27aca96b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BinarySerialization">
+      <UniqueIdentifier>{f677ae12-3c4b-4cb2-bb84-bf2130f7eaf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BinarySerialization">
+      <UniqueIdentifier>{c1b5f121-8f7c-427e-a5de-1d88c3d71d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BinarySerialization\DefaultTypeSerializers">
+      <UniqueIdentifier>{e9664ef2-b03c-405e-9b5f-4dff33977849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BinarySerialization\DefaultTypeSerializers">
+      <UniqueIdentifier>{37240d36-1ad7-4a8f-8f4b-0ee4ddf6b55e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BinarySerialization\PolymorphicSerialization">
+      <UniqueIdentifier>{fffe856c-dd40-48bb-bedd-710f38633a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BinarySerialization\PolymorphicSerialization">
+      <UniqueIdentifier>{4ac4e3a4-7ce1-4752-a243-f2d2254eccd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\TiledEntity">
+      <UniqueIdentifier>{a302f1f4-7028-4442-97c5-f37084d55ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\TiledEntity">
+      <UniqueIdentifier>{9765a677-fe61-4c6b-a58e-23dc5de7ab4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,14 +108,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)WindowClass.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntity.h">
-      <Filter>Header Files\Game\TileEntity</Filter>
+      <Filter>Header Files\Game\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h">
       <Filter>Header Files\Game\ResourceManagment</Filter>
@@ -115,46 +130,76 @@
       <Filter>Header Files\Game\GUI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileCollisionDetector.h">
-      <Filter>Header Files\Game\TileEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderInfo.h">
-      <Filter>Header Files\Game\TileEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>Header Files\Game\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Loader.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Header Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Unloader.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Header Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapLoader.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Header Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUnloader.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Header Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)LevelLoader.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LevelSaver.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Header Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)LevelUnloader.h">
-      <Filter>Header Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Header Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>Header Files\Game\TileEntity</Filter>
+      <Filter>Header Files\Game\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
       <Filter>Header Files\ApplicationModules</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h">
+      <Filter>Header Files\ApplicationModules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h">
+      <Filter>Header Files\Game\Convenient classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h">
+      <Filter>Header Files\Game\Convenient classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h">
-      <Filter>Header Files\ApplicationModules</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.h">
+      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WstringBinarySerializer.h">
+      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IntBinarySerializer.h">
+      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBinarySerializable.h">
+      <Filter>Header Files\BinarySerialization\PolymorphicSerialization</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SerializableObjectFactory.h">
+      <Filter>Header Files\BinarySerialization\PolymorphicSerialization</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BuildInfo.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TypeRegistrator.h">
+      <Filter>Header Files\BinarySerialization\PolymorphicSerialization</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringBinarySerializer.h">
+      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CstringBinarySerializer.h">
+      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RenderLayer.h">
+      <Filter>Header Files\Game\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,11 +221,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntity.cpp">
-      <Filter>Source Files\Game\TileEntity</Filter>
+      <Filter>Source Files\Game\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp">
       <Filter>Source Files\Game\ResourceManagment</Filter>
@@ -201,43 +243,67 @@
       <Filter>Source Files\Game\GUI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileCollisionDetector.cpp">
-      <Filter>Source Files\Game\TileEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderInfo.cpp">
-      <Filter>Source Files\Game\TileEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)LevelSaver.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelLoader.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Unloader.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Loader.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUnloader.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapLoader.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LevelUnloader.cpp">
-      <Filter>Source Files\Game\Loaders%255cUnloaders</Filter>
+      <Filter>Source Files\Game\ResourceManagment\Loaders%255cUnloaders</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>Source Files\Game\TileEntity</Filter>
+      <Filter>Source Files\Game\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
       <Filter>Source Files\ApplicationModules</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
+      <Filter>Source Files\ApplicationModules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
-      <Filter>Source Files\ApplicationModules</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WstringBinarySerializer.cpp">
+      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IntBinarySerializer.cpp">
+      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SerializableObjectFactory.cpp">
+      <Filter>Source Files\BinarySerialization\PolymorphicSerialization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.cpp">
+      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringBinarySerializer.cpp">
+      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CstringBinarySerializer.cpp">
+      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TypeRegistrator.cpp">
+      <Filter>Source Files\BinarySerialization\PolymorphicSerialization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IBinarySerializable.cpp">
+      <Filter>Source Files\BinarySerialization\PolymorphicSerialization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RenderLayer.cpp">
+      <Filter>Source Files\Game\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

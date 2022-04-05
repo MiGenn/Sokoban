@@ -7,7 +7,7 @@ public:
 	virtual int Run() = 0;
 
 protected:
-	Application() = default;
+	Application() noexcept = default;
 	Application(const Application&) = delete;
 
 	Application& operator=(const Application&) = delete;

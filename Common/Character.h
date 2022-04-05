@@ -5,7 +5,7 @@
 class Character : public TiledEntity
 {
 public:
-	Character(const TileRenderInfo& renderInfo);
+	Character(const SpriteRenderInfo& renderInfo);
 
 	Vector2i GetLastTranslation() const;
 	Vector2i GetPreviousPosition() const;

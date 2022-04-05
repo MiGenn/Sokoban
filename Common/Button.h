@@ -6,5 +6,5 @@ class Button final
 public:
 
 private:
-	SpriteRenderInfo renderInfo;
+	//SpriteRenderInfo renderInfo;
 };

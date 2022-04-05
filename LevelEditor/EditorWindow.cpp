@@ -10,14 +10,14 @@ EditorWindow::EditorWindow(int width, int height) : Window(width, height),
 
 	RECT windowRect{ 0, 0, width, height };
 	if (!AdjustWindowRect(&windowRect, windowStyle, true))
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
 
 	m_handle = CreateWindow(Class::editorClass.GetName(), L"Level Editor", windowStyle, CW_USEDEFAULT, CW_USEDEFAULT,
 		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		nullptr, LoadMenu(moduleHandle, MAKEINTRESOURCE(IDR_EDITOR_MENU)), moduleHandle, this);
 
 	if (!m_handle)
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
 }
 
 LRESULT EditorWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
@@ -84,5 +84,5 @@ EditorWindow::Class::Class() : WindowClass(L"SokobanEditor")
 	wcex.lpfnWndProc = SetupMessageHandling;
 
 	if (!RegisterClassEx(&wcex))
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
 }

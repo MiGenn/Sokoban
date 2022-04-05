@@ -5,5 +5,5 @@
 class LevelUnloader : public Unloader
 {
 public:
-	void operator()(void* resource) const;
+	void operator()(void* resource) const override;
 };

@@ -1,6 +1,6 @@
 #include "Character.h"
 
-Character::Character(const TileRenderInfo& renderInfo) :
+Character::Character(const SpriteRenderInfo& renderInfo) :
 	TiledEntity(renderInfo, { 0, 0 }, true, true)
 {
 	m_previousPosition = GetPosition();

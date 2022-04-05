@@ -1,28 +1,36 @@
 #pragma once
 #include <string>
+#include <array>
+#include "BuildInfo.h"
 #include "Character.h"
 
-class Level final
+class Level final : public IBinarySerializable
 {
 public:
 	static const std::string LevelFolderRelativePath;
 	static const std::string LevelFileExtension;
 
-	std::vector<TiledEntity*> entities;
-
-	Character* characterPointer;
-	std::vector<TiledEntity*> crossesPointers;
-	std::vector<TiledEntity*> barrelsPointers;
-
-	Level();
+	Level() noexcept;
+	Level(std::ifstream& file);
 	Level(const Level&) = delete;
 
 	Level& operator=(const Level&) = delete;
+	TiledEntity& operator[](int i);
 
-	void AddBarrel(TiledEntity* barrel);
-	void AddCross(TiledEntity* cross);
+	void BinarySerializeToOpenedFile(std::ofstream& file) const override;
+	void BinaryDeserializeFromOpenedFileToSelf(std::ifstream& file) override;
 
-	void RemoveBarrel(TiledEntity* barrel);
-	void RemoveCross(TiledEntity* cross);
-	void RemoveEntity(TiledEntity* entity);
+	Character& GetCharacter() const NOEXCEPT_WHEN_NDEBUG;
+	std::vector<TiledEntity*>& GetBarrels() const NOEXCEPT_WHEN_NDEBUG;
+	int GetEntitiesCount() const noexcept;
+
+	constexpr auto begin() noexcept;
+	constexpr auto end() noexcept;
+
+private:
+	std::vector<std::unique_ptr<TiledEntity>> m_entities;
+
+	Character* mutable m_character = nullptr;
+	std::vector<TiledEntity*> m_barrels;
+	std::vector<TiledEntity*> m_crosses;
 };

@@ -1,24 +1,24 @@
 #include "Graphics2D.h"
 
 #include <cmath>
+#include <cassert>
 #include "DeviceContextWrapper.h"
 
-Graphics2D::Graphics2D(Window* renderWindow) :
-	m_renderWindow(renderWindow), m_layersSize(renderWindow->GetSize())
+#pragma comment(lib, "Msimg32")
+
+Graphics2D::Graphics2D(Window* renderWindow) NOEXCEPT_WHEN_NDEBUG :
+	m_renderWindow(renderWindow)
 {
+	assert(renderWindow != nullptr);
+
+	m_layersSize = renderWindow->GetSize();
 	AddNewLayer(m_mainLayerIndex);
 	Fill(m_mainLayerIndex, RGB(0, 0, 0));
 
 	AddNewLayer(1);
 }
 
-Graphics2D::~Graphics2D()
-{
-	for (auto layer : m_layers)
-		delete layer;
-}
-
-void Graphics2D::Fill(int layerIndex, COLORREF color)
+void Graphics2D::Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
 	RenderRect(layerIndex, { 0, 0, m_layersSize.x, m_layersSize.y }, color);
 }
@@ -30,7 +30,7 @@ void Graphics2D::Present()
 	const Vector2i windowSize{ m_renderWindow->GetSize() };
 	if (!StretchBlt(m_renderWindow->GetDeviceContext().Get(), 0, 0, windowSize.x, windowSize.y,
 		m_layers[m_mainLayerIndex]->GetMemoryContext(), 0, 0, m_layersSize.x, m_layersSize.y, SRCCOPY))
-		throw LAST_EXCEPTION();
+		throw WINAPI_LAST_EXCEPTION();
 }
 
 void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
@@ -43,130 +43,90 @@ void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 	HDC sourceContext{ CreateCompatibleDC(destinationContext) };
 	HGDIOBJ initialBitmap{ SelectObject(sourceContext, renderInfo.GetBitmap()) };
 
-	MergeContexes(destinationContext, renderInfo.GetPosition(),
+	MergeTwoBitmaps(destinationContext, renderInfo.GetPosition(),
 		sourceContext, renderInfo.GetBoundingBox(), 10.f);
 
 	SelectObject(sourceContext, initialBitmap);
 	DeleteDC(sourceContext);
 }
 
-void Graphics2D::RenderRect(int layerIndex, const RECT& rect, COLORREF color)
+void Graphics2D::RenderRect(int layerIndex, const RECT& rect, COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
+	assert(layerIndex >= 0);
 	if (DoesNotLayerExist(layerIndex))
 		AddNewLayer(layerIndex);
 
-	if (!FillRect(m_layers[layerIndex]->GetMemoryContext(), &rect, CreateSolidBrush(color)))
-		throw LAST_EXCEPTION();
+	FillRect(m_layers[layerIndex]->GetMemoryContext(), &rect, CreateSolidBrush(color));
 }
 
-void Graphics2D::ResizeLayers(Vector2i newSize)
+void Graphics2D::ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG
 {
 	m_layersSize = newSize;
 	HDC context{ m_renderWindow->GetDeviceContext().Get() };
-
-	for (auto layer : m_layers)
-		if (layer != nullptr)
-			layer->Resize(context, newSize);
+	int layersCount{ (int)m_layers.size() };
+	for (int i{ 0 }; i < layersCount; ++i)
+		if (m_layers[i].get() != nullptr)
+			m_layers[i]->Resize(context, newSize);
 }
 
-bool Graphics2D::DoesNotLayerExist(int layerIndex)
+bool Graphics2D::DoesNotLayerExist(int layerIndex) const noexcept
 {
-	return layerIndex >= m_layers.size() || m_layers[layerIndex] == nullptr;
+	return layerIndex >= (int)m_layers.size() || m_layers[layerIndex] == nullptr;
 }
 
-void Graphics2D::AddNewLayer(int layerIndex)
+void Graphics2D::AddNewLayer(int layerIndex) noexcept
 {
-	int layersCount = static_cast<int>(m_layers.size());
+	int layersCount = (int)m_layers.size();
 
-	while (layerIndex > layersCount)
-	{
-		m_layers.push_back(nullptr);
-		++layersCount;
-	}
+	for (; layerIndex > layersCount; ++layersCount)
+		m_layers.emplace_back(nullptr);
 
 	if (layerIndex == layersCount)
-		m_layers.push_back(CreateCompatibleLayer());
+		m_layers.emplace_back(CreateCompatibleLayer());
 	else if (m_layers[layerIndex] == nullptr)
 		m_layers[layerIndex] = CreateCompatibleLayer();
 
 	ClearLayer(layerIndex);
 }
 
-Graphics2D::RenderLayer* Graphics2D::CreateCompatibleLayer()
+std::unique_ptr<RenderLayer> Graphics2D::CreateCompatibleLayer() const noexcept
 {
-	return new RenderLayer(m_renderWindow->GetDeviceContext().Get(), m_layersSize);
+	return std::make_unique<RenderLayer>(m_renderWindow->GetDeviceContext().Get(), m_layersSize);
 }
 
-void Graphics2D::MergeContexes(HDC destinationContext, Vector2i destinationPosition, 
-	 HDC sourceContext, Box2i boundingBox, float scale)
+void Graphics2D::MergeTwoBitmaps(HDC destinationLayerContext, Vector2i destinationPosition,
+	HDC sourceLayerContext, Box2i boundingBox, float scale)
 {
-	if (!TransparentBlt(destinationContext, destinationPosition.x, destinationPosition.y, 
-		(int)round(boundingBox.size.x * scale), (int)round(boundingBox.size.y * scale),
-		sourceContext, boundingBox.position.x, boundingBox.position.y,
-		boundingBox.size.x, boundingBox.size.y, (UINT)(chroma)))
-		throw LAST_EXCEPTION();
+	auto boxPosition{ boundingBox.GetPosition() };
+	auto boxSize{ boundingBox.GetSize() };
+
+	if (!TransparentBlt(destinationLayerContext, destinationPosition.x, destinationPosition.y,
+		(int)round(boxSize.x * scale), (int)round(boxSize.y * scale),
+		sourceLayerContext, boxPosition.x, boxPosition.y,
+		boxSize.x, boxSize.y, (UINT)(chroma)))
+		throw WINAPI_LAST_EXCEPTION();
 }
 
 void Graphics2D::MergeLayers()
 {
-	int layersCount{ static_cast<int>(m_layers.size()) };
+	int layersCount{ (int)m_layers.size() };
 	if (layersCount == 1)
 		return;
 
-	RenderLayer* const destinationLayer{ m_layers[m_mainLayerIndex] };
+	RenderLayer& destinationLayer{ *m_layers[m_mainLayerIndex] };
 	for (int i{ m_mainLayerIndex + 1 }; i < layersCount; ++i)
 	{
-		if (m_layers[i] != nullptr && m_layers[i]->IsUsed())
-		{
-			RenderLayer* const sourceLayer{ m_layers[i] };
-			MergeContexes(destinationLayer->GetMemoryContext(), { 0, 0 }, sourceLayer->GetMemoryContext(), 
+		if (m_layers[i].get() != nullptr && m_layers[i]->IsUsed())
+		{ 
+			RenderLayer& sourceLayer{ *m_layers[i] };
+			MergeTwoBitmaps(destinationLayer.GetMemoryContext(), {0, 0}, sourceLayer.GetMemoryContext(),
 				{ { 0, 0 }, { m_layersSize.x, m_layersSize.y } }, 1.f);
 		}
 	}
 }
 
-void Graphics2D::ClearLayer(int layerIndex)
+void Graphics2D::ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG
 {
 	Fill(layerIndex, chroma);
 	m_layers[layerIndex]->SetUsed(false);
-}
-
-Graphics2D::RenderLayer::RenderLayer(HDC referenceContext, Vector2i size) :
-	m_isUsed(false)
-{
-	m_context = CreateCompatibleDC(referenceContext);
-	m_bitmap = CreateCompatibleBitmap(referenceContext, size.x, size.y);
-	m_initialBitmap = SelectObject(m_context, m_bitmap);
-}
-
-Graphics2D::RenderLayer::~RenderLayer()
-{
-	SelectObject(m_context, m_initialBitmap);
-	DeleteObject(m_bitmap);
-	DeleteDC(m_context);
-}
-
-HDC Graphics2D::RenderLayer::GetMemoryContext()
-{
-	m_isUsed = true;
-
-	return m_context;
-}
-
-bool Graphics2D::RenderLayer::IsUsed() const
-{
-	return m_isUsed;
-}
-
-void Graphics2D::RenderLayer::SetUsed(bool isUsed)
-{
-	m_isUsed = isUsed;
-}
-
-void Graphics2D::RenderLayer::Resize(HDC referenceContext, Vector2i newSize)
-{
-	m_bitmap = CreateCompatibleBitmap(referenceContext, newSize.x, newSize.y);
-	HGDIOBJ oldBitmap{ SelectObject(m_context, m_bitmap) };
-
-	DeleteObject(oldBitmap);
 }

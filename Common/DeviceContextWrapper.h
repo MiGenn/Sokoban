@@ -4,13 +4,13 @@
 class DeviceContextWrapper final
 {
 public:
-	DeviceContextWrapper(const Window* window);
+	DeviceContextWrapper(const Window* window) NOEXCEPT_WHEN_NDEBUG;
 	DeviceContextWrapper(const DeviceContextWrapper&) = delete;
-	~DeviceContextWrapper();
+	~DeviceContextWrapper() noexcept;
 
 	DeviceContextWrapper& operator=(const DeviceContextWrapper&) = delete;
 
-	HDC Get() const;
+	HDC Get() const noexcept;
 
 private:
 	const Window* const m_window;

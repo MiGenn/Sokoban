@@ -1,54 +1,58 @@
 #include "Level.h"
 
+#include "VectorBinarySerializer.h"
+
 const std::string Level::LevelFolderRelativePath{ "\\Content\\Levels\\" };
 const std::string Level::LevelFileExtension{ ".lvl" };
 
-Level::Level() :
-	characterPointer(new Character({ ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Character.bmp"),
-		{ { 0, 0 }, { 24, 24 } }, 1 }))
+Level::Level()
 {
-	entities.push_back(characterPointer);
+	
 }
 
-void Level::AddBarrel(TiledEntity* barrel)
+Level::Level(std::ifstream& file)
 {
-	entities.push_back(barrel);
-	barrelsPointers.push_back(barrel);
+	BinaryDeserializeFromOpenedFileToSelf(file);
+	m_character = &GetCharacter();
 }
 
-void Level::AddCross(TiledEntity* cross)
+TiledEntity& Level::operator[](int i)
 {
-	entities.push_back(cross);
-	crossesPointers.push_back(cross);
+	return *m_entities[i];
 }
 
-void Level::RemoveBarrel(TiledEntity* barrel)
+void Level::BinarySerializeToOpenedFile(std::ofstream& file) const
 {
-	RemoveEntity(barrel);
-
-	auto barrelIterator{ std::find_if(barrelsPointers.begin(), barrelsPointers.end(), [barrel](TiledEntity* otherBarrel)
-		{
-			return barrel == otherBarrel;
-		}) };
-	barrelsPointers.erase(barrelIterator);
+	VectorBinarySerializer::SerializeToOpenedFile(m_entities, file);
 }
 
-void Level::RemoveCross(TiledEntity* cross)
+void Level::BinaryDeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
-	RemoveEntity(cross);
-
-	auto barrelIterator{ std::find_if(crossesPointers.begin(), crossesPointers.end(), [cross](TiledEntity* otherCross)
-		{
-			return cross == otherCross;
-		}) };
-	crossesPointers.erase(barrelIterator);
+	VectorBinarySerializer::DeserializeFromOpenedFile(m_entities, file);
 }
 
-void Level::RemoveEntity(TiledEntity* entity)
+Character& Level::GetCharacter() const NOEXCEPT_WHEN_NDEBUG
 {
-	auto barrelIterator{ std::find_if(entities.begin(), entities.end(), [entity](TiledEntity* otherEntity)
-	{
-		return entity == otherEntity;
-	}) };
-	entities.erase(barrelIterator);
+	if (!m_character)
+		for (auto& entity : m_entities)
+			dynamic_cast<Character*>(entity.get());
+
+	assert(m_character != nullptr);
+
+	return *m_character;
+}
+
+int Level::GetEntitiesCount() const noexcept
+{
+	return m_entities.size();
+}
+
+constexpr auto Level::begin() noexcept
+{
+	return m_entities.begin();
+}
+
+constexpr auto Level::end() noexcept
+{
+	return m_entities.end();
 }

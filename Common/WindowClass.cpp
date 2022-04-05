@@ -1,17 +1,20 @@
 #include "WindowClass.h"
 
-const wchar_t* WindowClass::GetName() const
+#include <cassert>
+
+const wchar_t* WindowClass::GetName() const noexcept
 {
 	return m_name;
 }
 
-WindowClass::WindowClass(const wchar_t* name) :
+WindowClass::WindowClass(const wchar_t* name) NOEXCEPT_WHEN_NDEBUG :
 	m_name(name)
 {
-
+	assert(name != nullptr);
+	assert(wcslen(name) > 0);
 }
 
-WindowClass::~WindowClass()
+WindowClass::~WindowClass() noexcept
 {
 	UnregisterClass(m_name, GetModuleHandle(nullptr));
 }

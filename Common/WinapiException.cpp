@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-WinapiException::WinapiException(int line, const char* file, HRESULT errorCode) :
+WinapiException::WinapiException(int line, const char* file, HRESULT errorCode) noexcept :
 	MyException(line, file)
 {
 	std::stringstream ss;
@@ -13,12 +13,12 @@ WinapiException::WinapiException(int line, const char* file, HRESULT errorCode) 
 	m_whatBuffer = ss.str();
 }
 
-const char* WinapiException::GetType() const
+const char* WinapiException::GetType() const noexcept
 {
 	return "Window Exception";
 }
 
-std::string WinapiException::TranslateErrorCode(HRESULT errorCode)
+std::string WinapiException::TranslateErrorCode(HRESULT errorCode) noexcept
 {
 	char* messageBuffer;
 	DWORD messageBufferSize = FormatMessageA(

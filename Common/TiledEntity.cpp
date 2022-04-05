@@ -3,11 +3,16 @@
 #include <stdexcept>
 #include "TileCollisionDetector.h"
 
-TiledEntity::TiledEntity(const TileRenderInfo& renderInfo,
+//TiledEntity::TiledEntity(std::ifstream& file)
+//{
+//	BinaryDeserializeFromOpenedFileToSelf(file);
+//{
+
+TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo,
 	Vector2i position, bool isCollidable, bool isMovable) :
 	m_renderInfo(renderInfo), m_position(position), 
 	m_isCollidable(isCollidable), m_isMovable(isMovable)
-{
+{ 
 	if (isMovable && !isCollidable)
 		throw std::runtime_error("Incorrect parameters!");
 }
@@ -32,12 +37,20 @@ bool TiledEntity::IsMovable() const
 	return m_isMovable;
 }
 
+void TiledEntity::BinarySerializeToOpenedFile(std::ofstream& file) const
+{
+}
+
+void TiledEntity::BinaryDeserializeFromOpenedFileToSelf(std::ifstream& file)
+{
+}
+
 void TiledEntity::SetPosition(Vector2i newPosition)
 {
 	m_position = newPosition;
 }
 
-const TileRenderInfo& TiledEntity::GetRenderInfo() const
+const SpriteRenderInfo& TiledEntity::GetRenderInfo() const
 {
 	m_renderInfo.SetPosition(m_position);
 
