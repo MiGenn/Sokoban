@@ -23,7 +23,7 @@ LRESULT WindowClass::SetupMessageHandling(HWND handle, UINT message, WPARAM wPar
 {
 	if (message == WM_NCCREATE)
 	{
-		const auto const createStruct{ reinterpret_cast<CREATESTRUCT*>(lParam) };
+		const auto createStruct{ reinterpret_cast<CREATESTRUCT*>(lParam) };
 		auto const window{ reinterpret_cast<Window*>(createStruct->lpCreateParams) };
 
 		SetWindowLongPtr(handle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(window));

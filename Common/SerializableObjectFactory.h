@@ -21,31 +21,36 @@ public:
 	SerializableObjectFactory& operator=(const SerializableObjectFactory&) = delete;
 
 	template<BinarySerializableAndConstructibleFromOpenedFile T>
-	static void RegisterType() noexcept
-	{
-		m_creatingFunctions.emplace(
-			typeid(T).name(), CreateInstanceFromOpenedFile<T>);
-	}
-
+	static void RegisterType() noexcept;
 	template <BinarySerializableAndConstructibleFromOpenedFile T>
-	static bool IsTypeRegistred() noexcept
-	{
-		return IsTypeRegistred(typeid(T).name());
-	}
-
+	static bool IsTypeRegistred() noexcept;
 	static bool IsTypeRegistred(const std::string& typeName) noexcept;
-
 	static std::unique_ptr<IBinarySerializable> CreateFromOpenedFile(std::ifstream& file);
-	static std::unique_ptr<IBinarySerializable> CreateFromOpenedFile(
-		const std::string& typeName, std::ifstream& file);
+	static std::unique_ptr<IBinarySerializable> CreateFromOpenedFile(const std::string& typeName, std::ifstream& file);
 
 private:
 	static std::unordered_map<std::string,
 		std::function<std::unique_ptr<IBinarySerializable>(std::ifstream& file)>> m_creatingFunctions;
 
 	template <BinarySerializableAndConstructibleFromOpenedFile T>
-	static std::unique_ptr<IBinarySerializable> CreateInstanceFromOpenedFile(std::ifstream& file)
-	{
-		return std::make_unique<T>(file);
-	}
+	static std::unique_ptr<IBinarySerializable> CreateInstanceFromOpenedFile(std::ifstream& file);
 };
+
+template<BinarySerializableAndConstructibleFromOpenedFile T>
+inline void SerializableObjectFactory::RegisterType() noexcept
+{
+	m_creatingFunctions.emplace(
+		typeid(T).name(), CreateInstanceFromOpenedFile<T>);
+}
+
+template<BinarySerializableAndConstructibleFromOpenedFile T>
+inline bool SerializableObjectFactory::IsTypeRegistred() noexcept
+{
+	return IsTypeRegistred(typeid(T).name());
+}
+
+template<BinarySerializableAndConstructibleFromOpenedFile T>
+inline std::unique_ptr<IBinarySerializable> SerializableObjectFactory::CreateInstanceFromOpenedFile(std::ifstream& file)
+{
+	return std::make_unique<T>(file);
+}

@@ -7,7 +7,7 @@
 Game::Game() :
 	m_window({ 1280, 720 })
 {
-
+	
 }
 
 int Game::Run()
@@ -69,17 +69,17 @@ void Game::SimulateLevel()
 {
 	assert(m_currentLevel.get() != nullptr);
 	
-	m_currentLevel->GetCharacter().Update(m_window.keyboard);
+	//m_currentLevel->GetCharacter().Update(m_window.keyboard);
 
-	if (m_currentLevel->GetCharacter().GetLastTranslation() != Vector2i())
-	{
-		m_collisionManager.Manage(*m_currentLevel);
+	//if (m_currentLevel->GetCharacter().GetLastTranslation() != Vector2i())
+	//{
+	//	m_collisionManager.Manage(*m_currentLevel);
 
-		if (CountDeliveredBarrels() == m_currentLevel->barrelsPointers.size())
-		{
-			// win
-		}
-	}
+	//	if (CountDeliveredBarrels() == m_currentLevel->GetBarrels().size())
+	//	{
+	//		// win
+	//	}
+	//}
 }
 
 void Game::RenderMainMenu()
@@ -96,10 +96,10 @@ void Game::RenderLevel()
 int Game::CountDeliveredBarrels()
 {
 	int deliveredBarrelsCount{ 0 };
-	for (auto barrel : m_currentLevel->barrelsPointers)
+	for (auto barrel : m_currentLevel->GetBarrels())
 	{
 		auto barrelPosition{ barrel->GetPosition() };
-		for (auto cross : m_currentLevel->crossesPointers)
+		for (auto cross : m_currentLevel->GetCrosses())
 		{
 			if (barrelPosition == cross->GetPosition())
 			{

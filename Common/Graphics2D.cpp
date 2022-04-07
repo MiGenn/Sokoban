@@ -41,9 +41,9 @@ void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 
 	HDC destinationContext{ m_layers[layerIndex]->GetMemoryContext() };
 	HDC sourceContext{ CreateCompatibleDC(destinationContext) };
-	HGDIOBJ initialBitmap{ SelectObject(sourceContext, renderInfo.GetBitmap()) };
+	HGDIOBJ initialBitmap{ SelectObject(sourceContext, renderInfo.GetSpriteBitmap()) };
 
-	MergeTwoBitmaps(destinationContext, renderInfo.GetPosition(),
+	MergeTwoBitmaps(destinationContext, renderInfo.GetWorldPosition(),
 		sourceContext, renderInfo.GetBoundingBox(), 10.f);
 
 	SelectObject(sourceContext, initialBitmap);

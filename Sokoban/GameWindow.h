@@ -24,7 +24,7 @@ private:
 
 	void OnClose() noexcept;
 
-	class Class : public WindowClass
+	class Class final : public WindowClass
 	{
 	public:
 		static const Class gameWindow;

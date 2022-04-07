@@ -4,31 +4,50 @@
 class TiledEntity : public IBinarySerializable
 {
 public:
-	static const int tileSize{ 24 };
+	enum class Tag : char
+	{
+		Unknown,
+		Wall,
+		Road,
+		Cross,
+		Barrel,
+		Character
+	};
 
-	//TiledEntity(std::ifstream& file);
-	TiledEntity(const SpriteRenderInfo& renderInfo,
-		Vector2i position, bool isCollidable, bool isMovable);
+	static constexpr int tileSize{ 24 };
 
-	bool operator==(const TiledEntity& otherEntity);
-	bool operator!=(const TiledEntity& otherEntity);
+	TiledEntity() noexcept = default;
+	TiledEntity(std::ifstream& file);
+	TiledEntity(SpriteRenderInfo&& renderInfo, Tag tag);
+	TiledEntity(SpriteRenderInfo&& renderInfo, Tag tag, Vector2i position);
+	TiledEntity(const TiledEntity&) = delete;
+	~TiledEntity() noexcept = default;
 
-	void SetPosition(Vector2i newPosition);
-	const SpriteRenderInfo& GetRenderInfo() const;
-	Vector2i GetPosition() const; 
-	bool IsCollision(const TiledEntity& otherTiledEntity) const;
-	virtual void Move(Vector2i translation);
+	TiledEntity& operator=(const TiledEntity&) = delete;
+	bool operator==(const TiledEntity& right) noexcept;
+	bool operator!=(const TiledEntity& right) noexcept;
 
-	bool IsCollidable() const;
-	bool IsMovable() const;
+	void Move(Vector2i translation) noexcept;
+	bool IsCollision(const TiledEntity& otherTiledEntity) const noexcept;
+	void SetPosition(Vector2i newPosition) noexcept;
 
-	void BinarySerializeToOpenedFile(std::ofstream& file) const override;
-	void BinaryDeserializeFromOpenedFileToSelf(std::ifstream& file) override;
+	Vector2i GetPosition() const noexcept;
+	Tag GetTag() const noexcept;
+	const SpriteRenderInfo& GetRenderInfo() const noexcept;
+
+	void SerializeToOpenedFile(std::ofstream& file) const override;
+	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
+
+	//
+	constexpr bool IsRegistred() const noexcept;
 
 private:
 	Vector2i m_position;
+	Tag m_tag{ Tag::Unknown };
 	mutable SpriteRenderInfo m_renderInfo;
-
-	bool m_isCollidable = false;
-	bool m_isMovable = false;
 };
+
+constexpr bool TiledEntity::IsRegistred() const noexcept
+{
+	return true;
+}

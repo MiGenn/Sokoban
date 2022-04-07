@@ -1,45 +1,43 @@
 #include "TiledEntityFactory.h"
 
-TiledEntity* TiledEntityFactory::CreateWall(Vector2i position)
+static const Box2i tileBoundingBox{ { 0, 0 }, { TiledEntity::tileSize, TiledEntity::tileSize } };
+
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateWall(Vector2i position)
 {
-	TileRenderInfo renderInfo{ 
-		ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Wall.bmp"), 
-		{ { 0, 0 }, { 24,24 } }, 0};
+	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::wallFullRelativePath), 
+		position, tileBoundingBox, 0};
 
-	TiledEntity* wall{ new TiledEntity(renderInfo, position, true, false) };
-
-	return wall;
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Wall, position);
 }
 
-TiledEntity* TiledEntityFactory::CreateRoad(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateRoad(Vector2i position)
 {
-	TileRenderInfo renderInfo{
-	ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Road.bmp"),
-	{ { 0, 0 }, { 24,24 } }, 0 };
+	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::roadFullRelativePath),
+		position, tileBoundingBox, 0 };
 
-	TiledEntity* Road{ new TiledEntity(renderInfo, position, false, false) };
-
-	return Road;
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Road, position);
 }
 
-TiledEntity* TiledEntityFactory::CreateBarrel(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateBarrel(Vector2i position)
 {
-	TileRenderInfo renderInfo{
-	ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Barrel.bmp"),
-	{ { 0, 0 }, { 24,24 } }, 0 };
+	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::barrelFullRelativePath),
+		position, tileBoundingBox, 0 };
 
-	TiledEntity* Barrel{ new TiledEntity(renderInfo, position, true, true) };
-
-	return Barrel;
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Barrel, position);
 }
 
-TiledEntity* TiledEntityFactory::CreateCross(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCross(Vector2i position)
 {
-	TileRenderInfo renderInfo{
-	ResourceManager::GetBitmapInterface(L"Content\\Textures\\GameObjects\\", L"Cross.bmp"),
-	{ { 0, 0 }, { 24,24 } }, 0 };
+	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::crossFullRelativePath),
+		position, tileBoundingBox, 0 };
 
-	TiledEntity* Cross{ new TiledEntity(renderInfo, position, false, false) };
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Cross, position);
+}
 
-	return Cross;
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCharacter(Vector2i position)
+{
+	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::characterFullRelativePath),
+		position, tileBoundingBox, 0 };
+
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Character, position);
 }

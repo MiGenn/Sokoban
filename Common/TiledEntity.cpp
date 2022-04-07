@@ -1,77 +1,81 @@
 #include "TiledEntity.h"
 
 #include <stdexcept>
+#include "Serializers.h"
 #include "TileCollisionDetector.h"
+#include "TypeRegistrator.h"
 
-//TiledEntity::TiledEntity(std::ifstream& file)
-//{
-//	BinaryDeserializeFromOpenedFileToSelf(file);
-//{
+static TypeRegistrator<TiledEntity> registrator;
 
-TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo,
-	Vector2i position, bool isCollidable, bool isMovable) :
-	m_renderInfo(renderInfo), m_position(position), 
-	m_isCollidable(isCollidable), m_isMovable(isMovable)
-{ 
-	if (isMovable && !isCollidable)
-		throw std::runtime_error("Incorrect parameters!");
-}
-
-bool TiledEntity::operator==(const TiledEntity& otherEntity)
+TiledEntity::TiledEntity(std::ifstream& file)
 {
-	return this == &otherEntity;
+	DeserializeFromOpenedFileToSelf(file);
 }
 
-bool TiledEntity::operator!=(const TiledEntity& otherEntity)
+TiledEntity::TiledEntity(SpriteRenderInfo&& renderInfo, Tag tag) :
+	m_renderInfo(std::move(renderInfo)), m_tag(tag)
 {
-	return !(*this == otherEntity);
+
 }
 
-bool TiledEntity::IsCollidable() const
+TiledEntity::TiledEntity(SpriteRenderInfo&& renderInfo, Tag tag, Vector2i position) :
+	TiledEntity(std::move(renderInfo), tag)
 {
-	return m_isCollidable;
+	m_position = position;
 }
 
-bool TiledEntity::IsMovable() const
+bool TiledEntity::operator==(const TiledEntity& right) noexcept
 {
-	return m_isMovable;
+	return this == &right;
 }
 
-void TiledEntity::BinarySerializeToOpenedFile(std::ofstream& file) const
+bool TiledEntity::operator!=(const TiledEntity& right) noexcept
 {
+	return !(*this == right);
 }
 
-void TiledEntity::BinaryDeserializeFromOpenedFileToSelf(std::ifstream& file)
+void TiledEntity::SerializeToOpenedFile(std::ofstream& file) const
 {
+	m_position.SerializeToOpenedFile(file);
+	PlainTypeBinarySerializer::SerializeToOpenedFile(m_tag, file);
+	m_renderInfo.SerializeToOpenedFile(file);
 }
 
-void TiledEntity::SetPosition(Vector2i newPosition)
+void TiledEntity::DeserializeFromOpenedFileToSelf(std::ifstream& file)
+{
+	m_position.DeserializeFromOpenedFileToSelf(file);
+	PlainTypeBinarySerializer::DeserializeFromOpenedFile(m_tag, file);
+	m_renderInfo.DeserializeFromOpenedFileToSelf(file);
+}
+
+void TiledEntity::SetPosition(Vector2i newPosition) noexcept
 {
 	m_position = newPosition;
 }
 
-const SpriteRenderInfo& TiledEntity::GetRenderInfo() const
+Vector2i TiledEntity::GetPosition() const noexcept
+{
+	return m_position;
+}
+
+TiledEntity::Tag TiledEntity::GetTag() const noexcept
+{
+	return m_tag;
+}
+
+const SpriteRenderInfo& TiledEntity::GetRenderInfo() const noexcept
 {
 	m_renderInfo.SetPosition(m_position);
 
 	return m_renderInfo;
 }
 
-Vector2i TiledEntity::GetPosition() const
+bool TiledEntity::IsCollision(const TiledEntity& otherTiledEntity) const noexcept
 {
-	return m_position;
+	return TileCollisionDetector::IsCollision(m_position, otherTiledEntity.m_position);;
 }
 
-bool TiledEntity::IsCollision(const TiledEntity& otherTiledEntity) const
+void TiledEntity::Move(Vector2i translation) noexcept
 {
-	if (m_isCollidable && otherTiledEntity.m_isCollidable)
-		return TileCollisionDetector::IsCollision(m_position, otherTiledEntity.m_position);
-	
-	return false;
-}
-
-void TiledEntity::Move(Vector2i translation)
-{
-	if (m_isMovable)
-		m_position += translation;
+	m_position += translation;	
 }

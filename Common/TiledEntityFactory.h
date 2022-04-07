@@ -1,11 +1,11 @@
 #pragma once
 #include "Character.h"
 
-class TiledEntityFactory
+namespace TiledEntityFactory
 {
-public:
-	static TiledEntity* CreateWall(Vector2i position);
-	static TiledEntity* CreateRoad(Vector2i position);
-	static TiledEntity* CreateBarrel(Vector2i position);
-	static TiledEntity* CreateCross(Vector2i position);
+	std::unique_ptr<TiledEntity> CreateWall(Vector2i position);
+	std::unique_ptr<TiledEntity> CreateRoad(Vector2i position);
+	std::unique_ptr<TiledEntity> CreateBarrel(Vector2i position);
+	std::unique_ptr<TiledEntity> CreateCross(Vector2i position);
+	std::unique_ptr<TiledEntity> CreateCharacter(Vector2i position);
 };

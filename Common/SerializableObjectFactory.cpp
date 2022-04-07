@@ -2,7 +2,8 @@
 
 #include "StringBinarySerializer.h"
 
-std::unordered_map<std::string, std::function<std::unique_ptr<IBinarySerializable>(std::ifstream& file)>> SerializableObjectFactory::m_creatingFunctions;
+std::unordered_map<std::string, std::function<std::unique_ptr<IBinarySerializable>(std::ifstream& file)>> 
+SerializableObjectFactory::m_creatingFunctions;
 
 bool SerializableObjectFactory::IsTypeRegistred(const std::string& typeName) noexcept
 {
