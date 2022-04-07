@@ -5,6 +5,7 @@
 #include "CstringBinarySerializer.h"
 #include "PlainTypeBinarySerializer.h"
 #include "TypeRegistrator.h"
+#include "UniquePointerUtilities.h"
 
 class VectorBinarySerializer final
 {
@@ -34,15 +35,13 @@ public:
 	static void DeserializeFromOpenedFile(
 		std::vector<std::unique_ptr<T>>& vector, std::ifstream& file)
 	{
-		//int elementsCount;
-		//PlainTypeBinarySerializer::DeserializeFromOpenedFile(elementsCount, file);
-		//vector.clear();
-		//vector.reserve(elementsCount);
+		int elementsCount;
+		PlainTypeBinarySerializer::DeserializeFromOpenedFile(elementsCount, file);
+		vector.clear();
+		vector.reserve(elementsCount);
 
-		//for (int i{ 0 }; i < elementsCount; ++i)
-		//{
-		//	auto object{ SerializableObjectFactory::CreateFromOpenedFile(file) };
-		//	vector.emplace_back(object.get());
-		//}
+		for (int i{ 0 }; i < elementsCount; ++i)
+			vector.emplace_back(
+				UniquePointerUtilities::StaticCast<T>(SerializableObjectFactory::CreateFromOpenedFile(file)));
 	}
 };

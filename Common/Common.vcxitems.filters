@@ -177,6 +177,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BuildInfo.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -265,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
       <Filter>Source Files\WinapiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
