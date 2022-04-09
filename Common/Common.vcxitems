@@ -15,12 +15,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WindowDCWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Button.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CstringBinarySerializer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)IBinarySerializable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PlainTypeBinarySerializer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp" />
@@ -46,14 +46,40 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WindowClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\com.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\common.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\com_apartment_variable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\cppwinrt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\cppwinrt_helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\cppwinrt_wrl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\filesystem.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\nt_result_macros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\registry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\resource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\result.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\result_macros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\result_originate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\rpc_helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\safecast.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\stl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\token_helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\Tracelogging.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\traceloggingconfig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\win32_helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\winrt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_config.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_functional.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_type_traits.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wrl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WindowDCWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Serializers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Button.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CstringBinarySerializer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BuildInfo.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IBinarySerializable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PlainTypeBinarySerializer.h" />
@@ -73,6 +99,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TypeRegistrator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UniqueAny.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.h" />

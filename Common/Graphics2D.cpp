@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <cassert>
-#include "DeviceContextWrapper.h"
+#include "WindowDCWrapper.h"
 
 #pragma comment(lib, "Msimg32")
 
@@ -16,11 +16,6 @@ Graphics2D::Graphics2D(Window* renderWindow) NOEXCEPT_WHEN_NDEBUG :
 	Fill(m_mainLayerIndex, RGB(0, 0, 0));
 
 	AddNewLayer(1);
-}
-
-void Graphics2D::Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
-{
-	RenderRect(layerIndex, { 0, 0, m_layersSize.x, m_layersSize.y }, color);
 }
 
 void Graphics2D::Present()
@@ -50,13 +45,58 @@ void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 	DeleteDC(sourceContext);
 }
 
-void Graphics2D::RenderRect(int layerIndex, const RECT& rect, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+void Graphics2D::RenderRect(int layerIndex, const RECT& rect,
+	COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
 	assert(layerIndex >= 0);
 	if (DoesNotLayerExist(layerIndex))
 		AddNewLayer(layerIndex);
 
-	FillRect(m_layers[layerIndex]->GetMemoryContext(), &rect, CreateSolidBrush(color));
+	UniqueGDIOBJ<HBRUSH> brush(CreateSolidBrush(color));
+	FillRect(m_layers[layerIndex]->GetMemoryContext(), &rect, brush.get());
+}
+
+void Graphics2D::RenderLine(int layerIndex, Vector2i startPosition, Vector2i endPosition, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	static constexpr int penWidth{ 1 };
+
+	assert(layerIndex >= 0);
+	if (DoesNotLayerExist(layerIndex))
+		AddNewLayer(layerIndex);
+
+	auto memoryContext{ m_layers[layerIndex]->GetMemoryContext() };
+	UniqueGDIOBJ<HPEN> pen(CreatePen(PS_SOLID, penWidth, color));
+	auto previousObject{ SelectObject(memoryContext, pen.get()) };
+
+	MoveToEx(memoryContext, startPosition.x, startPosition.y, NULL);
+	LineTo(memoryContext, endPosition.x, endPosition.y);
+
+	SelectObject(memoryContext, previousObject);
+}
+
+void Graphics2D::RenderGrid(int layerIndex, Vector2i startPosition, Vector2i endPosition, 
+	Vector2i sellSize, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	assert(sellSize.x >= 0 && sellSize.y >= 0);
+
+	for (int x{ startPosition.x }; x < endPosition.x - 1; x += sellSize.x)
+	{
+		RenderLine(layerIndex, { x, startPosition.y }, { x, endPosition.y - 1 }, color);
+		int SecondLineX{ x + sellSize.x - 1 };
+		RenderLine(layerIndex, { SecondLineX, startPosition.y }, { SecondLineX, endPosition.y - 1 }, color);
+	}
+
+	for (int y{ startPosition.y }; y < endPosition.y - 1; y += sellSize.y)
+	{
+		RenderLine(layerIndex, { startPosition.x, y }, { endPosition.x - 1, y }, color);
+		int SecondLineY{ y + sellSize.y - 1 };
+		RenderLine(layerIndex, { startPosition.x, SecondLineY }, { endPosition.x - 1, SecondLineY }, color);
+	}
+}
+
+void Graphics2D::Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	RenderRect(layerIndex, { 0, 0, m_layersSize.x, m_layersSize.y }, color);
 }
 
 void Graphics2D::ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG

@@ -1,5 +1,6 @@
 #include "Level.h"
 
+#include <algorithm>
 #include "VectorBinarySerializer.h"
 
 const std::string Level::LevelFolderRelativePath{ "\\Content\\Levels\\" };
@@ -17,6 +18,28 @@ TiledEntity& Level::operator[](int i)
 {
 	return *m_entities[i];
 }
+
+void Level::AddEntity(std::unique_ptr<TiledEntity>&& entity)
+{
+	m_entities.emplace_back(std::move(entity));
+}
+
+void Level::DeleteEntity(iterator& entity) NOEXCEPT_WHEN_NDEBUG
+{
+
+}
+
+void Level::DeleteEntity(const TiledEntity& entity) NOEXCEPT_WHEN_NDEBUG
+{
+	auto entityIterator{ std::find_if(begin(), end(), [&entity](const std::unique_ptr<TiledEntity>& otherEntity)
+		{
+			return entity == (*otherEntity);
+		}) };
+
+	assert(entityIterator != end());
+
+	m_entities.erase(entityIterator);
+} 
 
 TiledEntity& Level::GetCharacter() NOEXCEPT_WHEN_NDEBUG
 {

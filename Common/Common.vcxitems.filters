@@ -1,276 +1,363 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
+    <Filter Include="ExternalDependencies">
+      <UniqueIdentifier>{4218cef3-4bac-42b4-9f23-2bfd86d7fbca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternalDependencies\wil">
+      <UniqueIdentifier>{0d867a12-7c9e-461d-ac53-3ddddd1fb593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles">
       <UniqueIdentifier>{6c37b06b-6f61-4223-8716-0332ea25fd7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{64ef85b0-69fb-486f-91b1-38c5091123e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utilities">
-      <UniqueIdentifier>{cf30ad96-b518-4308-a1ad-b49640a0700f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utilities">
+    <Filter Include="HeaderFiles\Utilities">
       <UniqueIdentifier>{89c161b2-99a6-42ba-816f-f1cd13e40626}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\BinarySerialization">
-      <UniqueIdentifier>{f677ae12-3c4b-4cb2-bb84-bf2130f7eaf1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\BinarySerialization">
+    <Filter Include="HeaderFiles\BinarySerialization">
       <UniqueIdentifier>{c1b5f121-8f7c-427e-a5de-1d88c3d71d4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\BinarySerialization\DefaultTypeSerializers">
-      <UniqueIdentifier>{e9664ef2-b03c-405e-9b5f-4dff33977849}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\BinarySerialization\DefaultTypeSerializers">
+    <Filter Include="HeaderFiles\BinarySerialization\DefaultTypeSerializers">
       <UniqueIdentifier>{37240d36-1ad7-4a8f-8f4b-0ee4ddf6b55e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\BinarySerialization\PolymorphicSerialization">
-      <UniqueIdentifier>{fffe856c-dd40-48bb-bedd-710f38633a30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\BinarySerialization\PolymorphicSerialization">
+    <Filter Include="HeaderFiles\BinarySerialization\PolymorphicSerialization">
       <UniqueIdentifier>{4ac4e3a4-7ce1-4752-a243-f2d2254eccd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\WinapiLayer">
-      <UniqueIdentifier>{327c0a45-6379-4784-b8e0-d942f0459f5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\WinapiLayer">
+    <Filter Include="HeaderFiles\WinapiLayer">
       <UniqueIdentifier>{5f9acc03-428d-4092-97ce-be37d2d6e1f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameLayer">
-      <UniqueIdentifier>{f1aa41e5-608b-4b9b-9d5f-27c1db10d03b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameLayer\Level">
-      <UniqueIdentifier>{e1201d46-0528-4036-8cf6-43017d7b303f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameLayer\Graphics">
-      <UniqueIdentifier>{252666b5-cbf7-4ce5-8d76-34b5f4789635}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameLayer\GUI">
-      <UniqueIdentifier>{853ee319-f98a-4c8a-b9d7-71ada29597f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameLayer\TiledEntity">
-      <UniqueIdentifier>{a302f1f4-7028-4442-97c5-f37084d55ecb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameLayer\Sprites">
-      <UniqueIdentifier>{d3429d38-f4c0-4cf0-b944-7d433e344d3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameLayer">
+    <Filter Include="HeaderFiles\GameLayer">
       <UniqueIdentifier>{9088b131-8876-4f4b-b74c-b5dc63f35dbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameLayer\Level">
+    <Filter Include="HeaderFiles\GameLayer\Level">
       <UniqueIdentifier>{b2603d35-d4ce-46a1-8cba-815d590729ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameLayer\Graphics">
+    <Filter Include="HeaderFiles\GameLayer\Graphics">
       <UniqueIdentifier>{671da2dc-60bb-4c6d-bc28-4b6337562e06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameLayer\GUI">
+    <Filter Include="HeaderFiles\GameLayer\GUI">
       <UniqueIdentifier>{27b70feb-1997-47fe-bd3b-4712d6bc0348}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameLayer\TiledEntity">
+    <Filter Include="HeaderFiles\GameLayer\TiledEntity">
       <UniqueIdentifier>{9765a677-fe61-4c6b-a58e-23dc5de7ab4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameLayer\Sprites">
+    <Filter Include="HeaderFiles\GameLayer\Sprites">
       <UniqueIdentifier>{f79bdf81-b186-45e1-8427-dc5833c5520d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameLayer\Types">
+    <Filter Include="HeaderFiles\GameLayer\Types">
       <UniqueIdentifier>{348501df-736c-42b0-9f01-fce27aca96b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles">
+      <UniqueIdentifier>{64ef85b0-69fb-486f-91b1-38c5091123e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Utilities">
+      <UniqueIdentifier>{cf30ad96-b518-4308-a1ad-b49640a0700f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\BinarySerialization">
+      <UniqueIdentifier>{f677ae12-3c4b-4cb2-bb84-bf2130f7eaf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\BinarySerialization\DefaultTypeSerializers">
+      <UniqueIdentifier>{e9664ef2-b03c-405e-9b5f-4dff33977849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\BinarySerialization\PolymorphicSerialization">
+      <UniqueIdentifier>{fffe856c-dd40-48bb-bedd-710f38633a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\WinapiLayer">
+      <UniqueIdentifier>{327c0a45-6379-4784-b8e0-d942f0459f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameLayer">
+      <UniqueIdentifier>{f1aa41e5-608b-4b9b-9d5f-27c1db10d03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameLayer\Level">
+      <UniqueIdentifier>{e1201d46-0528-4036-8cf6-43017d7b303f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameLayer\Graphics">
+      <UniqueIdentifier>{252666b5-cbf7-4ce5-8d76-34b5f4789635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameLayer\GUI">
+      <UniqueIdentifier>{853ee319-f98a-4c8a-b9d7-71ada29597f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameLayer\TiledEntity">
+      <UniqueIdentifier>{a302f1f4-7028-4442-97c5-f37084d55ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameLayer\Sprites">
+      <UniqueIdentifier>{d3429d38-f4c0-4cf0-b944-7d433e344d3a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h">
-      <Filter>Header Files\GameLayer\Level</Filter>
+      <Filter>HeaderFiles\GameLayer\Level</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyException.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)WinapiException.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Window.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)WindowClass.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntity.h">
-      <Filter>Header Files\GameLayer\TiledEntity</Filter>
+      <Filter>HeaderFiles\GameLayer\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics2D.h">
-      <Filter>Header Files\GameLayer\Graphics</Filter>
+      <Filter>HeaderFiles\GameLayer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h">
-      <Filter>Header Files\GameLayer\Graphics</Filter>
+      <Filter>HeaderFiles\GameLayer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Button.h">
-      <Filter>Header Files\GameLayer\GUI</Filter>
+      <Filter>HeaderFiles\GameLayer\GUI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileCollisionDetector.h">
-      <Filter>Header Files\GameLayer\TiledEntity</Filter>
+      <Filter>HeaderFiles\GameLayer\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>Header Files\GameLayer\TiledEntity</Filter>
+      <Filter>HeaderFiles\GameLayer\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h">
-      <Filter>Header Files\GameLayer\Types</Filter>
+      <Filter>HeaderFiles\GameLayer\Types</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h">
-      <Filter>Header Files\GameLayer\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>HeaderFiles\GameLayer\Types</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.h">
-      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>HeaderFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)WstringBinarySerializer.h">
-      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>HeaderFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)PlainTypeBinarySerializer.h">
-      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>HeaderFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IBinarySerializable.h">
-      <Filter>Header Files\BinarySerialization\PolymorphicSerialization</Filter>
+      <Filter>HeaderFiles\BinarySerialization\PolymorphicSerialization</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SerializableObjectFactory.h">
-      <Filter>Header Files\BinarySerialization\PolymorphicSerialization</Filter>
+      <Filter>HeaderFiles\BinarySerialization\PolymorphicSerialization</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TypeRegistrator.h">
-      <Filter>Header Files\BinarySerialization\PolymorphicSerialization</Filter>
+      <Filter>HeaderFiles\BinarySerialization\PolymorphicSerialization</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StringBinarySerializer.h">
-      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>HeaderFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CstringBinarySerializer.h">
-      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>HeaderFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RenderLayer.h">
-      <Filter>Header Files\GameLayer\Graphics</Filter>
+      <Filter>HeaderFiles\GameLayer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprites.h">
-      <Filter>Header Files\GameLayer\Sprites</Filter>
+      <Filter>HeaderFiles\GameLayer\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUtilities.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Serializers.h">
-      <Filter>Header Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>HeaderFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StaticConstuctor.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h">
-      <Filter>Header Files\GameLayer\Sprites</Filter>
+      <Filter>HeaderFiles\GameLayer\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h">
-      <Filter>Header Files\WinapiLayer</Filter>
+      <Filter>HeaderFiles\WinapiLayer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BuildInfo.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>HeaderFiles\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UniqueAny.h">
+      <Filter>HeaderFiles\WinapiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\com.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\com_apartment_variable.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\common.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\cppwinrt.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\cppwinrt_helpers.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\cppwinrt_wrl.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\filesystem.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\nt_result_macros.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\registry.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\resource.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\result.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\result_macros.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\result_originate.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\rpc_helpers.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\safecast.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\stl.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\token_helpers.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\Tracelogging.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\traceloggingconfig.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\win32_helpers.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\winrt.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_config.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_functional.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_memory.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_type_traits.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wrl.h">
+      <Filter>ExternalDependencies\wil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WindowDCWrapper.h">
+      <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
-      <Filter>Source Files\GameLayer\Level</Filter>
+      <Filter>SourceFiles\GameLayer\Level</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Window.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WindowClass.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WinapiException.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntity.cpp">
-      <Filter>Source Files\GameLayer\TiledEntity</Filter>
+      <Filter>SourceFiles\GameLayer\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics2D.cpp">
-      <Filter>Source Files\GameLayer\Graphics</Filter>
+      <Filter>SourceFiles\GameLayer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.cpp">
-      <Filter>Source Files\GameLayer\Graphics</Filter>
+      <Filter>SourceFiles\GameLayer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Button.cpp">
-      <Filter>Source Files\GameLayer\GUI</Filter>
+      <Filter>SourceFiles\GameLayer\GUI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileCollisionDetector.cpp">
-      <Filter>Source Files\GameLayer\TiledEntity</Filter>
+      <Filter>SourceFiles\GameLayer\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>Source Files\GameLayer\TiledEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DeviceContextWrapper.cpp">
-      <Filter>Source Files\Utilities</Filter>
+      <Filter>SourceFiles\GameLayer\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp">
-      <Filter>Source Files\Utilities</Filter>
+      <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WstringBinarySerializer.cpp">
-      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>SourceFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PlainTypeBinarySerializer.cpp">
-      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>SourceFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SerializableObjectFactory.cpp">
-      <Filter>Source Files\BinarySerialization\PolymorphicSerialization</Filter>
+      <Filter>SourceFiles\BinarySerialization\PolymorphicSerialization</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.cpp">
-      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>SourceFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StringBinarySerializer.cpp">
-      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>SourceFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CstringBinarySerializer.cpp">
-      <Filter>Source Files\BinarySerialization\DefaultTypeSerializers</Filter>
+      <Filter>SourceFiles\BinarySerialization\DefaultTypeSerializers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TypeRegistrator.cpp">
-      <Filter>Source Files\BinarySerialization\PolymorphicSerialization</Filter>
+      <Filter>SourceFiles\BinarySerialization\PolymorphicSerialization</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)IBinarySerializable.cpp">
-      <Filter>Source Files\BinarySerialization\PolymorphicSerialization</Filter>
+      <Filter>SourceFiles\BinarySerialization\PolymorphicSerialization</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RenderLayer.cpp">
-      <Filter>Source Files\GameLayer\Graphics</Filter>
+      <Filter>SourceFiles\GameLayer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprites.cpp">
-      <Filter>Source Files\GameLayer\Sprites</Filter>
+      <Filter>SourceFiles\GameLayer\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUtilities.cpp">
-      <Filter>Source Files\Utilities</Filter>
+      <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StaticConstuctor.cpp">
-      <Filter>Source Files\Utilities</Filter>
+      <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp">
-      <Filter>Source Files\GameLayer\Sprites</Filter>
+      <Filter>SourceFiles\GameLayer\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
-      <Filter>Source Files\WinapiLayer</Filter>
+      <Filter>SourceFiles\WinapiLayer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.cpp">
-      <Filter>Source Files\Utilities</Filter>
+      <Filter>SourceFiles\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WindowDCWrapper.cpp">
+      <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

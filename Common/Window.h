@@ -2,6 +2,7 @@
 #include "WinapiException.h"
 #include "Vector2D.h"
 #include "BuildInfo.h"
+#include "UniqueAny.h"
 
 class Window
 {
@@ -14,7 +15,7 @@ public:
 	Window& operator=(const Window&) = delete;
 
 	virtual void Resize(Vector2i size);
-	class DeviceContextWrapper GetDeviceContext() noexcept;
+	class WindowDCWrapper GetDeviceContext() noexcept;
 	HWND GetHandle() const noexcept;
 	Vector2i GetSize() const noexcept;
 

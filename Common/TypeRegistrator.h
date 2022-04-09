@@ -4,7 +4,7 @@
 template<class T>
 concept RegistredType = BinarySerializable<T> && requires(T instance)
 {
-	instance.IsRegistred(); //////////
+	{ instance.IsRegistred() } -> std::same_as<bool>; //////////
 };
 
 template<BinarySerializableAndConstructibleFromOpenedFile T>

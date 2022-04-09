@@ -8,7 +8,7 @@ class EditorWindow final : public Window
 public:
 	Graphics2D graphics;
 
-	EditorWindow(int width, int height);
+	EditorWindow(Vector2i size);
 
 private:
 	LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam) override;
@@ -24,6 +24,7 @@ private:
 	void OnRoadButtonClick();
 	void OnCrossButtonClick();
 	void OnBarrelButtonClick();
+	void OnCharacterButtonClick();
 
 	class Class : public WindowClass
 	{

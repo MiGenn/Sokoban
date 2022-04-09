@@ -1,6 +1,6 @@
 #include "GameWindow.h"
 
-GameWindow::GameWindow(Vector2i size) NOEXCEPT_WHEN_NDEBUG:
+GameWindow::GameWindow(Vector2i size) :
 	Window(size), graphics(this)
 {
 	constexpr DWORD windowStyle{ WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_VISIBLE };

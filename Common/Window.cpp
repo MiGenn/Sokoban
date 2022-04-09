@@ -2,7 +2,7 @@
 
 #include <iomanip>
 #include <cassert>
-#include "DeviceContextWrapper.h"
+#include "WindowDCWrapper.h"
 
 Window::Window(Vector2i size) NOEXCEPT_WHEN_NDEBUG :
 	m_size(size)
@@ -25,7 +25,7 @@ HWND Window::GetHandle() const noexcept
 	return m_handle;
 }
 
-DeviceContextWrapper Window::GetDeviceContext() noexcept
+WindowDCWrapper Window::GetDeviceContext() noexcept
 {
 	return { this };
 }

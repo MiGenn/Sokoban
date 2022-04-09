@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include "WinapiException.h"
 #include "IBinarySerializable.h"
 #include "Serializers.h"
@@ -22,6 +23,8 @@ public:
 	Vector2D<T>& operator+=(const Vector2D<T>& right) noexcept;
 	Vector2D<T> operator-(const Vector2D<T>& right) const noexcept;
 	Vector2D<T>& operator-=(const Vector2D<T>& right) noexcept;
+
+	void ClampSelf(Vector2D<T> min, Vector2D<T> max) noexcept;
 
 	void SerializeToOpenedFile(std::ofstream& file) const noexcept override;
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) noexcept override;
@@ -92,6 +95,13 @@ template<Number T>
 inline Vector2D<T>& Vector2D<T>::operator-=(const Vector2D<T>& right) noexcept
 {
 	return (*this) = (*this) - right;
+}
+
+template<Number T>
+inline void Vector2D<T>::ClampSelf(Vector2D<T> min, Vector2D<T> max) noexcept
+{
+	x = std::clamp(x, min.x, max.x);
+	y = std::clamp(y, min.y, max.y);
 }
 
 template<Number T>

@@ -12,7 +12,7 @@ public:
 	Keyboard keyboard;
 	Graphics2D graphics;
 
-	GameWindow(Vector2i size) NOEXCEPT_WHEN_NDEBUG;
+	GameWindow(Vector2i size);
 	GameWindow(const GameWindow&) = delete;
 
 	GameWindow& operator=(const GameWindow&) = delete;

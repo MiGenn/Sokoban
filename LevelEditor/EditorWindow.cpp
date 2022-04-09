@@ -2,13 +2,13 @@
 
 const EditorWindow::Class EditorWindow::Class::editorClass;
 
-EditorWindow::EditorWindow(int width, int height) : Window(width, height),
+EditorWindow::EditorWindow(Vector2i size) : Window(size),
 	graphics(this)
 {
 	const HINSTANCE moduleHandle{ GetModuleHandle(nullptr) };
 	constexpr DWORD windowStyle{ WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_VISIBLE };
 
-	RECT windowRect{ 0, 0, width, height };
+	RECT windowRect{ 0, 0, size.x, size.y };
 	if (!AdjustWindowRect(&windowRect, windowStyle, true))
 		throw WINAPI_LAST_EXCEPTION();
 
@@ -58,6 +58,26 @@ void EditorWindow::OnCommand(int controlIdentifier)
 	case ID_FILE_SAVE:
 		OnSaveButtonClick();
 		break;
+
+	case ID_GAMEOBJECTS_WALL:
+		OnWallButtonClick();
+		break;
+
+	case ID_GAMEOBJECTS_ROAD:
+		OnRoadButtonClick();
+		break;
+
+	case ID_GAMEOBJECTS_CROSS:
+		OnCrossButtonClick();
+		break;
+
+	case ID_GAMEOBJECTS_BARREL:
+		OnBarrelButtonClick();
+		break;
+
+	case ID_GAMEOBJECTS_CHARACTER:
+		OnCharacterButtonClick();
+		break;
 	}
 }
 
@@ -74,6 +94,26 @@ void EditorWindow::OnLoadButtonClick()
 void EditorWindow::OnSaveButtonClick()
 {
 
+}
+
+void EditorWindow::OnWallButtonClick()
+{
+}
+
+void EditorWindow::OnRoadButtonClick()
+{
+}
+
+void EditorWindow::OnCrossButtonClick()
+{
+}
+
+void EditorWindow::OnBarrelButtonClick()
+{
+}
+
+void EditorWindow::OnCharacterButtonClick()
+{
 }
 
 EditorWindow::Class::Class() : WindowClass(L"SokobanEditor")

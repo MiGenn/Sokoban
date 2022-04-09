@@ -18,6 +18,10 @@ public:
 	void Present();
 	void RenderSprite(const SpriteRenderInfo& renderInfo);
 	void RenderRect(int layerIndex, const RECT& rect, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
+	void RenderLine(int layerIndex, Vector2i startPosition, Vector2i endPosition, 
+		COLORREF color) NOEXCEPT_WHEN_NDEBUG;
+	void RenderGrid(int layerIndex, Vector2i startPosition, Vector2i endPosition, 
+		Vector2i sellSize, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
 	void Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
 
 	void ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG;
