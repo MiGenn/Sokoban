@@ -20,7 +20,7 @@ public:
 	void Resize(Vector2i size) override;
 
 private:
-	LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam) override;
+	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
 
 	void OnClose() noexcept;
 

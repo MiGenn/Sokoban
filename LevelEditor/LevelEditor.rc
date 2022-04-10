@@ -1,6 +1,6 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "EditorMenu.h"
+#include "EditorResourceMacros.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@ LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 
 1 TEXTINCLUDE 
 BEGIN
-    "EditorMenu.h\0"
+    "EditorResourceMacros.h\0"
 END
 
 2 TEXTINCLUDE 
@@ -76,6 +76,51 @@ BEGIN
         MENUITEM "Barrel",                      ID_GAMEOBJECTS_BARREL
         MENUITEM "Character",                   ID_GAMEOBJECTS_CHARACTER
     END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ENTER_TEXT_BOX DIALOGEX 0, 0, 129, 92
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_CAPTION
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_ENTER_TEXT_EDIT,24,36,80,15,ES_CENTER
+    LTEXT           "Enter level name",ID_ENTER_TEXT_TEXT,37,24,54,8
+    PUSHBUTTON      "OK",IDC_ENTER_TEXT_OK_BUTTON,10,57,50,14
+    PUSHBUTTON      "Cancel",IDC_ENTER_TEXT_CANCEL_BUTTON,68,57,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ENTER_TEXT_BOX, DIALOG
+    BEGIN
+        RIGHTMARGIN, 128
+        VERTGUIDE, 64
+        HORZGUIDE, 51
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ENTER_TEXT_BOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
 END
 
 #endif    // English (United States) resources

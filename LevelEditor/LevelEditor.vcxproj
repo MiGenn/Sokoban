@@ -164,14 +164,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CustomDialogBox.cpp" />
+    <ClCompile Include="SelectFolderBox.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
+    <ClCompile Include="EnterTextBox.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="QuestionBox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomDialogBox.h" />
+    <ClInclude Include="SelectFolderBox.h" />
     <ClInclude Include="Editor.h" />
-    <ClInclude Include="EditorWindow.h" />
     <ClInclude Include="EditorMenu.h" />
+    <ClInclude Include="EditorWindow.h" />
+    <ClInclude Include="EditorResourceMacros.h" />
+    <ClInclude Include="EnterTextBox.h" />
+    <ClInclude Include="QuestionBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LevelEditor.rc" />

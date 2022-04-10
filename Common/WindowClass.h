@@ -19,5 +19,5 @@ protected:
 private:
 	const wchar_t* const m_name;
 
-	static LRESULT RouteMessages(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT RouteMessage(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 };

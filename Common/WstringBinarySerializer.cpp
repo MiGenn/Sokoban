@@ -11,10 +11,10 @@ void WstringBinarySerializer::SerializeToOpenedFile(const std::wstring& sourceSt
 
 void WstringBinarySerializer::DeserializeFromOpenedFile(std::wstring& destinationString, std::ifstream& file)
 {
-	char* string;
-	CstringBinarySerializer::DeserializeFromOpenedFile(string, file);
+	char* stringBuffer;
+	CstringBinarySerializer::DeserializeFromOpenedFile(stringBuffer, file);
 	destinationString.clear();
-	destinationString.assign(reinterpret_cast<wchar_t*>(string));
+	destinationString = reinterpret_cast<wchar_t*>(stringBuffer);
 
-	delete[] string;
+	delete[] stringBuffer;
 }

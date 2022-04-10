@@ -267,6 +267,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)WindowDCWrapper.h">
       <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUntilities.h">
+      <Filter>HeaderFiles\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h">
+      <Filter>HeaderFiles\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChangeWrapper.h">
+      <Filter>HeaderFiles\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h">
+      <Filter>HeaderFiles\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -357,6 +369,18 @@
       <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WindowDCWrapper.cpp">
+      <Filter>SourceFiles\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUntilities.cpp">
+      <Filter>SourceFiles\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp">
+      <Filter>SourceFiles\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChangeWrapper.cpp">
+      <Filter>SourceFiles\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp">
       <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
   </ItemGroup>

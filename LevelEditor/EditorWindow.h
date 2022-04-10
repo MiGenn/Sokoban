@@ -1,20 +1,31 @@
 #pragma once
 #include "WindowClass.h"
-#include "EditorMenu.h"
 #include "Graphics2D.h"
+#include "Mouse.h"
+#include "Keyboard.h"
+#include "Level.h"
+#include "ChangeWrapper.h"
 
 class EditorWindow final : public Window
 {
 public:
+	Mouse mouse;
+	Keyboard keyboard;
 	Graphics2D graphics;
 
 	EditorWindow(Vector2i size);
 
 private:
-	LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam) override;
+	ChangeWrapper<Level> m_level{ nullptr };
+	std::wstring m_levelPath;
+	std::wstring m_levelFullName;
+
+	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
+	void RegisterHotkeys();
 
 	void OnClose();
-	void OnCommand(int controlIdentifier);
+	void OnCommand(int controlID);
+	void OnHotkey(int hotkeyID);
 
 	void OnCreateButtonClick();
 	void OnLoadButtonClick();
@@ -25,6 +36,9 @@ private:
 	void OnCrossButtonClick();
 	void OnBarrelButtonClick();
 	void OnCharacterButtonClick();
+
+	void SetOrNotLevelPathByUser();
+	void SaveOrNotLevelBeforeLoadingOrCreatingNewOne();
 
 	class Class : public WindowClass
 	{

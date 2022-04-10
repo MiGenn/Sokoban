@@ -17,8 +17,10 @@ private:
 	static constexpr size_t m_keysNumber{ 256ull };
 
 	std::bitset<m_keysNumber> m_keysPressedStates;
+	unsigned char m_lastPressedCharacter{ 0 };
 
 	void ResetState() noexcept;
 	void OnKeyDown(unsigned char keycode, bool isKeyAlreadyPressed) noexcept;
 	void OnKeyUp(unsigned char keycode) noexcept;
+	void OnChar();
 };

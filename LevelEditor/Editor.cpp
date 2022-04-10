@@ -1,5 +1,10 @@
 #include "Editor.h"
 
+#include "EnterTextBox.h"
+#include "WinapiUntilities.h"
+
+const std::wstring Editor::ModulePath{ WinapiUntilities::GetModulePath(NULL) };
+
 Editor::Editor() :
 	m_window({ 1280, 720 })
 {
@@ -8,8 +13,6 @@ Editor::Editor() :
 
 int Editor::Run()
 {
-
-
 	while (true)
 	{
 		if (auto exitCode = RetrieveAndRouteMessages())

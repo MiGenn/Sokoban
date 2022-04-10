@@ -13,4 +13,4 @@ namespace UniquePointerUtilities
 
 		return std::move(output);
 	}
-};
+}

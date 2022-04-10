@@ -1,11 +1,12 @@
 #pragma once
 #include "Application.h"
 #include "EditorWindow.h"
-#include "Level.h"
 
 class Editor final : public Application
 {
 public:
+	static const std::wstring ModulePath;
+
 	Editor();
 	Editor(const Editor&) = delete;
 

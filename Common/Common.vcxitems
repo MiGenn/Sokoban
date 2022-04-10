@@ -15,6 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChangeWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUntilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WindowDCWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUtilities.cpp" />
@@ -73,6 +77,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wistd_type_traits.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wrl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChangeWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUntilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WindowDCWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Serializers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />

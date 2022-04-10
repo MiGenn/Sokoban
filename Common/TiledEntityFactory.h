@@ -8,4 +8,4 @@ namespace TiledEntityFactory
 	std::unique_ptr<TiledEntity> CreateBarrel(Vector2i position);
 	std::unique_ptr<TiledEntity> CreateCross(Vector2i position);
 	std::unique_ptr<TiledEntity> CreateCharacter(Vector2i position);
-};
+}

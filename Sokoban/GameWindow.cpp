@@ -23,7 +23,7 @@ void GameWindow::Resize(Vector2i size)
 	graphics.ResizeLayers(size);
 }
 
-LRESULT GameWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT GameWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{

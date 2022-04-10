@@ -14,7 +14,7 @@ public:
 	virtual void SerializeToOpenedFile(std::ofstream& file) const = 0;
 	virtual void DeserializeFromOpenedFileToSelf(std::ifstream& file) = 0;
 
-	constexpr virtual bool IsRegistred() const noexcept; ///////
+	constexpr virtual bool IsRegistred() const noexcept;
 };
 
 template<class T>

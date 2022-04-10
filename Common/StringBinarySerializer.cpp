@@ -10,10 +10,10 @@ void StringBinarySerializer::SerializeToOpenedFile(const std::string& sourceStri
 
 void StringBinarySerializer::DeserializeFromOpenedFile(std::string& destinationString, std::ifstream& file)
 {
-	char* string;
-	CstringBinarySerializer::DeserializeFromOpenedFile(string, file);
+	char* stringBuffer;
+	CstringBinarySerializer::DeserializeFromOpenedFile(stringBuffer, file);
 	destinationString.clear();
-	destinationString.assign(string);
+	destinationString = stringBuffer;
 
-	delete[] string;
+	delete[] stringBuffer;
 }

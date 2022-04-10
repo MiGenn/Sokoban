@@ -38,7 +38,7 @@ public:
 	void SerializeToOpenedFile(std::ofstream& file) const override;
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
 
-	constexpr bool IsRegistred() const noexcept;
+	constexpr bool IsRegistred() const noexcept override;
 
 private:
 	Vector2i m_position;

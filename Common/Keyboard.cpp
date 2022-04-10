@@ -22,3 +22,8 @@ void Keyboard::OnKeyUp(unsigned char keycode) noexcept
 {
     m_keysPressedStates[keycode] = false;
 }
+
+void Keyboard::OnChar()
+{
+    //
+}

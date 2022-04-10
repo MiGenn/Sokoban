@@ -3,15 +3,15 @@
 #include <algorithm>
 #include "VectorBinarySerializer.h"
 
-const std::string Level::LevelFolderRelativePath{ "\\Content\\Levels\\" };
-const std::string Level::LevelFileExtension{ ".lvl" };
+const std::wstring Level::FolderRelativePath{ L"\\Content\\Levels\\" };
+const std::wstring Level::FileExtension{ L".lvl" };
 
 Level::Level(std::ifstream& file)
 {
 	DeserializeFromOpenedFileToSelf(file);
-	GetCharacter();
-	GetBarrels();
-	GetCrosses();
+	//GetCharacter();
+	//GetBarrels();
+	//GetCrosses();
 }
 
 TiledEntity& Level::operator[](int i)
@@ -89,6 +89,10 @@ void Level::SerializeToOpenedFile(std::ofstream& file) const
 
 void Level::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
+	m_character = nullptr;
+	m_barrels.clear();
+	m_crosses.clear();
+
 	VectorBinarySerializer::DeserializeFromOpenedFile(m_entities, file);
 }
 

@@ -13,7 +13,7 @@ public:
 
 private:
 	Vector2i m_position;
-	bool m_isLeftButtonPressed;
+	bool m_isLeftButtonPressed{ false };
 
 	void OnLeftButtonPressed() noexcept;
 	void OnMouseMove(POINTS position) noexcept;

@@ -10,8 +10,8 @@ public:
 	using iterator = std::vector<std::unique_ptr<TiledEntity>>::iterator;
 	using const_iterator = std::vector<std::unique_ptr<TiledEntity>>::const_iterator;
 
-	static const std::string LevelFolderRelativePath;
-	static const std::string LevelFileExtension;
+	static const std::wstring FolderRelativePath;
+	static const std::wstring FileExtension;
 
 	Level() noexcept = default;
 	Level(std::ifstream& file);
