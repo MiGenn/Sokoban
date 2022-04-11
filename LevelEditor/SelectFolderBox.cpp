@@ -22,13 +22,13 @@ void SelectFolderBox::StartSelecting()
 	auto selectedFolder{ SHBrowseForFolder(&browseInfo) };
 	if (!selectedFolder)
 	{
-		m_isAnyFolderSelected = false;
+		m_isFolderSelected = false;
 		m_folderFullPath.clear();
 		m_folderFullPathWithTrailingBackslash.clear();
 		return;
 	}
 
-	m_isAnyFolderSelected = true;
+	m_isFolderSelected = true;
 	wchar_t folderFullPathBuffer[MAX_PATH];
 	SHGetPathFromIDList(selectedFolder, folderFullPathBuffer);
 	m_folderFullPath = folderFullPathBuffer;
@@ -50,5 +50,5 @@ const std::wstring& SelectFolderBox::GetFolderFullPathWithTrailingBackslash() co
 
 bool SelectFolderBox::IsFolderSelected() const noexcept
 {
-	return m_isAnyFolderSelected;
+	return m_isFolderSelected;
 }

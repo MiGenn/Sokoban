@@ -3,5 +3,5 @@
 
 namespace FileUtilities
 {
-	bool DoesFileExist(const std::wstring& fileFullPath) noexcept;
+	bool IsPathValid(const std::wstring& fileFullPath) noexcept;
 };

@@ -279,6 +279,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h">
       <Filter>HeaderFiles\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CstringUntilities.h">
+      <Filter>HeaderFiles\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -381,6 +384,9 @@
       <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp">
+      <Filter>SourceFiles\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CstringUntilities.cpp">
       <Filter>SourceFiles\Utilities</Filter>
     </ClCompile>
   </ItemGroup>

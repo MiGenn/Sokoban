@@ -1,6 +1,6 @@
 #include "Editor.h"
 
-#include "EnterTextBox.h"
+#include "SelectFileBox.h"
 #include "WinapiUntilities.h"
 
 const std::wstring Editor::ModulePath{ WinapiUntilities::GetModulePath(NULL) };

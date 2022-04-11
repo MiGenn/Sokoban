@@ -7,6 +7,7 @@
 #include "EditorResourceMacros.h"
 #include "QuestionBox.h"
 #include "SelectFolderBox.h"
+#include "SelectFileBox.h"
 #include "PathUtilities.h"
 #include "FileUtilities.h"
 
@@ -125,25 +126,27 @@ void EditorWindow::OnCreateButtonClick()
 	if (enterTextBox.GetText().empty())
 	{
 		MessageBox(m_handle, L"Level won't be created", L"Info", MB_ICONINFORMATION);
-		return;
 	}
-
-	m_levelFullName = enterTextBox.GetText() + Level::FileExtension;
-	m_level.ResetObject(new Level());
-
-	if (!m_levelPath.empty())
+	else
 	{
-		QuestionBox questionBox(this, L"Use previous folder?");
-		if (questionBox.IsCancelButtonPressed())
-		{
-			m_levelPath.clear();
-			return;
-		}
+		m_levelFullName = enterTextBox.GetText() + Level::FileExtension;
+		m_level.ResetObject(new Level());
 
-		if (!FileUtilities::DoesFileExist(m_levelPath))
+		if (!m_levelPath.empty())
 		{
-			MessageBox(m_handle, L"Previous path is invalid now. Choose new one", L"Error", MB_ICONERROR);
-			SetOrNotLevelPathByUser();
+			QuestionBox questionBox(this, L"Use previous folder?");
+			if (questionBox.IsCancelButtonPressed())
+			{
+				m_levelPath.clear();
+			}
+			else
+			{
+				if (!FileUtilities::IsPathValid(m_levelPath))
+				{
+					MessageBox(m_handle, L"Previous path is invalid now. Choose new one", L"Error", MB_ICONERROR);
+					SetOrNotLevelPathByUser();
+				}
+			}
 		}
 	}
 }
@@ -153,56 +156,48 @@ void EditorWindow::OnLoadButtonClick()
 	if (!m_level.IsNull() && m_level.IsChanged())
 		SaveOrNotLevelBeforeLoadingOrCreatingNewOne();
 
-	static wchar_t fileFullPathBuffer[MAX_PATH];
-	fileFullPathBuffer[0] = L'\0';
-
-	OPENFILENAME openFileName{};
-	openFileName.lStructSize = sizeof(OPENFILENAME);
-	openFileName.hwndOwner = m_handle;
-	openFileName.lpstrFilter = L"Level files\0*.lvl\0";
-	openFileName.lpstrFile = (LPWSTR)fileFullPathBuffer;
-	openFileName.nMaxFile = MAX_PATH;
-	openFileName.lpstrInitialDir = Editor::ModulePath.c_str();
-
-	if (GetOpenFileName(&openFileName))
+	SelectFileBox selectFileBox(this, Editor::ModulePath.c_str(),
+		{ L"Level files", L"*.lvl" });
+	if (selectFileBox.IsFileSelected())
 	{
-		std::ifstream levelFile(openFileName.lpstrFile);
+		std::ifstream levelFile(selectFileBox.GetFileFullName());
 		m_level.ResetObject(new Level(levelFile));
 		m_level.Reset();
-		m_levelPath = PathUtilities::ExtractPath(openFileName.lpstrFile);
-		m_levelFullName = PathUtilities::ExtractFullName(openFileName.lpstrFile);
+		m_levelPath = selectFileBox.GetFilePath();
+		m_levelFullName = selectFileBox.GetFileFullName();
 	}
 }
 
 void EditorWindow::OnSaveButtonClick()
 {
-	//if (!m_level.IsChanged())
-	//	return;
-
 	if (m_level.IsNull())
 	{
 		MessageBox(m_handle, L"There is nothing to save", L"Error", MB_ICONERROR);
-		return;
 	}
-
-	assert(m_levelFullName.empty() != true);
-
-	if (m_levelPath.empty())
+	else
 	{
-		SetOrNotLevelPathByUser();
-	}
+		assert(m_levelFullName.empty() != true);
+		if (!m_level.IsChanged())
+			return;
 
-	std::ofstream file(m_levelPath + m_levelFullName);
-	if (!file.is_open())
-	{
-		MessageBox(m_handle, L"Cannot find level file folder. Choose new one", L"Error", MB_ICONERROR);
-		m_levelPath.clear();
-		OnSaveButtonClick();
-		return;
-	}
+		if (m_levelPath.empty())
+		{
+			SetOrNotLevelPathByUser();
+		}
 
-	m_level.Get().SerializeToOpenedFile(file);
-	m_level.Reset();
+		std::ofstream file(m_levelPath + m_levelFullName);
+		if (!file.is_open())
+		{
+			MessageBox(m_handle, L"Cannot find level file folder. Choose new one", L"Error", MB_ICONERROR);
+			m_levelPath.clear();
+			OnSaveButtonClick();
+		}
+		else
+		{
+			m_level.Get().SerializeToOpenedFile(file);
+			m_level.Reset();
+		}
+	}
 }
 
 void EditorWindow::OnWallButtonClick()

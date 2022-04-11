@@ -20,5 +20,5 @@ private:
 
 	std::wstring m_folderFullPath;
 	std::wstring m_folderFullPathWithTrailingBackslash;
-	bool m_isAnyFolderSelected{ false };
+	bool m_isFolderSelected{ false };
 };

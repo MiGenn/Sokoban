@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChangeWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CstringUntilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUntilities.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Libs\include\wil\wrl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChangeWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CstringUntilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUntilities.h" />
