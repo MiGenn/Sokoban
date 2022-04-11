@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\DialogBoxes">
+      <UniqueIdentifier>{144a2e6a-99a7-47f0-83f3-780223f303c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DialogBoxes">
+      <UniqueIdentifier>{b6171220-b5f9-452f-9ddb-a27861d40219}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorWindow.cpp">
@@ -24,20 +30,20 @@
     <ClCompile Include="Editor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CustomDialogBox.cpp">
+      <Filter>Source Files\DialogBoxes</Filter>
+    </ClCompile>
     <ClCompile Include="EnterTextBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DialogBoxes</Filter>
     </ClCompile>
     <ClCompile Include="QuestionBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectFolderBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomDialogBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DialogBoxes</Filter>
     </ClCompile>
     <ClCompile Include="SelectFileBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DialogBoxes</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectFolderBox.cpp">
+      <Filter>Source Files\DialogBoxes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,20 +59,20 @@
     <ClInclude Include="EditorMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnterTextBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestionBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SelectFolderBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomDialogBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DialogBoxes</Filter>
     </ClInclude>
     <ClInclude Include="SelectFileBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DialogBoxes</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBox.h">
+      <Filter>Header Files\DialogBoxes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterTextBox.h">
+      <Filter>Header Files\DialogBoxes</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDialogBox.h">
+      <Filter>Header Files\DialogBoxes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
