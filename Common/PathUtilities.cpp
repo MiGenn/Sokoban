@@ -4,8 +4,11 @@
 
 std::wstring PathUtilities::ExtractPath(const std::wstring& fullPath)
 {
+    static constexpr int driveDesignatorSize{ 3 };
+
     wchar_t pathBuffer[MAX_PATH];
-    _wsplitpath_s(fullPath.c_str(), nullptr, 0, pathBuffer, MAX_PATH, nullptr, 0, nullptr, 0);
+    _wsplitpath_s(fullPath.c_str(), pathBuffer, driveDesignatorSize, 
+        &pathBuffer[driveDesignatorSize - 1], MAX_PATH - driveDesignatorSize - 1, nullptr, 0, nullptr, 0);
 
     return { pathBuffer };
 }

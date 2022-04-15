@@ -3,32 +3,31 @@
 #include <cassert>
 #include "Serializers.h"
 
-SpriteRenderInfo::SpriteRenderInfo(Sprite&& sprite, Vector2i position, 
-    Box2i boundingBox, int layerIndex) NOEXCEPT_WHEN_NDEBUG
+SpriteRenderInfo::SpriteRenderInfo(std::shared_ptr<Sprite> sprite, Vector2i position,
+    Box2i boundingBox, int layerIndex) NOEXCEPT_WHEN_NDEBUG :
+    m_sprite(std::move(sprite))
 {
-    assert(sprite.IsEmptyBitmap() != false);
-    assert(boundingBox.GetPosition().x > 0 && 
-        boundingBox.GetPosition().y > 0);
-
-    m_sprite = std::move(sprite);
+    assert(m_sprite->IsEmpty() != true);
+    assert(boundingBox.GetPosition().x >= 0 && 
+        boundingBox.GetPosition().y >= 0);
 }
 
-SpriteRenderInfo::SpriteRenderInfo(SpriteRenderInfo&& spriteRenderInfo) noexcept
-{
-    (*this) = std::move(spriteRenderInfo);
-}
+    SpriteRenderInfo::SpriteRenderInfo(const SpriteRenderInfo& spriteRenderInfo) noexcept
+    {
+        (*this) = spriteRenderInfo;
+    }
 
-SpriteRenderInfo& SpriteRenderInfo::operator=(SpriteRenderInfo&& right) noexcept
-{
-    m_sprite = std::move(right.m_sprite);
-    m_boundingBox = right.m_boundingBox;
-    m_worldPosition = right.m_worldPosition;
-    m_layerIndex = right.m_layerIndex;
+    SpriteRenderInfo& SpriteRenderInfo::operator=(const SpriteRenderInfo& right) noexcept
+    {
+        m_sprite = right.m_sprite;
+        m_boundingBox = right.m_boundingBox;
+        m_worldPosition = right.m_worldPosition;
+        m_layerIndex = right.m_layerIndex;
 
-    return *this;
-}
+        return *this;
+    }
 
-void SpriteRenderInfo::SetPosition(Vector2i newPosition) noexcept
+    void SpriteRenderInfo::SetPosition(Vector2i newPosition) noexcept
 {
     m_worldPosition = newPosition;
 }
@@ -45,12 +44,12 @@ void SpriteRenderInfo::SetLayerIndex(int newLayerIndex) noexcept
 
 bool SpriteRenderInfo::IsEmptySprite() const noexcept
 {
-    return m_sprite.IsEmptyBitmap();
+    return m_sprite->IsEmpty();
 }
 
-HBITMAP SpriteRenderInfo::GetSpriteBitmap() const noexcept
+HBITMAP SpriteRenderInfo::GetBitmap() const noexcept
 {
-    return m_sprite.GetBitmap();
+    return m_sprite->GetBitmap();
 }
 
 Box2i SpriteRenderInfo::GetBoundingBox() const noexcept
@@ -70,7 +69,7 @@ int SpriteRenderInfo::GetLayerIndex() const noexcept
 
 void SpriteRenderInfo::SerializeToOpenedFile(std::ofstream& file) const
 {
-    m_sprite.SerializeToOpenedFile(file);
+    m_sprite->SerializeToOpenedFile(file);
     m_boundingBox.SerializeToOpenedFile(file);
     m_worldPosition.SerializeToOpenedFile(file);
     PlainTypeBinarySerializer::SerializeToOpenedFile(m_layerIndex, file);
@@ -78,7 +77,7 @@ void SpriteRenderInfo::SerializeToOpenedFile(std::ofstream& file) const
 
 void SpriteRenderInfo::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
-    m_sprite.DeserializeFromOpenedFileToSelf(file);
+    m_sprite->DeserializeFromOpenedFileToSelf(file);
     m_boundingBox.DeserializeFromOpenedFileToSelf(file);
     m_worldPosition.DeserializeFromOpenedFileToSelf(file);
     PlainTypeBinarySerializer::DeserializeFromOpenedFile(m_layerIndex, file);

@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include "RenderLayer.h"
-#include "Window.h"
 #include "SpriteRenderInfo.h"
+#include "Window.h"
 
 class Graphics2D
 {

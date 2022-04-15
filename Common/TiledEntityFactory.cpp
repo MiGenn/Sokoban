@@ -1,43 +1,45 @@
 #include "TiledEntityFactory.h"
 
+#include "PredefinedSprites.h"
+
 static const Box2i tileBoundingBox{ { 0, 0 }, { TiledEntity::tileSize, TiledEntity::tileSize } };
 
-std::unique_ptr<TiledEntity> TiledEntityFactory::CreateWall(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateWall()
 {
-	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::wallFullRelativePath), 
-		position, tileBoundingBox, 0};
+	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::wallFullRelativePath), 
+		{}, tileBoundingBox, 0 };
 
-	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Wall, position);
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Wall);
 }
 
-std::unique_ptr<TiledEntity> TiledEntityFactory::CreateRoad(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateRoad()
 {
-	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::roadFullRelativePath),
-		position, tileBoundingBox, 0 };
+	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::roadFullRelativePath),
+		{}, tileBoundingBox, 0 };
 
-	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Road, position);
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Road);
 }
 
-std::unique_ptr<TiledEntity> TiledEntityFactory::CreateBarrel(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateBarrel()
 {
-	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::barrelFullRelativePath),
-		position, tileBoundingBox, 0 };
+	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::barrelFullRelativePath),
+		{}, tileBoundingBox, 0 };
 
-	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Barrel, position);
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Barrel);
 }
 
-std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCross(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCross()
 {
-	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::crossFullRelativePath),
-		position, tileBoundingBox, 0 };
+	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::crossFullRelativePath),
+		{}, tileBoundingBox, 0 };
 
-	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Cross, position);
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Cross);
 }
 
-std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCharacter(Vector2i position)
+std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCharacter()
 {
-	SpriteRenderInfo renderInfo{ Sprites::GetSprite(Sprites::characterFullRelativePath),
-		position, tileBoundingBox, 0 };
+	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::characterFullRelativePath),
+		{}, tileBoundingBox, 0 };
 
-	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Character, position);
+	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Character);
 }

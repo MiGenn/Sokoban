@@ -15,7 +15,7 @@ public:
 	T& GetForEditing() noexcept;
 
 	void ResetObject(T* newInstance) noexcept;
-	void Reset() noexcept;
+	void ResetState() noexcept;
 	bool IsChanged() const noexcept;
 	bool IsNull() const noexcept;
 
@@ -52,7 +52,7 @@ inline void ChangeWrapper<T>::ResetObject(T* newInstance) noexcept
 }
 
 template<class T>
-inline void ChangeWrapper<T>::Reset() noexcept
+inline void ChangeWrapper<T>::ResetState() noexcept
 {
 	m_isChanged = false;
 }

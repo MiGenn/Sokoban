@@ -4,4 +4,5 @@
 namespace WinapiUntilities
 {
 	std::wstring GetModulePath(HMODULE moduleHandle);
+	HWND FindMenu(HWND parent);
 }

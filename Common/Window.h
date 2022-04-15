@@ -2,7 +2,6 @@
 #include "WinapiException.h"
 #include "Vector2D.h"
 #include "BuildInfo.h"
-#include "UniqueAny.h"
 
 class Window
 {

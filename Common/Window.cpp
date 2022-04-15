@@ -1,6 +1,5 @@
 #include "Window.h"
 
-#include <iomanip>
 #include <cassert>
 #include "WindowDCWrapper.h"
 

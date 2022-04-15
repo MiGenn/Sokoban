@@ -1,8 +1,12 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 
+#include <windows.h>
+#include <commdlg.h>
+#include <shlobj_core.h>
 #include "MyException.h"
-#include "windows.h"
+
+#pragma comment(lib, "comdlg32")
 
 class WinapiException final : public MyException
 {

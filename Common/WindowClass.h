@@ -1,6 +1,5 @@
 #pragma once
 #include "Window.h"
-#include "BuildInfo.h"
 
 class WindowClass
 {

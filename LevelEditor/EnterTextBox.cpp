@@ -1,9 +1,9 @@
 #include "EnterTextBox.h"
 
-#include "Level.h"
 #include "EditorResourceMacros.h"
 
-EnterTextBox::EnterTextBox(const Window* parent) : CustomDialogBox(parent)
+EnterTextBox::EnterTextBox(const Window* parent, const std::wstring& hintText) : 
+	CustomDialogBox(parent), hintText(hintText)
 {
 	HWND parentHandle{ NULL };
 	if (parent)
@@ -33,6 +33,11 @@ INT_PTR EnterTextBox::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_INITDIALOG:
+		OnInit();
+		return true;
+
+	case WM_HOTKEY:
+		OnHotKey((HotKey)wParam);
 		return true;
 
 	case WM_COMMAND:
@@ -41,6 +46,15 @@ INT_PTR EnterTextBox::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return false;
+}
+
+void EnterTextBox::OnInit()
+{
+	auto hintTextHandle{ GetDlgItem(m_handle, ID_ENTER_TEXT_TEXT) };
+	SetWindowText(hintTextHandle, hintText.c_str());
+
+	RegisterHotKey(m_handle, (int)HotKey::Enter, NULL, VK_RETURN);
+	RegisterHotKey(m_handle, (int)HotKey::Escape, NULL, VK_ESCAPE);
 }
 
 void EnterTextBox::OnCommand(int controlID, int controlNotificationID)
@@ -55,6 +69,20 @@ void EnterTextBox::OnCommand(int controlID, int controlNotificationID)
 	case IDC_ENTER_TEXT_CANCEL_BUTTON:
 		if (controlNotificationID == BN_CLICKED)
 			OnCancelButton();
+		break;
+	}
+}
+
+void EnterTextBox::OnHotKey(HotKey hotKey)
+{
+	switch (hotKey)
+	{
+	case HotKey::Enter:
+		OnOKButton();
+		break;
+
+	case HotKey::Escape:
+		OnCancelButton();
 		break;
 	}
 }

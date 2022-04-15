@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "windows.h"
+#include "WinapiException.h"
 
 std::optional<int> Application::RetrieveAndRouteMessages()
 {

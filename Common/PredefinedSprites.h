@@ -1,10 +1,12 @@
 #pragma once
-#include <unordered_map>
-#include "WinapiException.h"
+#include <memory>
+#include <string>
+#include <vector>
 #include "StaticConstuctor.h"
+#include "Sprite.h"
 #include "BuildInfo.h"
 
-class Sprites
+class PredefinedSprites
 {
 public:
 	static const std::wstring wallFullRelativePath;
@@ -13,16 +15,15 @@ public:
 	static const std::wstring barrelFullRelativePath;
 	static const std::wstring characterFullRelativePath;
 
-	Sprites() = delete;
-	Sprites(const Sprites&) = delete;
+	PredefinedSprites() = delete;
+	PredefinedSprites(const PredefinedSprites&) = delete;
 
-	Sprites& operator=(const Sprites&) = delete;
+	PredefinedSprites& operator=(const PredefinedSprites&) = delete;
 
-	static class Sprite GetSprite(const std::wstring& spriteFullRelativePath) NOEXCEPT_WHEN_NDEBUG;
-	static HBITMAP GetRawSprite(const std::wstring& spriteFullRelativePath) NOEXCEPT_WHEN_NDEBUG;
+	static std::shared_ptr<Sprite> GetSprite(const std::wstring& spriteFullRelativePath) NOEXCEPT_WHEN_NDEBUG;
 
 private:
-	static std::unordered_map<std::wstring, HBITMAP> m_sprites;
+	static std::vector<std::shared_ptr<Sprite>> m_sprites;
 	static StaticConstructor m_constructor;
 
 	static void Construct() noexcept;

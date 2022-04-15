@@ -1,5 +1,4 @@
 #pragma once
-#include "WinapiException.h"
 #include "Window.h"
 
 class QuestionBox

@@ -18,12 +18,12 @@ public:
 
 	TiledEntity() noexcept = default;
 	TiledEntity(std::ifstream& file);
-	TiledEntity(SpriteRenderInfo&& renderInfo, Tag tag);
-	TiledEntity(SpriteRenderInfo&& renderInfo, Tag tag, Vector2i position);
-	TiledEntity(const TiledEntity&) = delete;
+	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag);
+	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2i position);
+	TiledEntity(const TiledEntity& entity);
 	~TiledEntity() noexcept = default;
 
-	TiledEntity& operator=(const TiledEntity&) = delete;
+	TiledEntity& operator=(const TiledEntity& right);
 	bool operator==(const TiledEntity& right) noexcept;
 	bool operator!=(const TiledEntity& right) noexcept;
 

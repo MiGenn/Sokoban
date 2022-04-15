@@ -10,3 +10,8 @@ std::wstring WinapiUntilities::GetModulePath(HMODULE moduleHandle)
 
     return PathUtilities::ExtractPath(fullPathBuffer);
 }
+
+HWND WinapiUntilities::FindMenu(HWND parent)
+{
+    return FindWindowEx(parent, NULL, MAKEINTATOM(0x8000), NULL);
+}

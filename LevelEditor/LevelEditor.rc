@@ -66,7 +66,12 @@ BEGIN
     BEGIN
         MENUITEM "Create",                      ID_FILE_CREATE
         MENUITEM "Load",                        ID_FILE_LOAD
+        MENUITEM "Unload",                      ID_FILE_UNLOAD
+        MENUITEM SEPARATOR
         MENUITEM "Save                 Ctrl+S", ID_FILE_SAVE
+        MENUITEM "Save as",                     ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "Rename",                      ID_FILE_RENAME
     END
     POPUP "Game Objects"
     BEGIN
@@ -76,6 +81,11 @@ BEGIN
         MENUITEM "Barrel",                      ID_GAMEOBJECTS_BARREL
         MENUITEM "Character",                   ID_GAMEOBJECTS_CHARACTER
     END
+    POPUP "Simulation"
+    BEGIN
+        MENUITEM "Play",                        ID_SIMULATION_PLAY
+        MENUITEM "Stop",                        ID_SIMULATION_STOP
+    END
 END
 
 
@@ -84,14 +94,15 @@ END
 // Dialog
 //
 
-IDD_ENTER_TEXT_BOX DIALOGEX 0, 0, 129, 92
+IDD_ENTER_TEXT_BOX DIALOGEX 0, 0, 129, 66
 STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_CAPTION
+CAPTION "Edit"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    EDITTEXT        IDC_ENTER_TEXT_EDIT,24,36,80,15,ES_CENTER
-    LTEXT           "Enter level name",ID_ENTER_TEXT_TEXT,37,24,54,8
-    PUSHBUTTON      "OK",IDC_ENTER_TEXT_OK_BUTTON,10,57,50,14
-    PUSHBUTTON      "Cancel",IDC_ENTER_TEXT_CANCEL_BUTTON,68,57,50,14
+    EDITTEXT        IDC_ENTER_TEXT_EDIT,24,22,80,15,ES_CENTER
+    LTEXT           "Enter text",ID_ENTER_TEXT_TEXT,47,10,34,8
+    PUSHBUTTON      "OK",IDC_ENTER_TEXT_OK_BUTTON,10,43,50,14
+    PUSHBUTTON      "Cancel",IDC_ENTER_TEXT_CANCEL_BUTTON,68,43,50,14
 END
 
 

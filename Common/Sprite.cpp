@@ -1,14 +1,13 @@
 #include "Sprite.h"
 
 #include <cassert>
-#include "Sprites.h"
 #include "BitmapUtilities.h"
 #include "Serializers.h"
 
-Sprite::Sprite(const std::wstring& spriteFullRalativePath) NOEXCEPT_WHEN_NDEBUG :
-	m_spriteFullRelativePath(spriteFullRalativePath)
+Sprite::Sprite(const std::wstring& fullRalativePath) :
+	m_fullRelativePath(fullRalativePath)
 {
-	m_spriteBitmap = Sprites::GetRawSprite(spriteFullRalativePath);
+	m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath);
 }
 
 Sprite::Sprite(Sprite&& sprite) noexcept
@@ -18,30 +17,35 @@ Sprite::Sprite(Sprite&& sprite) noexcept
 
 Sprite& Sprite::operator=(Sprite&& right) noexcept
 {
-	m_spriteFullRelativePath = std::move(right.m_spriteFullRelativePath);
-	m_spriteBitmap = right.m_spriteBitmap;
-	right.m_spriteBitmap = NULL;
+	m_fullRelativePath = std::move(right.m_fullRelativePath);
+	m_bitmap = right.m_bitmap;
+	right.m_bitmap = NULL;
 
 	return *this;
 }
 
-HBITMAP Sprite::GetBitmap() const noexcept
+const std::wstring& Sprite::GetFullRelativePath() const noexcept
 {
-	return m_spriteBitmap;
+	return m_fullRelativePath;
 }
 
-bool Sprite::IsEmptyBitmap() const noexcept
+HBITMAP Sprite::GetBitmap() const noexcept
 {
-	return m_spriteBitmap == NULL;
+	return m_bitmap;
+}
+
+bool Sprite::IsEmpty() const noexcept
+{
+	return m_bitmap == NULL;
 }
 
 void Sprite::SerializeToOpenedFile(std::ofstream& file) const
 {
-	WstringBinarySerializer::SerializeToOpenedFile(m_spriteFullRelativePath, file);
+	WstringBinarySerializer::SerializeToOpenedFile(m_fullRelativePath, file);
 }
 
 void Sprite::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
-	WstringBinarySerializer::DeserializeFromOpenedFile(m_spriteFullRelativePath, file);
-	m_spriteBitmap = Sprites::GetRawSprite(m_spriteFullRelativePath);
+	WstringBinarySerializer::DeserializeFromOpenedFile(m_fullRelativePath, file);
+	//m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath);
 }
