@@ -1,13 +1,13 @@
 #include "Sprite.h"
 
 #include <cassert>
-#include "BitmapUtilities.h"
+#include "BitmapManager.h"
 #include "Serializers.h"
 
 Sprite::Sprite(const std::wstring& fullRalativePath) :
 	m_fullRelativePath(fullRalativePath)
 {
-	m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath);
+	m_bitmap = BitmapManager::GetBitmap(m_fullRelativePath);
 }
 
 Sprite::Sprite(Sprite&& sprite) noexcept
@@ -47,5 +47,5 @@ void Sprite::SerializeToOpenedFile(std::ofstream& file) const
 void Sprite::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
 	WstringBinarySerializer::DeserializeFromOpenedFile(m_fullRelativePath, file);
-	m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath); ////////
+	//m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath); ////////
 }

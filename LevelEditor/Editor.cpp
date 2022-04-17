@@ -12,6 +12,15 @@ Editor::Editor() :
 
 }
 
+Editor::Editor(const std::wstring& levelFileFullPath) : Editor()
+{
+	if (!levelFileFullPath.empty())
+	{
+		if (!m_window.TryLoadLevel(levelFileFullPath))
+			throw std::runtime_error("The program won't start");
+	}
+}
+
 int Editor::Run()
 {
 	while (true)
@@ -52,7 +61,7 @@ void Editor::Render()
 	}
 
 	m_window.graphics.Present();
-	m_window.graphics.Clear(RGB(0, 0, 0));
+	m_window.graphics.Clear();
 }
 
 void Editor::RenderGrid()

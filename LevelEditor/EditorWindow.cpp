@@ -37,6 +37,31 @@ EditorWindow::EditorWindow(Vector2i size) : Window(size),
 	RegisterHotKeys();
 }
 
+bool EditorWindow::TryLoadLevel(const std::wstring& fullPath)
+{
+	auto fullPathSize{ fullPath.size() };
+	auto levelFileExtensionSize{ Level::FileExtension.size() };
+	if (fullPathSize > levelFileExtensionSize)
+	{
+		auto fileExtension{ fullPath.substr(fullPathSize - levelFileExtensionSize, levelFileExtensionSize) };
+		if (fileExtension == Level::FileExtension)
+		{
+			if (TryLoadLevelFromFile(fullPath))
+			{
+				OnLevelPathChanged();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	MessageBox(m_handle, L"The program doesn't support the file extension", L"Error", MB_ICONERROR);
+	return false;
+}
+
 const Level* EditorWindow::GetLevel() const noexcept
 {
 	return &m_level.Get();
@@ -289,11 +314,7 @@ void EditorWindow::OnLoadButtonClick()
 		m_levelFilter, StandardFileBox::Type::Open);
 	if (openFileBox.IsOKButtonPressed())
 	{
-		std::ifstream levelFile(openFileBox.GetFileFullPath(), std::ios::binary);
-		m_level.ResetObject(new Level(levelFile));
-		m_level.ResetState();
-
-		m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(openFileBox.GetFileFullPath()));
+		TryLoadLevelFromFile(openFileBox.GetFileFullPath());
 	}
 }
 
@@ -521,6 +542,28 @@ bool EditorWindow::TrySaveLevelIntoFile()
 		return true;
 	}
 
+	return false;
+}
+
+bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
+{
+	std::ifstream levelFile(fullPath, std::ios::binary);
+	if (levelFile.is_open())
+	{
+		try
+		{
+			m_level.ResetObject(new Level(levelFile));
+			m_level.ResetState();
+			m_levelPath.SetFullPath(fullPath);
+			return true;
+		}
+		catch (...)
+		{
+			MessageBox(m_handle, L"The level file is corrupted", L"Error", MB_ICONERROR);
+		}
+	}
+
+	MessageBox(m_handle, L"Cannot open the file", L"Error", MB_ICONERROR);
 	return false;
 }
 

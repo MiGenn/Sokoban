@@ -23,7 +23,7 @@ public:
 	void RenderGrid(int layerIndex, Vector2i startPosition, Vector2i endPosition, 
 		Vector2i sellSize, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
 	void Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
-	void Clear(COLORREF color) NOEXCEPT_WHEN_NDEBUG;
+	void Clear(COLORREF color = RGB(0, 0, 0)) NOEXCEPT_WHEN_NDEBUG;
 
 	void ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG;
 

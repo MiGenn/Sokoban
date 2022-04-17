@@ -45,7 +45,7 @@ public:
 private:
 	std::vector<std::unique_ptr<TiledEntity>> m_entities;
 
-	mutable TiledEntity* m_character = nullptr;
+	mutable TiledEntity* m_character{ nullptr };
 	mutable std::vector<TiledEntity*> m_barrels;
 	mutable std::vector<TiledEntity*> m_crosses;
 

@@ -3,7 +3,6 @@
 #include "WinapiException.h"
 #include "BuildInfo.h"
 
-//!!!
 class Sprite : public IBinarySerializable
 {
 public:

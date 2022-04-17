@@ -8,6 +8,7 @@ public:
 	static const std::wstring ModulePath;
 
 	Editor();
+	Editor(const std::wstring& levelFileFullPath);
 	Editor(const Editor&) = delete;
 
 	Editor& operator=(const Editor&) = delete;

@@ -243,6 +243,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Path.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapManager.h">
+      <Filter>Header Files\Winapi Layer\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -352,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Path.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapManager.cpp">
+      <Filter>Source Files\Winapi Layer\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -16,6 +16,7 @@ public:
 
 	EditorWindow(Vector2i size);
 
+	bool TryLoadLevel(const std::wstring& fullPath);
 	const Level* GetLevel() const noexcept;
 	bool IsSimulation() const noexcept;
 
@@ -70,6 +71,7 @@ private:
 	std::wstring GetLevelFullNameFromUser();
 
 	bool TrySaveLevelIntoFile();
+	bool TryLoadLevelFromFile(const std::wstring& fullPath);
 	bool AlreadyExists(const std::wstring& levelFullName);
 	bool CanContinueBeforeDeletingOrResetingLevel();
 	bool CanDeleteOrAddEntity();
