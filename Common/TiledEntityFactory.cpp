@@ -23,7 +23,7 @@ std::unique_ptr<TiledEntity> TiledEntityFactory::CreateRoad()
 std::unique_ptr<TiledEntity> TiledEntityFactory::CreateBarrel()
 {
 	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::barrelFullRelativePath),
-		{}, tileBoundingBox, 0 };
+		{}, tileBoundingBox, 1 };
 
 	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Barrel);
 }
@@ -39,7 +39,7 @@ std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCross()
 std::unique_ptr<TiledEntity> TiledEntityFactory::CreateCharacter()
 {
 	SpriteRenderInfo renderInfo{ PredefinedSprites::GetSprite(PredefinedSprites::characterFullRelativePath),
-		{}, tileBoundingBox, 0 };
+		{}, tileBoundingBox, 1 };
 
 	return std::make_unique<TiledEntity>(std::move(renderInfo), TiledEntity::Tag::Character);
 }

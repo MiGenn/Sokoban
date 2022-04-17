@@ -47,5 +47,5 @@ void Sprite::SerializeToOpenedFile(std::ofstream& file) const
 void Sprite::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
 	WstringBinarySerializer::DeserializeFromOpenedFile(m_fullRelativePath, file);
-	//m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath);
+	m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath); ////////
 }

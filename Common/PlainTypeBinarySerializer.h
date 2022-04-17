@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <concepts>
+#include "WinapiException.h"
 
 template <typename T>
 concept Integer = std::integral<T> && (!std::same_as<bool, T>);

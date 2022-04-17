@@ -20,13 +20,16 @@ public:
 	Level& operator=(const Level&) = delete;
 	TiledEntity& operator[](int i);
 
-	void AddEntity(std::unique_ptr<TiledEntity>&& entity);
-	void DeleteEntity(const TiledEntity& entity) NOEXCEPT_WHEN_NDEBUG;
-	void DeleteEntity(iterator& entity) NOEXCEPT_WHEN_NDEBUG;
+	void Add(std::unique_ptr<TiledEntity>&& entity);
+	void Delete(const_iterator& entity) noexcept;
 
-	TiledEntity& GetCharacter() NOEXCEPT_WHEN_NDEBUG;
-	std::vector<TiledEntity*>& GetBarrels() NOEXCEPT_WHEN_NDEBUG;
-	std::vector<TiledEntity*>& GetCrosses() NOEXCEPT_WHEN_NDEBUG;
+	bool IsPlaceOccupied(const TiledEntity& entity) const noexcept;
+	std::vector<TiledEntity*> FindByTag(TiledEntity::Tag tag) const noexcept;
+	const_iterator FindEquivalent(const TiledEntity& entity) const noexcept;
+
+	TiledEntity* GetCharacter() noexcept;
+	std::vector<TiledEntity*>& GetBarrels() noexcept;
+	std::vector<TiledEntity*>& GetCrosses() noexcept;
 	int GetEntitiesCount() const noexcept;
 
 	void SerializeToOpenedFile(std::ofstream& file) const override;
@@ -34,11 +37,22 @@ public:
 
 	iterator begin() noexcept;
 	iterator end() noexcept;
+	const_iterator begin() const noexcept;
+	const_iterator end() const noexcept;
+	const_iterator cbegin() const noexcept;
+	const_iterator cend() const noexcept;
 
 private:
 	std::vector<std::unique_ptr<TiledEntity>> m_entities;
 
-	TiledEntity* m_character = nullptr;
-	std::vector<TiledEntity*> m_barrels;
-	std::vector<TiledEntity*> m_crosses;
+	mutable TiledEntity* m_character = nullptr;
+	mutable std::vector<TiledEntity*> m_barrels;
+	mutable std::vector<TiledEntity*> m_crosses;
+
+	void CacheEntities() const NOEXCEPT_WHEN_NDEBUG;
+	void RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept;
+	void RecacheEntitiesWhenDeleting(const TiledEntity* entity) const noexcept;
+
+	void EraseCashedPointer(const TiledEntity* entity, 
+		std::vector<TiledEntity*>& cashedEntities) const noexcept;
 };

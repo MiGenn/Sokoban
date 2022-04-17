@@ -19,7 +19,7 @@ TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag) :
 }
 
 TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2i position) :
-	TiledEntity(std::move(renderInfo), tag)
+	TiledEntity(renderInfo, tag)
 {
 	m_position = position;
 }
@@ -40,7 +40,8 @@ TiledEntity& TiledEntity::operator=(const TiledEntity& right)
 
 bool TiledEntity::operator==(const TiledEntity& right) noexcept
 {
-	return this == &right;
+	return m_position == right.m_position &&
+		m_tag == right.m_tag;
 }
 
 bool TiledEntity::operator!=(const TiledEntity& right) noexcept

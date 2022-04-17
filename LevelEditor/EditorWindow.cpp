@@ -37,12 +37,32 @@ EditorWindow::EditorWindow(Vector2i size) : Window(size),
 	RegisterHotKeys();
 }
 
+const Level* EditorWindow::GetLevel() const noexcept
+{
+	return &m_level.Get();
+}
+
+bool EditorWindow::IsSimulation() const noexcept
+{
+	return m_isSimulation;
+}
+
+void EditorWindow::Test()
+{
+
+}
+
 LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_LBUTTONDOWN:
 		mouse.OnLeftButtonPressed();
+		OnLeftButtonClick(MAKEPOINTS(lParam));
+		return 0;
+
+	case WM_RBUTTONDOWN:
+		OnRightButtonClick(MAKEPOINTS(lParam));
 		return 0;
 
 	case WM_MOUSEMOVE:
@@ -80,10 +100,14 @@ LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void EditorWindow::RegisterHotKeys()
 {
 	RegisterHotKey(m_handle, (int)HotKey::ControlS, MOD_CONTROL, 'S');
+	RegisterHotKey(m_handle, (int)HotKey::ControlZ, MOD_CONTROL, 'Z');
 }
 
 void EditorWindow::OnClose()
 {
+	if (!CanContinueBeforeDeletingOrResetingLevel())
+		return;
+
 	PostQuitMessage(0);
 	DestroyMenu(GetMenu(m_handle));
 	DestroyWindow(m_handle);
@@ -95,27 +119,22 @@ void EditorWindow::OnCommand(int controlID)
 	{
 	case ID_FILE_CREATE:
 		OnCreateButtonClick();
-		OnLevelPathChanged();
 		break;
 
 	case ID_FILE_LOAD:
 		OnLoadButtonClick();
-		OnLevelPathChanged();
 		break;
 
 	case ID_FILE_UNLOAD:
 		OnUnloadButtonClick();
-		OnLevelPathChanged();
 		break;
 
 	case ID_FILE_SAVE:
 		OnSaveButtonClick();
-		OnLevelPathChanged();
 		break;
 
 	case ID_FILE_SAVE_AS:
 		OnSaveAsButtonClick();
-		OnLevelPathChanged();
 		break;
 
 	case ID_FILE_RENAME:
@@ -150,16 +169,57 @@ void EditorWindow::OnCommand(int controlID)
 		OnStopButtonClick();
 		break;
 	}
+
+	if (SubMenuUtilities::IsOwned(controlID, ID_FILE))
+		OnLevelPathChanged();
 }
 void EditorWindow::OnHotkey(HotKey hotKey)
 {
+	if (GetFocus() != m_handle)
+		return;
+
 	switch (hotKey)
 	{
 	case HotKey::ControlS:
-		if (GetFocus() == m_handle)
-			OnSaveButtonClick();
+		OnSaveButtonClick();
+		break;
+
+	case HotKey::ControlZ:
 		break;
 	}
+}
+
+void EditorWindow::OnLeftButtonClick(POINTS position)
+{
+	if (!CanDeleteOrAddEntity())
+		return;
+
+	m_currentEntity->SetPosition({ position.x, position.y });
+	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character)
+	{
+		auto character{ m_level.GetForEditing().GetCharacter() };
+		if (character)
+		{
+			character->SetPosition(m_currentEntity->GetPosition());
+			return;
+		}
+	}
+
+	m_level.GetForEditing().Add(std::make_unique<TiledEntity>(*m_currentEntity));
+}
+
+void EditorWindow::OnRightButtonClick(POINTS position)
+{
+	if (!CanDeleteOrAddEntity())
+		return;
+	
+	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character)
+		return;
+
+	m_currentEntity->SetPosition({ position.x, position.y });
+	auto equivalentEntity{ m_level.Get().FindEquivalent(*m_currentEntity) };
+	if (equivalentEntity != m_level.Get().end())
+		m_level.GetForEditing().Delete(equivalentEntity);
 }
 
 void EditorWindow::OnCreateButtonClick()
@@ -229,7 +289,7 @@ void EditorWindow::OnLoadButtonClick()
 		m_levelFilter, StandardFileBox::Type::Open);
 	if (openFileBox.IsOKButtonPressed())
 	{
-		std::ifstream levelFile(openFileBox.GetFileFullPath());
+		std::ifstream levelFile(openFileBox.GetFileFullPath(), std::ios::binary);
 		m_level.ResetObject(new Level(levelFile));
 		m_level.ResetState();
 
@@ -263,6 +323,9 @@ void EditorWindow::OnSaveButtonClick()
 	{
 		assert(m_levelPath.IsFullNameEmpty() != true);
 		if (!m_level.IsChanged())
+			return;
+
+		if (!CanLevelBeSaved())
 			return;
 
 		if (m_levelPath.IsPathEmpty())
@@ -314,6 +377,9 @@ void EditorWindow::OnSaveAsButtonClick()
 	}
 	else
 	{
+		if (!CanLevelBeSaved())
+			return;
+
 		StandardFileBox saveFileBox(this, Editor::ModulePath, m_levelFilter,
 			StandardFileBox::Type::Save, OFN_OVERWRITEPROMPT, m_levelPath.GetFullName());
 		if (saveFileBox.IsOKButtonPressed())
@@ -402,6 +468,18 @@ void EditorWindow::OnCharacterButtonClick()
 	m_currentEntity = TiledEntityFactory::CreateCharacter();
 }
 
+void EditorWindow::OnPlayButtonClick()
+{
+	m_isSimulation = true;
+	ChangeMenuItemsWhenSimulation(MF_GRAYED);
+}
+
+void EditorWindow::OnStopButtonClick()
+{
+	m_isSimulation = false;
+	ChangeMenuItemsWhenSimulation(MF_ENABLED);
+}
+
 void EditorWindow::OnLevelPathChanged()
 {
 	std::wstring additionalInfo;
@@ -418,17 +496,7 @@ void EditorWindow::ChangeMenuItemsWhenSimulation(int option)
 	EnableMenuItem(menuHandle, ID_FILE, MF_BYPOSITION | option);
 	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | option);
 
-	InvalidateRect(WinapiUntilities::FindMenu(m_handle), NULL, true);
-}
-
-void EditorWindow::OnPlayButtonClick()
-{
-	ChangeMenuItemsWhenSimulation(MF_GRAYED);
-}
-
-void EditorWindow::OnStopButtonClick()
-{
-	ChangeMenuItemsWhenSimulation(MF_ENABLED);
+	InvalidateRect(WinapiUntilities::FindMenuWindow(m_handle), NULL, true);
 }
 
 std::wstring EditorWindow::GetPathFromUser()
@@ -445,7 +513,7 @@ std::wstring EditorWindow::GetLevelFullNameFromUser()
 
 bool EditorWindow::TrySaveLevelIntoFile()
 {
-	std::ofstream file(m_levelPath.GetFullPath());
+	std::ofstream file(m_levelPath.GetFullPath(), std::ios::binary);
 	if (file.is_open())
 	{
 		m_level.Get().SerializeToOpenedFile(file);
@@ -463,7 +531,7 @@ bool EditorWindow::AlreadyExists(const std::wstring& levelFullName)
 
 bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel()
 {
-	if (CanLevelBeSaved())
+	if (!m_level.IsNull() && m_level.IsChanged())
 	{
 		QuestionBox questionBox(this, L"Do you want to save the current level?");
 		if (questionBox.IsOKButtonPressed())
@@ -476,9 +544,28 @@ bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel()
 	return true;
 }
 
+bool EditorWindow::CanDeleteOrAddEntity()
+{
+	return !m_level.IsNull() && m_currentEntity.get();
+}
+
 bool EditorWindow::CanLevelBeSaved()
 {
-	return !m_level.IsNull() && m_level.IsChanged();
+	bool canBeSaved{ true };
+	auto& level{ m_level.GetForEditing() };
+	if (level.GetCharacter() == nullptr)
+	{
+		MessageBox(m_handle, L"The level must contain the character", L"Error", MB_ICONERROR);
+		canBeSaved = false;
+	}
+
+	if (level.GetBarrels().size() != level.GetCrosses().size())
+	{
+		MessageBox(m_handle, L"The level must contain the same number of barrels and crosses", L"Error", MB_ICONERROR);
+		canBeSaved = false;
+	}
+
+	return canBeSaved;
 }
 
 EditorWindow::Class::Class() : WindowClass(L"SokobanEditor")

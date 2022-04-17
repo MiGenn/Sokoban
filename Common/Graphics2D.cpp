@@ -39,11 +39,21 @@ void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 	HDC sourceContext{ CreateCompatibleDC(destinationContext) };
 	HGDIOBJ initialBitmap{ SelectObject(sourceContext, renderInfo.GetBitmap()) };
 
-	MergeTwoBitmaps(destinationContext, renderInfo.GetWorldPosition(),
-		sourceContext, renderInfo.GetBoundingBox(), 10.f);
+	MergeTwoBitmaps(destinationContext, renderInfo.GetScreenPosition(),
+		sourceContext, renderInfo.GetBoundingBox(), 4.f);
 
 	SelectObject(sourceContext, initialBitmap);
 	DeleteDC(sourceContext);
+}
+
+void Graphics2D::Clear(COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	Fill(m_mainLayerIndex, color);
+
+	int layersCount{ (int)m_layers.size() };
+	for (int i{ m_mainLayerIndex + 1 }; i < layersCount; ++i)
+		if (m_layers[i].get() != nullptr)
+			ClearLayer(i);
 }
 
 void Graphics2D::RenderRect(int layerIndex, const RECT& rect,
@@ -145,7 +155,7 @@ void Graphics2D::MergeTwoBitmaps(HDC destinationLayerContext, Vector2i destinati
 		(int)round(boxSize.x * scale), (int)round(boxSize.y * scale),
 		sourceLayerContext, boxPosition.x, boxPosition.y,
 		boxSize.x, boxSize.y, (UINT)(chroma)))
-		throw WINAPI_LAST_EXCEPTION();
+		throw std::runtime_error("Error when merging");
 }
 
 void Graphics2D::MergeLayers()

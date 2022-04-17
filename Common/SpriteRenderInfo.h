@@ -6,7 +6,7 @@
 class SpriteRenderInfo : public IBinarySerializable
 {
 public:
-	SpriteRenderInfo() noexcept = default;
+	SpriteRenderInfo() noexcept;
 	SpriteRenderInfo(std::shared_ptr<Sprite> sprite, Vector2i position,
 		Box2i boundingBox, int layerIndex) NOEXCEPT_WHEN_NDEBUG;
 	SpriteRenderInfo(const SpriteRenderInfo& spriteRenderInfo) noexcept;
@@ -20,15 +20,15 @@ public:
 
 	HBITMAP GetBitmap() const noexcept;
 	Box2i GetBoundingBox() const noexcept;
-	Vector2i GetWorldPosition() const noexcept;
+	Vector2i GetScreenPosition() const noexcept;
 	int GetLayerIndex() const noexcept;
 
 	void SerializeToOpenedFile(std::ofstream& file) const override;
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
 
 private:
-	std::shared_ptr<Sprite> m_sprite{ nullptr };
+	std::shared_ptr<Sprite> m_sprite;
 	Box2i m_boundingBox;
-	Vector2i m_worldPosition;
+	Vector2i m_screenPosition;
 	int m_layerIndex = 0;
 };

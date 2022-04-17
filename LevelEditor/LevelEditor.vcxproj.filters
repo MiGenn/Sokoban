@@ -60,6 +60,9 @@
     <ClCompile Include="QuestionBox.cpp">
       <Filter>Source Files\Dialog Boxes\Others</Filter>
     </ClCompile>
+    <ClCompile Include="EditorResourceMacros.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorWindow.h">

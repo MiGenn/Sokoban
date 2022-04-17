@@ -64,6 +64,8 @@ inline void Box2D<T>::SetSize(Vector2D<T> newSize)
 
 	if (newSize.x < zero || newSize.y < zero)
 		throw std::logic_error("The size is incorrect!");
+
+	m_size = newSize;
 }
 
 template<Number T>

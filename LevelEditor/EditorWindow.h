@@ -16,10 +16,16 @@ public:
 
 	EditorWindow(Vector2i size);
 
+	const Level* GetLevel() const noexcept;
+	bool IsSimulation() const noexcept;
+
+	void Test();
+
 private:
 	enum class HotKey
 	{
 		ControlS,
+		ControlZ
 	};
 
 	static const std::wstring m_editorName;
@@ -28,8 +34,8 @@ private:
 
 	ChangeWrapper<Level> m_level{ nullptr };
 	Path m_levelPath;
-
 	std::unique_ptr<TiledEntity> m_currentEntity;
+	bool m_isSimulation{ false };
 
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
 	void RegisterHotKeys();
@@ -37,6 +43,8 @@ private:
 	void OnClose();
 	void OnCommand(int controlID);
 	void OnHotkey(HotKey hotKey);
+	void OnLeftButtonClick(POINTS position);
+	void OnRightButtonClick(POINTS position);
 
 	void OnCreateButtonClick();
 	void OnLoadButtonClick();
@@ -64,6 +72,7 @@ private:
 	bool TrySaveLevelIntoFile();
 	bool AlreadyExists(const std::wstring& levelFullName);
 	bool CanContinueBeforeDeletingOrResetingLevel();
+	bool CanDeleteOrAddEntity();
 	bool CanLevelBeSaved();
 
 	class Class : public WindowClass

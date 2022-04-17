@@ -27,6 +27,11 @@
 #define ID_SIMULATION_PLAY              50001
 #define ID_SIMULATION_STOP              50002
 
+namespace SubMenuUtilities
+{
+	bool IsOwned(int itemID, int subMenuID);
+}
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

@@ -2,6 +2,8 @@
 
 #include "WinapiUntilities.h"
 
+#define CHECK MessageBox(NULL, L"Check", L"Check", MB_OK)
+
 const std::wstring Editor::ModulePath{ WinapiUntilities::GetModulePath(NULL) };
 
 Editor::Editor() :
@@ -17,6 +19,11 @@ int Editor::Run()
 		if (auto exitCode = RetrieveAndRouteMessages())
 			return *exitCode;
 
+		if (m_window.IsSimulation())
+			m_state = EditorState::LevelSimulation;
+		else
+			m_state = EditorState::Editing;
+
 		Simulate();
 		Render();
 
@@ -28,9 +35,6 @@ void Editor::Simulate()
 {
 	switch (m_state)
 	{
-	case Editor::EditorState::Editing:
-		break;
-
 	case Editor::EditorState::LevelSimulation:
 		break;
 	}
@@ -42,13 +46,13 @@ void Editor::Render()
 	{
 	case Editor::EditorState::Editing:
 		RenderGrid();
-		break;
-
 	case Editor::EditorState::LevelSimulation:
+		RenderLevel();
 		break;
 	}
 
 	m_window.graphics.Present();
+	m_window.graphics.Clear(RGB(0, 0, 0));
 }
 
 void Editor::RenderGrid()
@@ -60,4 +64,14 @@ void Editor::RenderGrid()
 	static constexpr COLORREF lineColor{ RGB(128, 128, 128) };
 	
 	m_window.graphics.RenderGrid(layerIndex, startPosition, endPosition, sellSize, lineColor);
+}
+
+void Editor::RenderLevel()
+{
+	auto* level{ m_window.GetLevel() };
+	if (level == nullptr)
+		return;
+
+	for (auto& entity : *level)
+		m_window.graphics.RenderSprite(entity->GetRenderInfo());
 }

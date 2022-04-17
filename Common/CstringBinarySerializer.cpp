@@ -5,7 +5,7 @@
 void CstringBinarySerializer::SerializeToOpenedFile(const char* sourceCstring, std::ofstream& file, int size)
 {
 	if (size == 0)
-		size = (int)strlen(sourceCstring);
+		size = (int)strlen(sourceCstring) + 1;
 
 	PlainTypeBinarySerializer::SerializeToOpenedFile(size, file);
 	file.write(sourceCstring, size);

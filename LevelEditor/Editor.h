@@ -28,4 +28,5 @@ private:
 	void Render();
 
 	void RenderGrid();
+	void RenderLevel();
 };
