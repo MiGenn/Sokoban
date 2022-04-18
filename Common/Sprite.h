@@ -1,4 +1,5 @@
 #pragma once
+#include "StringUtilities.h"
 #include "IBinarySerializable.h"
 #include "WinapiException.h"
 #include "BuildInfo.h"
@@ -7,7 +8,7 @@ class Sprite : public IBinarySerializable
 {
 public:
 	Sprite() noexcept = default;
-	Sprite(const std::wstring& spriteFullRalativePath);
+	Sprite(const std::wstring& fullPath);
 	Sprite(Sprite&& sprite) noexcept;
 
 	Sprite& operator=(Sprite&& right) noexcept;
@@ -20,6 +21,8 @@ public:
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
 
 private:
-	std::wstring m_fullRelativePath;
+	const std::wstring* m_fullPath{ &StringUtilities::empty };
 	HBITMAP m_bitmap{ NULL };
+
+	void Initialize(const std::wstring& fullPath);
 };

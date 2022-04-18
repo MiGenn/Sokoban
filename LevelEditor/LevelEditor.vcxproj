@@ -97,7 +97,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
@@ -116,7 +116,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,7 +135,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
@@ -154,7 +154,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -165,7 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CustomDialogBox.cpp" />
-    <ClCompile Include="EditorResourceMacros.cpp" />
+    <ClCompile Include="MenuHelper.cpp" />
     <ClCompile Include="StandardFileBox.cpp" />
     <ClCompile Include="IFileBox.cpp" />
     <ClCompile Include="SelectFolderBox.cpp" />
@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomDialogBox.h" />
+    <ClInclude Include="MenuHelper.h" />
     <ClInclude Include="StandardFileBox.h" />
     <ClInclude Include="IFileBox.h" />
     <ClInclude Include="SelectFolderBox.h" />
@@ -188,6 +189,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LevelEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Debug\Icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

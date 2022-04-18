@@ -44,5 +44,18 @@
     <ClInclude Include="GameWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameResourceMacros.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sokoban.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Debug\Icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

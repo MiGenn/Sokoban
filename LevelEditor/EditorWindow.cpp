@@ -3,6 +3,7 @@
 #include "Editor.h"
 #include "EnterTextBox.h"
 #include "EditorResourceMacros.h"
+#include "MenuHelper.h"
 #include "QuestionBox.h"
 #include "SelectFolderBox.h"
 #include "StandardFileBox.h"
@@ -56,8 +57,10 @@ bool EditorWindow::TryLoadLevel(const std::wstring& fullPath)
 				return false;
 			}
 		}
-	}
 
+		MessageBox(m_handle, fileExtension.c_str(), L"Check", MB_OK);
+	}
+	
 	MessageBox(m_handle, L"The program doesn't support the file extension", L"Error", MB_ICONERROR);
 	return false;
 }
@@ -195,7 +198,7 @@ void EditorWindow::OnCommand(int controlID)
 		break;
 	}
 
-	if (SubMenuUtilities::IsOwned(controlID, ID_FILE))
+	if (MenuHelper::IsOwned(controlID, ID_FILE))
 		OnLevelPathChanged();
 }
 void EditorWindow::OnHotkey(HotKey hotKey)
@@ -562,8 +565,11 @@ bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
 			MessageBox(m_handle, L"The level file is corrupted", L"Error", MB_ICONERROR);
 		}
 	}
-
-	MessageBox(m_handle, L"Cannot open the file", L"Error", MB_ICONERROR);
+	else
+	{
+		MessageBox(m_handle, L"Cannot open the file", L"Error", MB_ICONERROR);
+	}
+	
 	return false;
 }
 
@@ -615,8 +621,10 @@ EditorWindow::Class::Class() : WindowClass(L"SokobanEditor")
 {
 	WNDCLASSEX wcex{ sizeof(wcex) };
 	wcex.lpszClassName = GetName();
-	wcex.hInstance = GetModuleHandle(nullptr);
+	wcex.hInstance = GetModuleHandle(NULL);
 	wcex.lpfnWndProc = SetupMessageHandling;
+	wcex.hIcon = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
 
 	if (!RegisterClassEx(&wcex))
 		throw WINAPI_LAST_EXCEPTION();

@@ -60,8 +60,8 @@
     <ClCompile Include="QuestionBox.cpp">
       <Filter>Source Files\Dialog Boxes\Others</Filter>
     </ClCompile>
-    <ClCompile Include="EditorResourceMacros.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="MenuHelper.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,10 +92,18 @@
     <ClInclude Include="QuestionBox.h">
       <Filter>Header Files\Dialog Boxes\Others</Filter>
     </ClInclude>
+    <ClInclude Include="MenuHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LevelEditor.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Debug\Icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

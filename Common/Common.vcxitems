@@ -21,6 +21,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Path.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UnsafeUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUntilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WindowDCWrapper.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Path.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UnsafeUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUntilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WindowDCWrapper.h" />

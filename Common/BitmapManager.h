@@ -11,8 +11,8 @@ public:
 
 	BitmapManager& operator=(const BitmapManager&) = delete;
 
-	static HBITMAP GetBitmap(const std::wstring& fullPath);
+	static const std::pair<std::wstring, HBITMAP>& GetBitmap(const std::wstring& fullPath);
 
 private:
-	std::unordered_map<std::wstring, HBITMAP> m_bitmaps;
+	static std::unordered_map<std::wstring, HBITMAP> m_bitmaps;
 };

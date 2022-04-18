@@ -1,5 +1,7 @@
 #include "GameWindow.h"
 
+#include "GameResourceMacros.h"
+
 GameWindow::GameWindow(Vector2i size) :
 	Window(size), graphics(this)
 {
@@ -69,6 +71,8 @@ GameWindow::Class::Class() : WindowClass(L"SokobanGame")
 	wcex.lpszClassName = GetName();
 	wcex.hInstance = GetModuleHandle(nullptr);
 	wcex.lpfnWndProc = SetupMessageHandling;
+	wcex.hIcon = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
 
 	if (!RegisterClassEx(&wcex))
 		throw WINAPI_LAST_EXCEPTION();

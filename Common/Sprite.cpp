@@ -4,10 +4,9 @@
 #include "BitmapManager.h"
 #include "Serializers.h"
 
-Sprite::Sprite(const std::wstring& fullRalativePath) :
-	m_fullRelativePath(fullRalativePath)
+Sprite::Sprite(const std::wstring& fullPath)
 {
-	m_bitmap = BitmapManager::GetBitmap(m_fullRelativePath);
+	Initialize(fullPath);
 }
 
 Sprite::Sprite(Sprite&& sprite) noexcept
@@ -17,8 +16,9 @@ Sprite::Sprite(Sprite&& sprite) noexcept
 
 Sprite& Sprite::operator=(Sprite&& right) noexcept
 {
-	m_fullRelativePath = std::move(right.m_fullRelativePath);
+	m_fullPath = right.m_fullPath;
 	m_bitmap = right.m_bitmap;
+	right.m_fullPath = &StringUtilities::empty;
 	right.m_bitmap = NULL;
 
 	return *this;
@@ -26,7 +26,7 @@ Sprite& Sprite::operator=(Sprite&& right) noexcept
 
 const std::wstring& Sprite::GetFullRelativePath() const noexcept
 {
-	return m_fullRelativePath;
+	return *m_fullPath;
 }
 
 HBITMAP Sprite::GetBitmap() const noexcept
@@ -41,11 +41,19 @@ bool Sprite::IsEmpty() const noexcept
 
 void Sprite::SerializeToOpenedFile(std::ofstream& file) const
 {
-	WstringBinarySerializer::SerializeToOpenedFile(m_fullRelativePath, file);
+	WstringBinarySerializer::SerializeToOpenedFile(*m_fullPath, file);
 }
 
 void Sprite::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
-	WstringBinarySerializer::DeserializeFromOpenedFile(m_fullRelativePath, file);
-	//m_bitmap = BitmapUtilities::LoadBMP(m_fullRelativePath); ////////
+	std::wstring fullRelativePath;
+	WstringBinarySerializer::DeserializeFromOpenedFile(fullRelativePath, file);
+	Initialize(fullRelativePath);
+}
+
+void Sprite::Initialize(const std::wstring& fullPath)
+{
+	auto& pathAndBitmap{ BitmapManager::GetBitmap(fullPath) };
+	m_fullPath = &pathAndBitmap.first;
+	m_bitmap = pathAndBitmap.second;
 }

@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "StringUtilities.h"
 
 int WINAPI wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR fullPath, _In_ int)
 {
@@ -6,7 +7,7 @@ int WINAPI wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR fullPath, _I
 
 	try
 	{
-		return Editor(L"D:\\test.lvl").Run();
+		return Editor(StringUtilities::DeleteQuotationMarks(fullPath)).Run();
 	}
 	catch (const MyException& e)
 	{

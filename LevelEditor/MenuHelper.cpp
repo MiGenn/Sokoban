@@ -1,8 +1,9 @@
-#include "EditorResourceMacros.h"
+#include "MenuHelper.h"
 
 #include <cassert>
+#include "EditorResourceMacros.h"
 
-bool SubMenuUtilities::IsOwned(int itemID, int subMenuID)
+bool MenuHelper::IsOwned(int itemID, int subMenuID)
 {
 	assert(subMenuID >= 0 && subMenuID <= 2);
 	assert((itemID >= 30001 && subMenuID <= 30006) ||
@@ -27,5 +28,5 @@ bool SubMenuUtilities::IsOwned(int itemID, int subMenuID)
 		break;
 	}
 
-    return false;
+	return false;
 }
