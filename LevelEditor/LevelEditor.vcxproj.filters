@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Dialog Boxes\File Boxes">
       <UniqueIdentifier>{2a0abd78-3b6b-4568-99d0-78a2459d92a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\WindowMenu">
+      <UniqueIdentifier>{089d09aa-50e3-4bf3-81da-6736ed8429e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WindowMenu">
+      <UniqueIdentifier>{d0919ce6-7522-454b-a767-1156ead88040}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorWindow.cpp">
@@ -61,7 +67,7 @@
       <Filter>Source Files\Dialog Boxes\Others</Filter>
     </ClCompile>
     <ClCompile Include="MenuHelper.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\WindowMenu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +99,7 @@
       <Filter>Header Files\Dialog Boxes\Others</Filter>
     </ClInclude>
     <ClInclude Include="MenuHelper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\WindowMenu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

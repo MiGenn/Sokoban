@@ -67,12 +67,9 @@ void Editor::Render()
 void Editor::RenderGrid()
 {
 	static constexpr int layerIndex{ 0 };
-	static Vector2i startPosition(0, 0);
-	static Vector2i endPosition(m_window.GetSize());
-	static Vector2i sellSize(TiledEntity::tileSize, TiledEntity::tileSize);
 	static constexpr COLORREF lineColor{ RGB(128, 128, 128) };
 	
-	m_window.graphics.RenderGrid(layerIndex, startPosition, endPosition, sellSize, lineColor);
+	m_window.graphics.RenderGrid(layerIndex, lineColor);
 }
 
 void Editor::RenderLevel()

@@ -18,9 +18,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChangeWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CstringUntilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Path.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SelectWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UnsafeUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUntilities.cpp" />
@@ -58,9 +60,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChangeWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CstringUntilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Path.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SelectWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UnsafeUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUntilities.h" />

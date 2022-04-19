@@ -4,9 +4,9 @@
 //
 #define IDI_ICON						5000
 
-#define ID_FILE                         10
-#define ID_GAMEOBJECTS                  11
-#define ID_SIMULATION                   12
+#define ID_FILE                         0
+#define ID_GAMEOBJECTS                  1
+#define ID_SIMULATION                   2
 #define IDR_EDITOR_MENU                 101
 #define IDD_ENTER_TEXT_BOX              102
 #define IDC_ENTER_TEXT_EDIT             1001
@@ -24,8 +24,8 @@
 #define ID_GAMEOBJECTS_CROSS            40003
 #define ID_GAMEOBJECTS_BARREL           40004
 #define ID_GAMEOBJECTS_CHARACTER        40005
-#define ID_SIMULATION_PLAY              50001
-#define ID_SIMULATION_STOP              50002
+#define ID_SIMULATION_STOP              50001
+#define ID_SIMULATION_PLAY              50002
 
 // Next default values for new objects
 // 

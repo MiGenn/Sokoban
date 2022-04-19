@@ -15,44 +15,68 @@ TiledEntity& Level::operator[](int i)
 	return *m_entities[i];
 }
 
-void Level::Add(std::unique_ptr<TiledEntity>&& entity)
+bool Level::Add(std::unique_ptr<TiledEntity>&& entity) noexcept
 {
 	if (entity->GetTag() == TiledEntity::Tag::Character &&
 		m_character != nullptr)
-		return;
+		return false;
 
 	if (!IsPlaceOccupied(*entity))
 	{
 		RecacheEntitiesWhenAdding(entity.get());
 		m_entities.push_back(std::move(entity));
 	}
+
+	return true;
 }
 
-void Level::Delete(const_iterator& entityIterator) noexcept
+bool Level::Delete(const_iterator& entityIterator) noexcept
 {
-	auto entityPointer{ entityIterator->get() };
-	if (entityPointer->GetTag() == TiledEntity::Tag::Character)
-		return;
+	auto entity{ entityIterator->get() };
+	if (entity->GetTag() == TiledEntity::Tag::Character)
+		return false;
 
-	RecacheEntitiesWhenDeleting(entityPointer);
+	RecacheEntitiesWhenDeleting(entity);
 	m_entities.erase(entityIterator);	
+
+	return true;
+}
+
+bool Level::CanEntityBeOverlapped(const TiledEntity& entity) noexcept
+{
+	switch (entity.GetTag())
+	{
+	case TiledEntity::Tag::Road:
+	case TiledEntity::Tag::Cross:
+		return true;
+	}
+
+	return false;
+}
+
+bool Level::CanEntitiesBeInTheSamePosition(const TiledEntity& entity, const TiledEntity& otherEntity) noexcept
+{
+	if (otherEntity.GetRenderInfo().GetLayerIndex() == entity.GetRenderInfo().GetLayerIndex())
+		return false;
+
+	return CanEntityBeOverlapped(otherEntity) || CanEntityBeOverlapped(entity);;
 }
 
 bool Level::IsPlaceOccupied(const TiledEntity& entity) const noexcept
 {
-	auto entityPosition{ entity.GetPosition() };
-	auto entityLayerIndex{ entity.GetRenderInfo().GetLayerIndex() };
-	auto entityIterator{ std::find_if(m_entities.begin(), m_entities.end(), 
-		[entityPosition, entityLayerIndex](const std::unique_ptr<TiledEntity>& otherEntity)
+	auto entityIterator{ std::find_if(m_entities.begin(), m_entities.end(),
+		[&entity](const std::unique_ptr<TiledEntity>& otherEntity)
 		{
-			return otherEntity->GetPosition() == entityPosition &&
-				otherEntity->GetRenderInfo().GetLayerIndex() == entityLayerIndex;
+			if (otherEntity->GetPosition() == entity.GetPosition())
+				return !CanEntitiesBeInTheSamePosition(entity, *otherEntity);
+
+			return false;
 		}) };
 
-	if (entityIterator != m_entities.end())
-		return true;
+	if (entityIterator == m_entities.end())
+		return false;
 
-	return false;
+	return true;
 }
 
 std::vector<TiledEntity*> Level::FindByTag(TiledEntity::Tag tag) const noexcept
@@ -146,6 +170,12 @@ void Level::CacheEntities() const NOEXCEPT_WHEN_NDEBUG
 	auto character{ FindByTag(TiledEntity::Tag::Character) };
 	assert(character.size() == 1);
 	m_character = character[0];
+}
+
+bool Level::IsWallOrBarrel(TiledEntity::Tag tag)
+{
+	return tag == TiledEntity::Tag::Wall ||
+		tag == TiledEntity::Tag::Barrel;
 }
 
 void Level::RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept

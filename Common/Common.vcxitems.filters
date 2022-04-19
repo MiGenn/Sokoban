@@ -249,6 +249,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtilities.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SelectWrapper.h">
+      <Filter>Header Files\Utilities\Winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.h">
+      <Filter>Header Files\Utilities\Winapi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -364,6 +370,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StringUtilities.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SelectWrapper.cpp">
+      <Filter>Source Files\Utilities\Winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.cpp">
+      <Filter>Source Files\Utilities\Winapi</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

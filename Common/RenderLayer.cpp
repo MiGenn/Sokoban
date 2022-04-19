@@ -2,29 +2,15 @@
 
 #include <cassert>
 
-RenderLayer::RenderLayer(HDC referenceContext, Vector2i size) NOEXCEPT_WHEN_NDEBUG :
-	m_isUsed(false), m_size(size)
+RenderLayer::RenderLayer(HDC referenceContext, Vector2i size) NOEXCEPT_WHEN_NDEBUG
 {
-	assert(size.x > 0 && size.y > 0);
-
-	m_context = CreateCompatibleDC(referenceContext);
-	assert(m_context != NULL);
-	auto bitmap = CreateCompatibleBitmap(referenceContext, size.x, size.y);
-	m_initialBitmap = SelectObject(m_context, bitmap);
-}
-
-RenderLayer::~RenderLayer() noexcept
-{
-	auto bitmap{ SelectObject(m_context, m_initialBitmap) };
-	DeleteObject(bitmap);
-	DeleteDC(m_context);
+	Resize(referenceContext, size);
 }
 
 HDC RenderLayer::GetMemoryContext() noexcept
 {
 	m_isUsed = true;
-
-	return m_context;
+	return m_context.Get();
 }
 
 Vector2i RenderLayer::GetSize() const noexcept
@@ -45,11 +31,12 @@ void RenderLayer::SetUsed(bool isUsed) noexcept
 void RenderLayer::Resize(HDC referenceContext, Vector2i newSize) NOEXCEPT_WHEN_NDEBUG
 {
 	assert(newSize.x > 0 && newSize.y > 0);
-
+	m_isUsed = false;
 	m_size = newSize;
-	auto newBitmap{ CreateCompatibleBitmap(referenceContext, newSize.x, newSize.y) };
-	assert(newBitmap != NULL);
-	HGDIOBJ oldBitmap{ SelectObject(m_context, newBitmap) };
+	m_contextSelect.Reset();
 
-	DeleteObject(oldBitmap);
+	m_context.Reset(CreateCompatibleDC(referenceContext));
+	assert(m_context.Get() != NULL);
+	m_bitmap.reset(CreateCompatibleBitmap(referenceContext, newSize.x, newSize.y));
+	m_contextSelect.Reset(m_context.Get(), m_bitmap.get());
 }

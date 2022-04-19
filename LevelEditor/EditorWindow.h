@@ -29,6 +29,12 @@ private:
 		ControlZ
 	};
 
+	enum class ChangeSubmenuOption
+	{
+		Disable = MF_DISABLED,
+		Enable = MF_ENABLED
+	};
+
 	static const std::wstring m_editorName;
 	static constexpr const wchar_t* m_levelFilter{ L"Level Files\0*.lvl\0" };
 	static const std::wstring m_levelHintText;
@@ -63,8 +69,11 @@ private:
 	void OnPlayButtonClick();
 	void OnStopButtonClick();
 
+	void OnLevelDeletedOrLoaded();
 	void OnLevelPathChanged();
-	void ChangeMenuItemsWhenSimulation(int option);
+	void ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option);
+	void ChangeSubmenusWhenSimulation(ChangeSubmenuOption option);
+	void SetCurrentEntityPosition(POINTS positionInPixels);
 
 	std::pair<std::wstring, std::wstring> GetLevelSplittedFullPathFromUser();
 	std::wstring GetPathFromUser();
@@ -72,7 +81,7 @@ private:
 
 	bool TrySaveLevelIntoFile();
 	bool TryLoadLevelFromFile(const std::wstring& fullPath);
-	bool AlreadyExists(const std::wstring& levelFullName);
+	bool AlreadyExists(const std::wstring& levelFullName); //
 	bool CanContinueBeforeDeletingOrResetingLevel();
 	bool CanDeleteOrAddEntity();
 	bool CanLevelBeSaved();

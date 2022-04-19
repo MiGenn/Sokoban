@@ -20,9 +20,11 @@ public:
 	Level& operator=(const Level&) = delete;
 	TiledEntity& operator[](int i);
 
-	void Add(std::unique_ptr<TiledEntity>&& entity);
-	void Delete(const_iterator& entity) noexcept;
+	bool Add(std::unique_ptr<TiledEntity>&& entity) noexcept;
+	bool Delete(const_iterator& entity) noexcept;
 
+	static bool CanEntityBeOverlapped(const TiledEntity& entity) noexcept;
+	static bool CanEntitiesBeInTheSamePosition(const TiledEntity& entity, const TiledEntity& otherEntity) noexcept;
 	bool IsPlaceOccupied(const TiledEntity& entity) const noexcept;
 	std::vector<TiledEntity*> FindByTag(TiledEntity::Tag tag) const noexcept;
 	const_iterator FindEquivalent(const TiledEntity& entity) const noexcept;
@@ -48,6 +50,8 @@ private:
 	mutable TiledEntity* m_character{ nullptr };
 	mutable std::vector<TiledEntity*> m_barrels;
 	mutable std::vector<TiledEntity*> m_crosses;
+
+	static bool IsWallOrBarrel(TiledEntity::Tag tag);
 
 	void CacheEntities() const NOEXCEPT_WHEN_NDEBUG;
 	void RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept;

@@ -222,32 +222,40 @@ void EditorWindow::OnLeftButtonClick(POINTS position)
 	if (!CanDeleteOrAddEntity())
 		return;
 
-	m_currentEntity->SetPosition({ position.x, position.y });
-	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character)
-	{
-		auto character{ m_level.GetForEditing().GetCharacter() };
-		if (character)
-		{
+	SetCurrentEntityPosition(position);
+	bool isAlreadyChanged{ m_level.IsChanged() };
+	auto& level{ m_level.GetForEditing() };
+
+	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character &&
+		!level.IsPlaceOccupied(*m_currentEntity))
+	{	
+		if (auto character{ level.GetCharacter() }; character)
 			character->SetPosition(m_currentEntity->GetPosition());
-			return;
-		}
 	}
 
-	m_level.GetForEditing().Add(std::make_unique<TiledEntity>(*m_currentEntity));
+	if (!level.Add(std::make_unique<TiledEntity>(*m_currentEntity)))
+		m_level.ResetState();
+
+	if (isAlreadyChanged)
+		m_level.GetForEditing();
 }
 
 void EditorWindow::OnRightButtonClick(POINTS position)
 {
 	if (!CanDeleteOrAddEntity())
 		return;
-	
-	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character)
-		return;
 
-	m_currentEntity->SetPosition({ position.x, position.y });
-	auto equivalentEntity{ m_level.Get().FindEquivalent(*m_currentEntity) };
-	if (equivalentEntity != m_level.Get().end())
-		m_level.GetForEditing().Delete(equivalentEntity);
+	SetCurrentEntityPosition(position);
+	bool isAlreadyChanged{ m_level.IsChanged() };
+	auto& level{ m_level.GetForEditing() };
+	auto equivalentEntity{ level.FindEquivalent(*m_currentEntity) };
+
+	if (equivalentEntity != level.end())
+		if (!level.Delete(equivalentEntity))
+			m_level.ResetState();
+
+	if (isAlreadyChanged)
+		m_level.GetForEditing();
 }
 
 void EditorWindow::OnCreateButtonClick()
@@ -287,6 +295,7 @@ void EditorWindow::OnCreateButtonClick()
 						{
 							m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
 							m_level.ResetObject(new Level());
+							OnLevelDeletedOrLoaded();
 							return;
 						}
 						else
@@ -305,6 +314,7 @@ void EditorWindow::OnCreateButtonClick()
 
 		m_levelPath.SetFullName(std::move(newName));
 		m_level.ResetObject(new Level());
+		OnLevelDeletedOrLoaded();
 	}
 }
 
@@ -334,6 +344,7 @@ void EditorWindow::OnUnloadButtonClick()
 
 		m_level.ResetObject(nullptr);
 		m_levelPath.ClearFullPath();
+		OnLevelDeletedOrLoaded();
 	}
 }
 
@@ -495,13 +506,22 @@ void EditorWindow::OnCharacterButtonClick()
 void EditorWindow::OnPlayButtonClick()
 {
 	m_isSimulation = true;
-	ChangeMenuItemsWhenSimulation(MF_GRAYED);
+	ChangeSubmenusWhenSimulation(ChangeSubmenuOption::Disable);
 }
 
 void EditorWindow::OnStopButtonClick()
 {
 	m_isSimulation = false;
-	ChangeMenuItemsWhenSimulation(MF_ENABLED);
+	ChangeSubmenusWhenSimulation(ChangeSubmenuOption::Enable);
+}
+
+void EditorWindow::OnLevelDeletedOrLoaded()
+{
+	auto option{ ChangeSubmenuOption::Enable };
+	if (m_level.IsNull())
+		option = ChangeSubmenuOption::Disable;
+
+	ChangeSubmenusWhenLevelIsDeletedOrLoaded(option);
 }
 
 void EditorWindow::OnLevelPathChanged()
@@ -513,14 +533,30 @@ void EditorWindow::OnLevelPathChanged()
 	SetWindowText(m_handle, (m_editorName + additionalInfo).c_str());;
 }
 
-void EditorWindow::ChangeMenuItemsWhenSimulation(int option)
+void EditorWindow::ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option)
 {
 	auto menuHandle{ GetMenu(m_handle) };
 
-	EnableMenuItem(menuHandle, ID_FILE, MF_BYPOSITION | option);
-	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | option);
+	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | (int)option);
+	EnableMenuItem(menuHandle, ID_SIMULATION, MF_BYPOSITION | (int)option);
 
 	InvalidateRect(WinapiUntilities::FindMenuWindow(m_handle), NULL, true);
+}
+
+void EditorWindow::ChangeSubmenusWhenSimulation(ChangeSubmenuOption option)
+{
+	auto menuHandle{ GetMenu(m_handle) };
+
+	EnableMenuItem(menuHandle, ID_FILE, MF_BYPOSITION | (int)option);
+	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | (int)option);
+
+	InvalidateRect(WinapiUntilities::FindMenuWindow(m_handle), NULL, true);
+}
+
+void EditorWindow::SetCurrentEntityPosition(POINTS positionInPixels)
+{
+	auto entityPosition{ graphics.ConvertPixelsToUnits({ positionInPixels.x, positionInPixels.y }) };
+	m_currentEntity->SetPosition(entityPosition);
 }
 
 std::wstring EditorWindow::GetPathFromUser()
@@ -558,6 +594,7 @@ bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
 			m_level.ResetObject(new Level(levelFile));
 			m_level.ResetState();
 			m_levelPath.SetFullPath(fullPath);
+			OnLevelDeletedOrLoaded();
 			return true;
 		}
 		catch (...)

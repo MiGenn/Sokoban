@@ -19,7 +19,7 @@ public:
 	TiledEntity() noexcept = default;
 	TiledEntity(std::ifstream& file);
 	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag);
-	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2i position);
+	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2i positionInUnits);
 	TiledEntity(const TiledEntity& entity);
 	~TiledEntity() noexcept = default;
 
@@ -29,7 +29,7 @@ public:
 
 	void Move(Vector2i translation) noexcept;
 	bool IsCollision(const TiledEntity& otherTiledEntity) const noexcept;
-	void SetPosition(Vector2i newPosition) noexcept;
+	void SetPosition(Vector2i newPositionInUnits) noexcept;
 
 	Vector2i GetPosition() const noexcept;
 	Tag GetTag() const noexcept;
@@ -41,7 +41,7 @@ public:
 	constexpr bool IsRegistred() const noexcept override;
 
 private:
-	Vector2i m_position;
+	Vector2i m_positionInUnits;
 	Tag m_tag{ Tag::Unknown };
 	mutable SpriteRenderInfo m_renderInfo;
 };

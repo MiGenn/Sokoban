@@ -1,4 +1,7 @@
 #pragma once
+#include "MemoryDCWrapper.h"
+#include "SelectWrapper.h"
+#include "UniqueAny.h"
 #include "Vector2D.h"
 #include "BuildInfo.h"
 
@@ -7,7 +10,6 @@ class RenderLayer
 public:
 	RenderLayer(HDC referenceContext, Vector2i size) NOEXCEPT_WHEN_NDEBUG;
 	RenderLayer(const RenderLayer&) = delete;
-	~RenderLayer() noexcept;
 
 	RenderLayer& operator=(const RenderLayer&) = delete;
 
@@ -19,10 +21,10 @@ public:
 	Vector2i GetSize() const noexcept;
 
 private:
-	Vector2i m_size;
-	HDC m_context;
 	bool m_isUsed;
+	Vector2i m_size;
 
-	HGDIOBJ m_initialBitmap;
+	MemoryDCWrapper m_context;
+	UniqueGDIOBJ<HBITMAP> m_bitmap;
+	SelectWrapper m_contextSelect;
 };
-

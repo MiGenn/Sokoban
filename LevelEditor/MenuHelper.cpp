@@ -5,25 +5,25 @@
 
 bool MenuHelper::IsOwned(int itemID, int subMenuID)
 {
-	assert(subMenuID >= 10 && subMenuID <= 12);
-	assert((itemID >= 30001 && subMenuID <= 30006) ||
-		itemID >= 40001 && subMenuID <= 40005 ||
-		itemID >= 50001 && subMenuID <= 50002);
+	assert(subMenuID >= ID_FILE && subMenuID <= ID_SIMULATION);
+	assert((itemID >= ID_FILE_CREATE && subMenuID <= ID_FILE_RENAME) ||
+		itemID >= ID_GAMEOBJECTS_WALL && subMenuID <= ID_GAMEOBJECTS_CHARACTER ||
+		itemID >= ID_SIMULATION_STOP && subMenuID <= ID_SIMULATION_PLAY);
 
 	switch (subMenuID)
 	{
 	case ID_FILE:
-		if (itemID >= 30001 && itemID <= 30006)
+		if (itemID >= ID_FILE_CREATE && itemID <= ID_FILE_RENAME)
 			return true;
 		break;
 
 	case ID_GAMEOBJECTS:
-		if (itemID >= 40001 && itemID <= 40005)
+		if (itemID >= ID_GAMEOBJECTS_WALL && itemID <= ID_GAMEOBJECTS_CHARACTER)
 			return true;
 		break;
 
 	case ID_SIMULATION:
-		if (itemID >= 50001 && itemID <= 50002)
+		if (itemID >= ID_SIMULATION_STOP && itemID <= ID_SIMULATION_PLAY)
 			return true;
 		break;
 	}

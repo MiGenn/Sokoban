@@ -2,21 +2,23 @@
 
 #include <cmath>
 #include <cassert>
+#include <ranges>
 #include "WindowDCWrapper.h"
-#include "UniqueAny.h"
 
 #pragma comment(lib, "Msimg32")
+#undef min
 
-Graphics2D::Graphics2D(Window* renderWindow) NOEXCEPT_WHEN_NDEBUG :
+Graphics2D::Graphics2D(Window* renderWindow, Vector2i units) NOEXCEPT_WHEN_NDEBUG :
 	m_renderWindow(renderWindow)
 {
 	assert(renderWindow != nullptr);
 
 	m_layersSize = renderWindow->GetSize();
-	AddNewLayer(m_mainLayerIndex);
+	m_unitSize = CalculateUnitSize(m_layersSize, units);
+	AddOrNotNewLayer(m_mainLayerIndex);
 	Fill(m_mainLayerIndex, RGB(0, 0, 0));
 
-	AddNewLayer(1);
+	AddOrNotNewLayer(1);
 }
 
 void Graphics2D::Present()
@@ -32,103 +34,108 @@ void Graphics2D::Present()
 void Graphics2D::RenderSprite(const SpriteRenderInfo& renderInfo)
 {
 	int layerIndex{ renderInfo.GetLayerIndex() };
-	if (DoesNotLayerExist(layerIndex))
-		AddNewLayer(layerIndex);
+	AddOrNotNewLayer(layerIndex);
 
-	HDC destinationContext{ m_layers[layerIndex]->GetMemoryContext() };
-	HDC sourceContext{ CreateCompatibleDC(destinationContext) };
-	HGDIOBJ initialBitmap{ SelectObject(sourceContext, renderInfo.GetBitmap()) };
+	auto layerContext{ m_layers[layerIndex]->GetMemoryContext() };
+	MemoryDCWrapper spriteContext(CreateCompatibleDC(layerContext));
+	SelectWrapper selectWrapper(spriteContext.Get(), renderInfo.GetBitmap());
 
-	MergeTwoBitmaps(destinationContext, renderInfo.GetScreenPosition(),
-		sourceContext, renderInfo.GetBoundingBox(), 4.f);
+	RenderSprite(layerContext, ConvertUnitsToPixels(renderInfo.GetPosition()),
+		spriteContext.Get(), renderInfo.GetBoundingBox(), renderInfo.GetSizeInUnits());
+}
+ 
+void Graphics2D::RenderRect(int layerIndex, const RECT& rect,
+	COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	assert(layerIndex >= 0);
+	AddOrNotNewLayer(layerIndex);
 
-	SelectObject(sourceContext, initialBitmap);
-	DeleteDC(sourceContext);
+	RenderRect(*m_layers[layerIndex], rect, color);
+}
+
+void Graphics2D::RenderLine(int layerIndex, 
+	Vector2i startPositionInPixels, Vector2i endPositionInPixels, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	static constexpr int penWidth{ 1 };
+	static constexpr int penStyle{ PS_SOLID };
+
+	assert(layerIndex >= 0);
+	AddOrNotNewLayer(layerIndex);
+
+	auto layerContext{ m_layers[layerIndex]->GetMemoryContext() };
+	UniqueGDIOBJ<HPEN> pen(CreatePen(penStyle, penWidth, color));
+	SelectWrapper selectWrapper(layerContext, pen.get());
+
+	MoveToEx(layerContext, startPositionInPixels.x, startPositionInPixels.y, NULL);
+	LineTo(layerContext, endPositionInPixels.x, endPositionInPixels.y);
+}
+
+void Graphics2D::RenderGrid(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	const Vector2i startPositionInPixels{ 0, 0 };
+	const Vector2i endPositionInPixels{ m_layersSize };
+
+	for (int x{ startPositionInPixels.x }; x < endPositionInPixels.x - 1; x += m_unitSize)
+	{
+		RenderLine(layerIndex, { x, startPositionInPixels.y }, { x, endPositionInPixels.y - 1 }, color);
+		int secondLineX{ x + m_unitSize - 1 };
+		RenderLine(layerIndex, { secondLineX, startPositionInPixels.y }, { secondLineX, endPositionInPixels.y - 1 }, color);
+	}
+
+	for (int y{ startPositionInPixels.y }; y < endPositionInPixels.y - 1; y += m_unitSize)
+	{
+		RenderLine(layerIndex, { startPositionInPixels.x, y }, { endPositionInPixels.x - 1, y }, color);
+		int secondLineY{ y + m_unitSize - 1 };
+		RenderLine(layerIndex, { startPositionInPixels.x, secondLineY }, { endPositionInPixels.x - 1, secondLineY }, color);
+	}
+}
+
+void Graphics2D::Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	assert(layerIndex >= 0);
+	AddOrNotNewLayer(layerIndex);
+
+	RenderRect(*m_layers[layerIndex], {0, 0, m_layersSize.x, m_layersSize.y}, color);
 }
 
 void Graphics2D::Clear(COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
 	Fill(m_mainLayerIndex, color);
 
-	int layersCount{ (int)m_layers.size() };
-	for (int i{ m_mainLayerIndex + 1 }; i < layersCount; ++i)
-		if (m_layers[i].get() != nullptr)
-			ClearLayer(i);
-}
-
-void Graphics2D::RenderRect(int layerIndex, const RECT& rect,
-	COLORREF color) NOEXCEPT_WHEN_NDEBUG
-{
-	assert(layerIndex >= 0);
-	if (DoesNotLayerExist(layerIndex))
-		AddNewLayer(layerIndex);
-
-	UniqueGDIOBJ<HBRUSH> brush(CreateSolidBrush(color));
-	FillRect(m_layers[layerIndex]->GetMemoryContext(), &rect, brush.get());
-}
-
-void Graphics2D::RenderLine(int layerIndex, Vector2i startPosition, Vector2i endPosition, COLORREF color) NOEXCEPT_WHEN_NDEBUG
-{
-	static constexpr int penWidth{ 1 };
-
-	assert(layerIndex >= 0);
-	if (DoesNotLayerExist(layerIndex))
-		AddNewLayer(layerIndex);
-
-	auto memoryContext{ m_layers[layerIndex]->GetMemoryContext() };
-	UniqueGDIOBJ<HPEN> pen(CreatePen(PS_SOLID, penWidth, color));
-	auto previousObject{ SelectObject(memoryContext, pen.get()) };
-
-	MoveToEx(memoryContext, startPosition.x, startPosition.y, NULL);
-	LineTo(memoryContext, endPosition.x, endPosition.y);
-
-	SelectObject(memoryContext, previousObject);
-}
-
-void Graphics2D::RenderGrid(int layerIndex, Vector2i startPosition, Vector2i endPosition, 
-	Vector2i sellSize, COLORREF color) NOEXCEPT_WHEN_NDEBUG
-{
-	assert(sellSize.x >= 0 && sellSize.y >= 0);
-
-	for (int x{ startPosition.x }; x < endPosition.x - 1; x += sellSize.x)
-	{
-		RenderLine(layerIndex, { x, startPosition.y }, { x, endPosition.y - 1 }, color);
-		int SecondLineX{ x + sellSize.x - 1 };
-		RenderLine(layerIndex, { SecondLineX, startPosition.y }, { SecondLineX, endPosition.y - 1 }, color);
-	}
-
-	for (int y{ startPosition.y }; y < endPosition.y - 1; y += sellSize.y)
-	{
-		RenderLine(layerIndex, { startPosition.x, y }, { endPosition.x - 1, y }, color);
-		int SecondLineY{ y + sellSize.y - 1 };
-		RenderLine(layerIndex, { startPosition.x, SecondLineY }, { endPosition.x - 1, SecondLineY }, color);
-	}
-}
-
-void Graphics2D::Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
-{
-	RenderRect(layerIndex, { 0, 0, m_layersSize.x, m_layersSize.y }, color);
+	for (auto& layer : m_layers | std::views::drop(1))
+		if (layer.get() != nullptr)
+			ClearLayer(*layer);
 }
 
 void Graphics2D::ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG
 {
 	m_layersSize = newSize;
+	m_unitSize = CalculateUnitSize(m_layersSize, { m_unitSize, m_unitSize });
+
 	HDC context{ m_renderWindow->GetDeviceContext().Get() };
-	int layersCount{ (int)m_layers.size() };
-	for (int i{ 0 }; i < layersCount; ++i)
-		if (m_layers[i].get() != nullptr)
-			m_layers[i]->Resize(context, newSize);
+	for (auto& layer : m_layers)
+		if (layer.get() != nullptr)
+			layer->Resize(context, newSize);
 }
 
-bool Graphics2D::DoesNotLayerExist(int layerIndex) const noexcept
+Vector2i Graphics2D::ConvertUnitsToPixels(Vector2i positionInUnits)
 {
-	return layerIndex >= (int)m_layers.size() || m_layers[layerIndex] == nullptr;
+	return { positionInUnits.x * m_unitSize, positionInUnits.y * m_unitSize };
 }
 
-void Graphics2D::AddNewLayer(int layerIndex) noexcept
+Vector2i Graphics2D::ConvertPixelsToUnits(Vector2i positonInPixels)
+{
+	return { positonInPixels.x / m_unitSize, positonInPixels.y / m_unitSize };
+}
+
+int Graphics2D::CalculateUnitSize(Vector2i windowSize, Vector2i units) noexcept
+{
+	return std::min(windowSize.x / units.x, windowSize.y / units.y);;
+}
+
+void Graphics2D::AddOrNotNewLayer(int layerIndex) noexcept
 {
 	int layersCount = (int)m_layers.size();
-
 	for (; layerIndex > layersCount; ++layersCount)
 		m_layers.emplace_back(nullptr);
 
@@ -136,48 +143,60 @@ void Graphics2D::AddNewLayer(int layerIndex) noexcept
 		m_layers.emplace_back(CreateCompatibleLayer());
 	else if (m_layers[layerIndex] == nullptr)
 		m_layers[layerIndex] = CreateCompatibleLayer();
-
-	ClearLayer(layerIndex);
 }
 
-std::unique_ptr<RenderLayer> Graphics2D::CreateCompatibleLayer() const noexcept
+std::unique_ptr<RenderLayer> Graphics2D::CreateCompatibleLayer() noexcept
 {
-	return std::make_unique<RenderLayer>(m_renderWindow->GetDeviceContext().Get(), m_layersSize);
+	auto layer{ std::make_unique<RenderLayer>(m_renderWindow->GetDeviceContext().Get(), m_layersSize) };
+	ClearLayer(*layer);
+
+	return layer;
 }
 
-void Graphics2D::MergeTwoBitmaps(HDC destinationLayerContext, Vector2i destinationPosition,
-	HDC sourceLayerContext, Box2i boundingBox, float scale)
+void Graphics2D::MergeTwoLayers(HDC destinationLayerContext, HDC sourceLayerContext)
 {
-	auto boxPosition{ boundingBox.GetPosition() };
-	auto boxSize{ boundingBox.GetSize() };
-
-	if (!TransparentBlt(destinationLayerContext, destinationPosition.x, destinationPosition.y,
-		(int)round(boxSize.x * scale), (int)round(boxSize.y * scale),
-		sourceLayerContext, boxPosition.x, boxPosition.y,
-		boxSize.x, boxSize.y, (UINT)(chroma)))
-		throw std::runtime_error("Error when merging");
+	if (!TransparentBlt(destinationLayerContext, 0, 0, m_layersSize.x, m_layersSize.y,
+		sourceLayerContext, 0, 0, m_layersSize.x, m_layersSize.y, (UINT)chroma))
+		throw std::runtime_error("An error occurred while merging two layers");
 }
 
 void Graphics2D::MergeLayers()
 {
-	int layersCount{ (int)m_layers.size() };
-	if (layersCount == 1)
-		return;
-
 	RenderLayer& destinationLayer{ *m_layers[m_mainLayerIndex] };
-	for (int i{ m_mainLayerIndex + 1 }; i < layersCount; ++i)
-	{
-		if (m_layers[i].get() != nullptr && m_layers[i]->IsUsed())
-		{ 
-			RenderLayer& sourceLayer{ *m_layers[i] };
-			MergeTwoBitmaps(destinationLayer.GetMemoryContext(), {0, 0}, sourceLayer.GetMemoryContext(),
-				{ { 0, 0 }, { m_layersSize.x, m_layersSize.y } }, 1.f);
-		}
-	}
+	for (auto& layer : m_layers | std::views::drop(1))
+		if (layer.get() != nullptr && layer->IsUsed())
+			MergeTwoLayers(destinationLayer.GetMemoryContext(), layer->GetMemoryContext());
+}
+
+void Graphics2D::RenderSprite(HDC layerContext, Vector2i positionInPixels, HDC spriteContext, Box2i boundingBox, int sizeInUnits)
+{
+	auto boundingBoxPosition{ boundingBox.GetPosition() };
+	auto boundingBoxSize{ boundingBox.GetSize() };
+	if (!TransparentBlt(layerContext, positionInPixels.x, positionInPixels.y, 
+		sizeInUnits * m_unitSize, sizeInUnits * m_unitSize,
+		spriteContext, boundingBoxPosition.x, boundingBoxPosition.y, 
+		boundingBoxSize.x, boundingBoxSize.y, (UINT)chroma))
+		throw std::runtime_error("An error occurred while rendering a sprite");
+}
+
+void Graphics2D::ClearLayer(RenderLayer& layer) NOEXCEPT_WHEN_NDEBUG
+{
+	Fill(layer, chroma);
+	layer.SetUsed(false);
 }
 
 void Graphics2D::ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG
 {
-	Fill(layerIndex, chroma);
-	m_layers[layerIndex]->SetUsed(false);
+	ClearLayer(*m_layers[layerIndex]);
+}
+
+void Graphics2D::Fill(RenderLayer& layer, COLORREF color)
+{
+	RenderRect(layer, { 0, 0, m_layersSize.x, m_layersSize.y }, color);
+}
+
+void Graphics2D::RenderRect(RenderLayer& layer, const RECT& rect, COLORREF color) NOEXCEPT_WHEN_NDEBUG
+{
+	UniqueGDIOBJ<HBRUSH> brush(CreateSolidBrush(color));
+	FillRect(layer.GetMemoryContext(), &rect, brush.get());
 }
