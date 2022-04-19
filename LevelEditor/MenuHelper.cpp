@@ -5,7 +5,7 @@
 
 bool MenuHelper::IsOwned(int itemID, int subMenuID)
 {
-	assert(subMenuID >= 0 && subMenuID <= 2);
+	assert(subMenuID >= 10 && subMenuID <= 12);
 	assert((itemID >= 30001 && subMenuID <= 30006) ||
 		itemID >= 40001 && subMenuID <= 40005 ||
 		itemID >= 50001 && subMenuID <= 50002);

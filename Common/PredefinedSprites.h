@@ -9,11 +9,11 @@
 class PredefinedSprites
 {
 public:
-	static const std::wstring wallFullRelativePath;
-	static const std::wstring roadFullRelativePath;
-	static const std::wstring crossFullRelativePath;
-	static const std::wstring barrelFullRelativePath;
-	static const std::wstring characterFullRelativePath;
+	static const std::wstring wallFullPath;
+	static const std::wstring roadFullPath;
+	static const std::wstring crossFullPath;
+	static const std::wstring barrelFullPath;
+	static const std::wstring characterFullPath;
 
 	PredefinedSprites() = delete;
 	PredefinedSprites(const PredefinedSprites&) = delete;

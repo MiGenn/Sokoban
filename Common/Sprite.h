@@ -13,7 +13,7 @@ public:
 
 	Sprite& operator=(Sprite&& right) noexcept;
 
-	const std::wstring& GetFullRelativePath() const noexcept;
+	const std::wstring& GetFullPath() const noexcept;
 	HBITMAP GetBitmap() const noexcept;
 	bool IsEmpty() const noexcept;
 
@@ -21,8 +21,8 @@ public:
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
 
 private:
-	const std::wstring* m_fullPath{ &StringUtilities::empty };
+	std::wstring m_fullPath;
 	HBITMAP m_bitmap{ NULL };
 
-	void Initialize(const std::wstring& fullPath);
+	void InitializeBitmap();
 };
