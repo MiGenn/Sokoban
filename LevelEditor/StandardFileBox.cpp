@@ -6,7 +6,7 @@
 #define THROW_IF_DIALOG_BOX_EXCEPTION if (CommDlgExtendedError()) throw WINAPI_EXCEPTION(CommDlgExtendedError())
 
 StandardFileBox::StandardFileBox(const Window* parent, const std::wstring& initialPath, const wchar_t* filter,
-	Type type, int flags, const std::wstring& defaultFileFullName, const std::wstring& boxTitle)
+	Type type, Flag flags, const std::wstring& defaultFileFullName, const std::wstring& boxTitle)
 {
 	wchar_t fileFullPathBuffer[MAX_PATH];
 	wcsncpy_s(fileFullPathBuffer, defaultFileFullName.c_str(), MAX_PATH);
@@ -19,7 +19,7 @@ StandardFileBox::StandardFileBox(const Window* parent, const std::wstring& initi
 	fileCriterias.nMaxFile = MAX_PATH;
 	fileCriterias.lpstrInitialDir = initialPath.c_str();
 	fileCriterias.lpstrTitle = boxTitle.empty() ? NULL : boxTitle.c_str();
-	fileCriterias.Flags = flags;
+	fileCriterias.Flags = (int)flags;
 
 	decltype(&GetOpenFileName) showBoxFunction =
 		type == Type::Open ? GetOpenFileName : GetSaveFileName;

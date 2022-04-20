@@ -276,35 +276,13 @@ void EditorWindow::OnCreateButtonClick()
 			QuestionBox questionBox(this, L"Do you want to use the previous folder?");
 			if (questionBox.IsOKButtonPressed())
 			{
-				if (!FileUtilities::IsPathValid(m_levelPath.GetPath()))
-				{
-					MessageBox(m_handle, L"The previous path is invalid. Choose a new one", L"Error", MB_ICONERROR);
-					m_levelPath = GetPathFromUser();
-					if (m_levelPath.IsPathEmpty())
-						return;
-				}
-				//
-				if (FileUtilities::IsPathValid(m_levelPath.GetPath() + newName))
-				{
-					QuestionBox questionBox(this, newName + L" already exists in the folder. Do you want to replace it?");
-					if (questionBox.IsCancelButtonPressed())
-					{
-						StandardFileBox saveFileBox(this, m_levelPath.GetPath(), m_levelFilter,
-							StandardFileBox::Type::Save, OFN_OVERWRITEPROMPT, newName);
-						if (saveFileBox.IsOKButtonPressed())
-						{
-							m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
-							m_level.ResetObject(new Level());
-							OnLevelDeletedOrLoaded();
-							return;
-						}
-						else
-						{
-							return;
-						}
-					}
-				}
-				//
+				if (!TryValidateLevelPathIfInvalid())
+					return;
+
+				if (TryValidateFullPathIfAnotherFileExists(m_levelPath.GetPath(), newName))
+					newName = UnsafeUtilities::MakeNonConstForMove(m_levelPath.GetFullName());
+				else
+					return;
 			}
 			else
 			{
@@ -357,10 +335,7 @@ void EditorWindow::OnSaveButtonClick()
 	else
 	{
 		assert(m_levelPath.IsFullNameEmpty() != true);
-		if (!m_level.IsChanged())
-			return;
-
-		if (!CanLevelBeSaved())
+		if (!m_level.IsChanged() || !CanLevelBeSaved())
 			return;
 
 		if (m_levelPath.IsPathEmpty())
@@ -368,26 +343,8 @@ void EditorWindow::OnSaveButtonClick()
 			auto selectedPath = GetPathFromUser();
 			if (!selectedPath.empty())
 			{
-				if (FileUtilities::IsPathValid(selectedPath + m_levelPath.GetFullName()))
-				{
-					QuestionBox questionBox(this, m_levelPath.GetFullName() + L" already exists in the folder. Do you want to replace it?");
-					if (questionBox.IsCancelButtonPressed())
-					{
-						StandardFileBox saveFileBox(this, Editor::ModulePath, m_levelFilter,
-							StandardFileBox::Type::Save, OFN_OVERWRITEPROMPT, m_levelPath.GetFullName());
-						if (saveFileBox.IsOKButtonPressed())
-						{
-							m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
-						}
-						else
-						{
-							return;
-						}
-					}
-				}
-
-				if (m_levelPath.IsPathEmpty())
-					m_levelPath.SetPath(std::move(selectedPath));
+				if (!TryValidateFullPathIfAnotherFileExists(selectedPath, m_levelPath.GetFullName()))
+					return;
 			}
 			else
 			{
@@ -416,7 +373,7 @@ void EditorWindow::OnSaveAsButtonClick()
 			return;
 
 		StandardFileBox saveFileBox(this, Editor::ModulePath, m_levelFilter,
-			StandardFileBox::Type::Save, OFN_OVERWRITEPROMPT, m_levelPath.GetFullName());
+			StandardFileBox::Type::Save, StandardFileBox::Flag::OverwritePrompt, m_levelPath.GetFullName());
 		if (saveFileBox.IsOKButtonPressed())
 		{
 			m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
@@ -443,33 +400,16 @@ void EditorWindow::OnRenameButtonClick()
 		auto newName{ enterTextBox.GetText() + Level::FileExtension };
 		if (!m_levelPath.GetFullPath().empty())
 		{
-			if (!FileUtilities::IsPathValid(m_levelPath.GetFullPath()))
+			if (!m_levelPath.GetPath().empty() && !FileUtilities::IsPathValid(m_levelPath.GetPath()))
 			{
 				MessageBox(m_handle, L"Cannot find the folder", L"Error", MB_ICONERROR);
 				m_levelPath.ClearPath();
 			}
-
-			if (FileUtilities::IsPathValid(m_levelPath.GetPath() + newName))
+			else
 			{
-				QuestionBox questionBox(this, newName + L" already exists in the folder. Do you want to replace it?");
-				if (questionBox.IsCancelButtonPressed())
-				{
-					StandardFileBox saveFileBox(this, m_levelPath.GetPath(), m_levelFilter,
-						StandardFileBox::Type::Save, OFN_OVERWRITEPROMPT, newName);
-					if (saveFileBox.IsOKButtonPressed())
-					{
-						m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
-					}
-
-					return;
-				}
-				else
-				{
-					m_levelPath.SetFullName(std::move(newName));
-					m_level.GetForEditing();
-					OnSaveButtonClick();
-					return;
-				}
+				TryValidateFullPathIfAnotherFileExists(m_levelPath.GetPath(), newName);
+				m_level.GetForEditing();
+				return;
 			}
 		}
 
@@ -611,9 +551,43 @@ bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
 	return false;
 }
 
-bool EditorWindow::AlreadyExists(const std::wstring& levelFullName)
-{ ///////
-	return false;
+bool EditorWindow::TryValidateLevelPathIfInvalid()
+{
+	if (!FileUtilities::IsPathValid(m_levelPath.GetPath()))
+	{
+		MessageBox(m_handle, L"The folder is invalid. Choose a new one", L"Error", MB_ICONERROR);
+		m_levelPath.SetPath(GetPathFromUser());
+		if (m_levelPath.IsPathEmpty())
+			return false;
+	}
+
+	return true;
+}
+
+bool EditorWindow::TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName)
+{
+	auto fullPath{ validNewPath + newFullName };
+	if (FileUtilities::IsPathValid(fullPath))
+	{
+		QuestionBox questionBox(this, newFullName + L" already exists in the folder. Do you want to replace it?");
+		if (questionBox.IsCancelButtonPressed())
+		{
+			StandardFileBox saveFileBox(this, validNewPath, m_levelFilter,
+				StandardFileBox::Type::Save, StandardFileBox::Flag::OverwritePrompt, newFullName);
+			if (saveFileBox.IsOKButtonPressed())
+			{
+				m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	m_levelPath.SetFullPath(std::move(fullPath));
+	return true;
 }
 
 bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel()

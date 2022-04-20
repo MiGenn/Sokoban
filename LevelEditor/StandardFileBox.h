@@ -11,8 +11,13 @@ public:
 		Save
 	};
 
+	enum class Flag
+	{
+		OverwritePrompt = OFN_OVERWRITEPROMPT
+	};
+
 	StandardFileBox(const Window* parent, const std::wstring& initialPath, const wchar_t* filter, 
-		Type type, int flags = 0, const std::wstring& defaultFileFullName = L"", const std::wstring& boxTitle = L"");
+		Type type, Flag flag = Flag::OverwritePrompt, const std::wstring& defaultFileFullName = L"", const std::wstring& boxTitle = L"");
 	StandardFileBox(const StandardFileBox&) = delete;
 
 	StandardFileBox& operator=(const StandardFileBox&) = delete;

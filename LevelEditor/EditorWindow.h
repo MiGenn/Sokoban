@@ -83,7 +83,8 @@ private:
 
 	bool TrySaveLevelIntoFile();
 	bool TryLoadLevelFromFile(const std::wstring& fullPath);
-	bool AlreadyExists(const std::wstring& levelFullName); //
+	bool TryValidateLevelPathIfInvalid();
+	bool TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName);
 	bool CanContinueBeforeDeletingOrResetingLevel();
 	bool CanDeleteOrAddEntity();
 	bool CanLevelBeSaved();
