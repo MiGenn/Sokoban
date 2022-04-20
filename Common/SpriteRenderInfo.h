@@ -13,14 +13,14 @@ public:
 
 	SpriteRenderInfo& operator=(const SpriteRenderInfo& right) noexcept;
 
-	void SetPosition(Vector2i newPositionInUnits) noexcept;
+	void SetPosition(Vector2f newPositionInUnits) noexcept;
 	void SetBoundingBox(Box2i newBoundingBox) noexcept;
 	void SetLayerIndex(int newLayerIndex) noexcept;
 	bool IsEmptySprite() const noexcept;
 
 	HBITMAP GetBitmap() const noexcept;
 	Box2i GetBoundingBox() const noexcept;
-	Vector2i GetPosition() const noexcept;
+	Vector2f GetPosition() const noexcept;
 	float GetSizeInUnits() const noexcept;
 	int GetLayerIndex() const noexcept;
 
@@ -30,7 +30,7 @@ public:
 private:
 	std::shared_ptr<Sprite> m_sprite;
 	Box2i m_boundingBox;
-	Vector2i m_positionInUnits;
+	Vector2f m_positionInUnits;
 	float m_sizeInUnits{ 0 };
 	int m_layerIndex{ 0 };
 };

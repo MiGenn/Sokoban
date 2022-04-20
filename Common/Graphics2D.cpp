@@ -8,7 +8,7 @@
 #pragma comment(lib, "Msimg32")
 #undef min
 
-Graphics2D::Graphics2D(Window* renderWindow, Vector2i units) NOEXCEPT_WHEN_NDEBUG :
+Graphics2D::Graphics2D(Window* renderWindow, Vector2f units) NOEXCEPT_WHEN_NDEBUG :
 	m_renderWindow(renderWindow)
 {
 	assert(renderWindow != nullptr);
@@ -74,18 +74,19 @@ void Graphics2D::RenderGrid(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
 	const Vector2i startPositionInPixels{ 0, 0 };
 	const Vector2i endPositionInPixels{ m_layersSize };
+	const int unitSize{ (int)round(m_unitSize) };
 
-	for (int x{ startPositionInPixels.x }; x < endPositionInPixels.x - 1; x += m_unitSize)
+	for (int x{ startPositionInPixels.x }; x < endPositionInPixels.x - 1; x += unitSize)
 	{
 		RenderLine(layerIndex, { x, startPositionInPixels.y }, { x, endPositionInPixels.y - 1 }, color);
-		int secondLineX{ x + m_unitSize - 1 };
+		int secondLineX{ x + unitSize - 1 };
 		RenderLine(layerIndex, { secondLineX, startPositionInPixels.y }, { secondLineX, endPositionInPixels.y - 1 }, color);
 	}
 
-	for (int y{ startPositionInPixels.y }; y < endPositionInPixels.y - 1; y += m_unitSize)
+	for (int y{ startPositionInPixels.y }; y < endPositionInPixels.y - 1; y += unitSize)
 	{
 		RenderLine(layerIndex, { startPositionInPixels.x, y }, { endPositionInPixels.x - 1, y }, color);
-		int secondLineY{ y + m_unitSize - 1 };
+		int secondLineY{ y + unitSize - 1 };
 		RenderLine(layerIndex, { startPositionInPixels.x, secondLineY }, { endPositionInPixels.x - 1, secondLineY }, color);
 	}
 }
@@ -95,7 +96,7 @@ void Graphics2D::Fill(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
 	assert(layerIndex >= 0);
 	AddOrNotNewLayer(layerIndex);
 
-	RenderRect(*m_layers[layerIndex], {0, 0, m_layersSize.x, m_layersSize.y}, color);
+	RenderRect(*m_layers[layerIndex], { 0, 0, m_layersSize.x, m_layersSize.y }, color);
 }
 
 void Graphics2D::Clear(COLORREF color) NOEXCEPT_WHEN_NDEBUG
@@ -118,17 +119,17 @@ void Graphics2D::ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG
 			layer->Resize(context, newSize);
 }
 
-Vector2i Graphics2D::ConvertUnitsToPixels(Vector2i positionInUnits)
+Vector2f Graphics2D::ConvertUnitsToPixels(Vector2f positionInUnits)
 {
 	return { positionInUnits.x * m_unitSize, positionInUnits.y * m_unitSize };
 }
 
-Vector2i Graphics2D::ConvertPixelsToUnits(Vector2i positonInPixels)
+Vector2f Graphics2D::ConvertPixelsToUnits(Vector2i positonInPixels)
 {
 	return { positonInPixels.x / m_unitSize, positonInPixels.y / m_unitSize };
 }
 
-int Graphics2D::CalculateUnitSize(Vector2i windowSize, Vector2i units) noexcept
+float Graphics2D::CalculateUnitSize(Vector2i windowSize, Vector2f units) noexcept
 {
 	return std::min(windowSize.x / units.x, windowSize.y / units.y);;
 }
@@ -168,20 +169,19 @@ void Graphics2D::MergeLayers()
 			MergeTwoLayers(destinationLayer.GetMemoryContext(), layer->GetMemoryContext());
 }
 
-void Graphics2D::RenderSprite(HDC layerContext, Vector2i positionInPixels, 
+void Graphics2D::RenderSprite(HDC layerContext, Vector2f positionInPixels, 
 	HDC spriteContext, Box2i boundingBox, float sizeInUnits)
 {
 	auto boundingBoxPosition{ boundingBox.GetPosition() };
 	auto actualSpriteSize{ (Vector2f)boundingBox.GetSize() };
 
-	auto unitSize{ (float)m_unitSize };
-	auto sizeInPixels{ sizeInUnits * unitSize };
+	auto sizeInPixels{ sizeInUnits * m_unitSize };
 	auto minScale{ std::min(sizeInPixels / actualSpriteSize.x, sizeInPixels / actualSpriteSize.y) };
 	Vector2f finalSpriteSize(actualSpriteSize.x * minScale, actualSpriteSize.y * minScale);
 	Vector2f shift((sizeInPixels - finalSpriteSize.x) / (sizeInPixels / finalSpriteSize.x),
 		(sizeInPixels - finalSpriteSize.y) / (sizeInPixels / finalSpriteSize.y) );
 
-	auto finalSpritePosition{ (Vector2f)positionInPixels + shift };
+	auto finalSpritePosition{ positionInPixels + shift };
 	if (!TransparentBlt(layerContext, (int)round(finalSpritePosition.x), (int)round(finalSpritePosition.y),
 		(int)round(finalSpriteSize.x), (int)round(finalSpriteSize.y),
 		spriteContext, boundingBoxPosition.x, boundingBoxPosition.y, 

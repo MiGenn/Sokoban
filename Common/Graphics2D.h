@@ -9,7 +9,7 @@ class Graphics2D
 public:
 	static constexpr COLORREF chroma{ RGB(102, 0, 51) };
 	
-	Graphics2D(Window* renderWindow, Vector2i units) NOEXCEPT_WHEN_NDEBUG;
+	Graphics2D(Window* renderWindow, Vector2f units) NOEXCEPT_WHEN_NDEBUG;
 	Graphics2D(const Graphics2D&) = delete;
 
 	Graphics2D& operator=(const Graphics2D&) = delete;
@@ -24,18 +24,18 @@ public:
 	void Clear(COLORREF color = RGB(0, 0, 0)) NOEXCEPT_WHEN_NDEBUG;
 
 	void ResizeLayers(Vector2i newSize) NOEXCEPT_WHEN_NDEBUG;
-	Vector2i ConvertUnitsToPixels(Vector2i positionInUnits);
-	Vector2i ConvertPixelsToUnits(Vector2i positonInPixels);
+	Vector2f ConvertUnitsToPixels(Vector2f positionInUnits);
+	Vector2f ConvertPixelsToUnits(Vector2i positonInPixels);
 
 private:
 	static constexpr int m_mainLayerIndex{ 0 };
-	int m_unitSize;
+	float m_unitSize;
 	Vector2i m_layersSize;
 	Window* m_renderWindow;
 
 	std::vector<std::unique_ptr<RenderLayer>> m_layers;
 
-	int CalculateUnitSize(Vector2i windowSize, Vector2i units) noexcept;
+	float CalculateUnitSize(Vector2i windowSize, Vector2f units) noexcept;
 
 	void AddOrNotNewLayer(int layerIndex) noexcept;
 	std::unique_ptr<RenderLayer> CreateCompatibleLayer() noexcept;
@@ -44,7 +44,7 @@ private:
 	void ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG;
 	void ClearLayer(RenderLayer& layer) NOEXCEPT_WHEN_NDEBUG;
 	
-	void RenderSprite(HDC layerContext, Vector2i positionInPixels, 
+	void RenderSprite(HDC layerContext, Vector2f positionInPixels, 
 		HDC spriteContext, Box2i boundingBox, float sizeInUnits);
 	void RenderRect(RenderLayer& layer, const RECT& rect, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
 	void Fill(RenderLayer& layer, COLORREF color) NOEXCEPT_WHEN_NDEBUG;

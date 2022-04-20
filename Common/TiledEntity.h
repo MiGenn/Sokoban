@@ -29,9 +29,9 @@ public:
 
 	void Move(Vector2i translation) noexcept;
 	bool IsCollision(const TiledEntity& otherTiledEntity) const noexcept;
-	void SetPosition(Vector2i newPositionInUnits) noexcept;
+	void SetPosition(Vector2f newPositionInUnits) noexcept;
 
-	Vector2i GetPosition() const noexcept;
+	Vector2f GetPosition() const noexcept;
 	Tag GetTag() const noexcept;
 	const SpriteRenderInfo& GetRenderInfo() const noexcept;
 
@@ -41,7 +41,7 @@ public:
 	constexpr bool IsRegistred() const noexcept override;
 
 private:
-	Vector2i m_positionInUnits;
+	Vector2f m_positionInUnits;
 	Tag m_tag{ Tag::Unknown };
 	mutable SpriteRenderInfo m_renderInfo;
 };

@@ -63,12 +63,12 @@ void TiledEntity::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 	m_renderInfo.DeserializeFromOpenedFileToSelf(file);
 }
 
-void TiledEntity::SetPosition(Vector2i newPositionInUnits) noexcept
+void TiledEntity::SetPosition(Vector2f newPositionInUnits) noexcept
 {
 	m_positionInUnits = newPositionInUnits;
 }
 
-Vector2i TiledEntity::GetPosition() const noexcept
+Vector2f TiledEntity::GetPosition() const noexcept
 {
 	return m_positionInUnits;
 }

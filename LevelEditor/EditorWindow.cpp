@@ -555,7 +555,8 @@ void EditorWindow::ChangeSubmenusWhenSimulation(ChangeSubmenuOption option)
 
 void EditorWindow::SetCurrentEntityPosition(POINTS positionInPixels)
 {
-	auto entityPosition{ graphics.ConvertPixelsToUnits({ positionInPixels.x, positionInPixels.y }) };
+	auto position{ graphics.ConvertPixelsToUnits({ positionInPixels.x, positionInPixels.y }) };
+	Vector2f entityPosition{ floor(position.x), floor(position.y) };
 	m_currentEntity->SetPosition(entityPosition);
 }
 

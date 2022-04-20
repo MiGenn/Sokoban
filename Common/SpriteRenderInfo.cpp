@@ -36,7 +36,7 @@ SpriteRenderInfo& SpriteRenderInfo::operator=(const SpriteRenderInfo& right) noe
     return *this;
 }
 
-void SpriteRenderInfo::SetPosition(Vector2i newPositionInUnits) noexcept
+void SpriteRenderInfo::SetPosition(Vector2f newPositionInUnits) noexcept
 {
     m_positionInUnits = newPositionInUnits;
 }
@@ -66,7 +66,7 @@ Box2i SpriteRenderInfo::GetBoundingBox() const noexcept
     return m_boundingBox;
 }
 
-Vector2i SpriteRenderInfo::GetPosition() const noexcept
+Vector2f SpriteRenderInfo::GetPosition() const noexcept
 {
     return m_positionInUnits;
 }

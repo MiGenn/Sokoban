@@ -25,23 +25,22 @@ int Editor::Run()
 {
 	while (true)
 	{
+		WaitMessage();
 		if (auto exitCode = RetrieveAndRouteMessages())
 			return *exitCode;
 
-		if (m_window.IsSimulation())
-			m_state = EditorState::LevelSimulation;
-		else
-			m_state = EditorState::Editing;
-
 		Simulate();
 		Render();
-
-		WaitMessage();
 	}
 }
 
 void Editor::Simulate()
 {
+	if (m_window.IsSimulation())
+		m_state = EditorState::LevelSimulation;
+	else
+		m_state = EditorState::Editing;
+
 	switch (m_state)
 	{
 	case Editor::EditorState::LevelSimulation:
