@@ -19,7 +19,7 @@ const std::wstring EditorWindow::m_editorName{ L"Level Editor" };
 const std::wstring EditorWindow::m_levelHintText{ L"Enter level name" };
 
 EditorWindow::EditorWindow(Vector2i size) : Window(size),
-	graphics(this)
+	graphics(this, defaultSizeInUnits)
 {
 	const HINSTANCE moduleHandle{ GetModuleHandle(nullptr) };
 	constexpr DWORD windowStyle{ WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_VISIBLE };

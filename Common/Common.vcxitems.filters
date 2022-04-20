@@ -115,7 +115,7 @@
     <Filter Include="Header Files\Game Layer\Sprites">
       <UniqueIdentifier>{f79bdf81-b186-45e1-8427-dc5833c5520d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game Layer\Types">
+    <Filter Include="Header Files\Types">
       <UniqueIdentifier>{348501df-736c-42b0-9f01-fce27aca96b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -139,10 +139,10 @@
       <Filter>Header Files\Game Layer\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h">
-      <Filter>Header Files\Game Layer\Types</Filter>
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Box2D.h">
-      <Filter>Header Files\Game Layer\Types</Filter>
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.h">
       <Filter>Header Files\Binary Serialization\DefaultTypeSerializers</Filter>

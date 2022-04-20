@@ -10,7 +10,7 @@ SpriteRenderInfo::SpriteRenderInfo() noexcept :
 }
 
 SpriteRenderInfo::SpriteRenderInfo(std::shared_ptr<Sprite> sprite, 
-    Box2i boundingBox, int sizeInUnits, int layerIndex) NOEXCEPT_WHEN_NDEBUG :
+    Box2i boundingBox, float sizeInUnits, int layerIndex) NOEXCEPT_WHEN_NDEBUG :
     m_sprite(std::move(sprite)), m_boundingBox(boundingBox), 
     m_sizeInUnits(sizeInUnits), m_layerIndex(layerIndex)
 {
@@ -71,7 +71,7 @@ Vector2i SpriteRenderInfo::GetPosition() const noexcept
     return m_positionInUnits;
 }
 
-int SpriteRenderInfo::GetSizeInUnits() const noexcept
+float SpriteRenderInfo::GetSizeInUnits() const noexcept
 {
     return m_sizeInUnits;
 }

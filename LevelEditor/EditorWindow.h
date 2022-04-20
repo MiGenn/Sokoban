@@ -10,6 +10,8 @@
 class EditorWindow final : public Window
 {
 public:
+	static inline const Vector2i defaultSizeInUnits{ 32, 18 };
+
 	Mouse mouse;
 	Keyboard keyboard;
 	Graphics2D graphics;

@@ -3,7 +3,7 @@
 #include "PredefinedSprites.h"
 
 static const Box2i tileBoundingBox{ { 0, 0 }, { TiledEntity::tileSize, TiledEntity::tileSize } };
-static constexpr int sizeInUnits{ 1 };
+static constexpr float sizeInUnits{ 1.f };
 
 std::unique_ptr<TiledEntity> TiledEntityFactory::CreateWall()
 {

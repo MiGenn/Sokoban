@@ -8,9 +8,8 @@ class Graphics2D
 {
 public:
 	static constexpr COLORREF chroma{ RGB(102, 0, 51) };
-	static inline const Vector2i defaultUnitSize{ 16, 9 };
-
-	Graphics2D(Window* renderWindow, Vector2i units = defaultUnitSize) NOEXCEPT_WHEN_NDEBUG;
+	
+	Graphics2D(Window* renderWindow, Vector2i units) NOEXCEPT_WHEN_NDEBUG;
 	Graphics2D(const Graphics2D&) = delete;
 
 	Graphics2D& operator=(const Graphics2D&) = delete;
@@ -45,7 +44,8 @@ private:
 	void ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG;
 	void ClearLayer(RenderLayer& layer) NOEXCEPT_WHEN_NDEBUG;
 	
-	void RenderSprite(HDC layerContext, Vector2i positionInPixels, HDC spriteContext, Box2i boundingBox, int sizeInUnits);
+	void RenderSprite(HDC layerContext, Vector2i positionInPixels, 
+		HDC spriteContext, Box2i boundingBox, float sizeInUnits);
 	void RenderRect(RenderLayer& layer, const RECT& rect, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
 	void Fill(RenderLayer& layer, COLORREF color) NOEXCEPT_WHEN_NDEBUG;
 };

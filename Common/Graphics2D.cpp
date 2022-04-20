@@ -168,14 +168,24 @@ void Graphics2D::MergeLayers()
 			MergeTwoLayers(destinationLayer.GetMemoryContext(), layer->GetMemoryContext());
 }
 
-void Graphics2D::RenderSprite(HDC layerContext, Vector2i positionInPixels, HDC spriteContext, Box2i boundingBox, int sizeInUnits)
+void Graphics2D::RenderSprite(HDC layerContext, Vector2i positionInPixels, 
+	HDC spriteContext, Box2i boundingBox, float sizeInUnits)
 {
 	auto boundingBoxPosition{ boundingBox.GetPosition() };
-	auto boundingBoxSize{ boundingBox.GetSize() };
-	if (!TransparentBlt(layerContext, positionInPixels.x, positionInPixels.y, 
-		sizeInUnits * m_unitSize, sizeInUnits * m_unitSize,
+	auto actualSpriteSize{ (Vector2f)boundingBox.GetSize() };
+
+	auto unitSize{ (float)m_unitSize };
+	auto sizeInPixels{ sizeInUnits * unitSize };
+	auto minScale{ std::min(sizeInPixels / actualSpriteSize.x, sizeInPixels / actualSpriteSize.y) };
+	Vector2f finalSpriteSize(actualSpriteSize.x * minScale, actualSpriteSize.y * minScale);
+	Vector2f shift((sizeInPixels - finalSpriteSize.x) / (sizeInPixels / finalSpriteSize.x),
+		(sizeInPixels - finalSpriteSize.y) / (sizeInPixels / finalSpriteSize.y) );
+
+	auto finalSpritePosition{ (Vector2f)positionInPixels + shift };
+	if (!TransparentBlt(layerContext, (int)round(finalSpritePosition.x), (int)round(finalSpritePosition.y),
+		(int)round(finalSpriteSize.x), (int)round(finalSpriteSize.y),
 		spriteContext, boundingBoxPosition.x, boundingBoxPosition.y, 
-		boundingBoxSize.x, boundingBoxSize.y, (UINT)chroma))
+		(int)actualSpriteSize.x, (int)actualSpriteSize.y, (UINT)chroma))
 		throw std::runtime_error("An error occurred while rendering a sprite");
 }
 
