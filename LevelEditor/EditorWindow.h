@@ -10,8 +10,6 @@
 class EditorWindow final : public Window
 {
 public:
-	static inline const Vector2i defaultSizeInUnits{ 32, 18 };
-
 	Mouse mouse;
 	Keyboard keyboard;
 	Graphics2D graphics;
@@ -21,8 +19,6 @@ public:
 	bool TryLoadLevel(const std::wstring& fullPath);
 	const Level* GetLevel() const noexcept;
 	bool IsSimulation() const noexcept;
-
-	void Test();
 
 private:
 	enum class HotKey

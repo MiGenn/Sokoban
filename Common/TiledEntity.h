@@ -28,7 +28,6 @@ public:
 	bool operator!=(const TiledEntity& right) noexcept;
 
 	void Move(Vector2i translation) noexcept;
-	bool IsCollision(const TiledEntity& otherTiledEntity) const noexcept;
 	void SetPosition(Vector2f newPositionInUnits) noexcept;
 
 	Vector2f GetPosition() const noexcept;

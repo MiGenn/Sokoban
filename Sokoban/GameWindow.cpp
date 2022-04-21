@@ -27,6 +27,9 @@ void GameWindow::Resize(Vector2i size)
 
 LRESULT GameWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (keyboard.IsProcessed())
+		keyboard.ResetState();
+
 	switch (message)
 	{
 	case WM_LBUTTONDOWN:

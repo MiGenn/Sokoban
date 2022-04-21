@@ -1,6 +1,7 @@
 #include "Level.h"
 
 #include "VectorBinarySerializer.h"
+#include "VectorUtilities.h"
 
 const std::wstring Level::FolderRelativePath{ L"\\Content\\Levels\\" };
 const std::wstring Level::FileExtension{ L".lvl" };
@@ -8,6 +9,19 @@ const std::wstring Level::FileExtension{ L".lvl" };
 Level::Level(std::ifstream& file)
 {
 	DeserializeFromOpenedFileToSelf(file);	
+}
+
+Level::Level(const Level& level)
+{
+	(*this) = level;
+}
+
+Level& Level::operator=(const Level& right)
+{
+	m_entities = VectorUtilities::Duplicate(right.m_entities);
+	CacheEntities();
+
+	return *this;
 }
 
 TiledEntity& Level::operator[](int i)

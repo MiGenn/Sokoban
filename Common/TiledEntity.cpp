@@ -2,7 +2,6 @@
 
 #include <stdexcept>
 #include "Serializers.h"
-#include "TileCollisionDetector.h"
 #include "TypeRegistrator.h"
 
 static TypeRegistrator<TiledEntity> registrator;
@@ -83,11 +82,6 @@ const SpriteRenderInfo& TiledEntity::GetRenderInfo() const noexcept
 	m_renderInfo.SetPosition(m_positionInUnits);
 
 	return m_renderInfo;
-}
-
-bool TiledEntity::IsCollision(const TiledEntity& otherTiledEntity) const noexcept
-{
-	return TileCollisionDetector::IsCollision(m_positionInUnits, otherTiledEntity.m_positionInUnits);;
 }
 
 void TiledEntity::Move(Vector2i translation) noexcept

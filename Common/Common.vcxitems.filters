@@ -43,9 +43,6 @@
     <Filter Include="Source Files\Winapi Layer\Graphics">
       <UniqueIdentifier>{252666b5-cbf7-4ce5-8d76-34b5f4789635}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Winapi Layer\Input">
-      <UniqueIdentifier>{eb3c964a-e783-40ac-bbe3-be568093424d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Winapi Layer\Exception">
       <UniqueIdentifier>{78e80aaa-afcb-4a6e-993b-6f5004986405}</UniqueIdentifier>
     </Filter>
@@ -91,9 +88,6 @@
     <Filter Include="Header Files\Winapi Layer\Graphics">
       <UniqueIdentifier>{671da2dc-60bb-4c6d-bc28-4b6337562e06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Winapi Layer\Input">
-      <UniqueIdentifier>{255be183-0575-44e9-9ebd-f053b2634803}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Winapi Layer\Exception">
       <UniqueIdentifier>{79b7cd89-c356-432b-a00f-de8a31f71099}</UniqueIdentifier>
     </Filter>
@@ -118,6 +112,18 @@
     <Filter Include="Header Files\Types">
       <UniqueIdentifier>{348501df-736c-42b0-9f01-fce27aca96b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Layer\Simulation">
+      <UniqueIdentifier>{c8214bdf-e6fb-4359-93a6-4f5c53b6a0ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Layer\Simulation">
+      <UniqueIdentifier>{2dbf14c8-95fb-4120-841b-40f9e57c349d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Layer\Input">
+      <UniqueIdentifier>{eb3c964a-e783-40ac-bbe3-be568093424d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Layer\Input">
+      <UniqueIdentifier>{255be183-0575-44e9-9ebd-f053b2634803}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h">
@@ -131,12 +137,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h">
       <Filter>Header Files\Winapi Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TileCollisionDetector.h">
-      <Filter>Header Files\Game Layer\TiledEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>Header Files\Game Layer\TiledEntity</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector2D.h">
       <Filter>Header Files\Types</Filter>
@@ -178,10 +178,10 @@
       <Filter>Header Files\Binary Serialization\DefaultTypeSerializers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
-      <Filter>Header Files\Winapi Layer\Input</Filter>
+      <Filter>Header Files\Game Layer\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h">
-      <Filter>Header Files\Winapi Layer\Input</Filter>
+      <Filter>Header Files\Game Layer\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyException.h">
       <Filter>Header Files\Winapi Layer\Exception</Filter>
@@ -255,6 +255,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Simulator.h">
+      <Filter>Header Files\Game Layer\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)VectorUtilities.h">
+      <Filter>Header Files\Utilities\Cpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp">
@@ -268,12 +274,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.cpp">
       <Filter>Source Files\Winapi Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TileCollisionDetector.cpp">
-      <Filter>Source Files\Game Layer\TiledEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>Source Files\Game Layer\TiledEntity</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WstringBinarySerializer.cpp">
       <Filter>Source Files\Binary Serialization\DefaultTypeSerializers</Filter>
@@ -306,10 +306,10 @@
       <Filter>Source Files\Game Layer\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
-      <Filter>Source Files\Winapi Layer\Input</Filter>
+      <Filter>Source Files\Game Layer\Input</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
-      <Filter>Source Files\Winapi Layer\Input</Filter>
+      <Filter>Source Files\Game Layer\Input</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp">
       <Filter>Source Files\Winapi Layer\Exception</Filter>
@@ -376,6 +376,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.cpp">
       <Filter>Source Files\Utilities\Winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Simulator.cpp">
+      <Filter>Source Files\Game Layer\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)VectorUtilities.cpp">
+      <Filter>Source Files\Utilities\Cpp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

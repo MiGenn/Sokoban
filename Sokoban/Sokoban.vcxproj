@@ -162,17 +162,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Menu.h" />
     <ClInclude Include="GameResourceMacros.h" />
   </ItemGroup>
   <ItemGroup>

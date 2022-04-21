@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <array>
+#include "TiledEntity.h"
 #include "BuildInfo.h"
-#include "Character.h"
 
 class Level final : public IBinarySerializable
 {
@@ -15,9 +15,9 @@ public:
 
 	Level() noexcept = default;
 	Level(std::ifstream& file);
-	Level(const Level&) = delete;
+	Level(const Level& level);
 
-	Level& operator=(const Level&) = delete;
+	Level& operator=(const Level& right);
 	TiledEntity& operator[](int i);
 
 	bool Add(std::unique_ptr<TiledEntity>&& entity) noexcept;

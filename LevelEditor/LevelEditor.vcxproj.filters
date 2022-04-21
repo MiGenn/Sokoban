@@ -37,15 +37,21 @@
     <Filter Include="Source Files\WindowMenu">
       <UniqueIdentifier>{d0919ce6-7522-454b-a767-1156ead88040}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Application">
+      <UniqueIdentifier>{a5cc63d5-3ad6-48bc-b069-fc0e78ac2703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{acaad005-87da-43ec-b3b8-7f9ca41aac49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Window">
+      <UniqueIdentifier>{2d63cc83-7af3-4e1e-a4ca-136552a0502b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Window">
+      <UniqueIdentifier>{fd942da5-f2ea-42c9-b75e-f6975de24534}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EditorWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IFileBox.cpp">
@@ -69,14 +75,14 @@
     <ClCompile Include="MenuHelper.cpp">
       <Filter>Source Files\WindowMenu</Filter>
     </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorWindow.cpp">
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EditorWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EditorResourceMacros.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -100,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="MenuHelper.h">
       <Filter>Header Files\WindowMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorWindow.h">
+      <Filter>Header Files\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

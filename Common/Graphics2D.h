@@ -7,9 +7,10 @@
 class Graphics2D
 {
 public:
+	static inline const Vector2i defaultSizeInUnits{ 32, 18 };
 	static constexpr COLORREF chroma{ RGB(102, 0, 51) };
 	
-	Graphics2D(Window* renderWindow, Vector2f units) NOEXCEPT_WHEN_NDEBUG;
+	Graphics2D(Window* renderWindow, Vector2f units = defaultSizeInUnits) NOEXCEPT_WHEN_NDEBUG;
 	Graphics2D(const Graphics2D&) = delete;
 
 	Graphics2D& operator=(const Graphics2D&) = delete;

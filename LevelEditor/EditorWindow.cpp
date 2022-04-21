@@ -12,14 +12,12 @@
 #include "UnsafeUtilities.h"
 #include "WinapiUntilities.h"
 
-#define CHECK MessageBox(NULL, L"Check", L"Check", MB_OK)
-
 const EditorWindow::Class EditorWindow::Class::editorClass;
 const std::wstring EditorWindow::m_editorName{ L"Level Editor" };
 const std::wstring EditorWindow::m_levelHintText{ L"Enter level name" };
 
 EditorWindow::EditorWindow(Vector2i size) : Window(size),
-	graphics(this, defaultSizeInUnits)
+	graphics(this)
 {
 	const HINSTANCE moduleHandle{ GetModuleHandle(nullptr) };
 	constexpr DWORD windowStyle{ WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_VISIBLE };
@@ -57,8 +55,6 @@ bool EditorWindow::TryLoadLevel(const std::wstring& fullPath)
 				return false;
 			}
 		}
-
-		MessageBox(m_handle, fileExtension.c_str(), L"Check", MB_OK);
 	}
 	
 	MessageBox(m_handle, L"The program doesn't support the file extension", L"Error", MB_ICONERROR);
@@ -75,13 +71,11 @@ bool EditorWindow::IsSimulation() const noexcept
 	return m_isSimulation;
 }
 
-void EditorWindow::Test()
-{
-
-}
-
 LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (keyboard.IsProcessed())
+		keyboard.ResetState();
+
 	switch (message)
 	{
 	case WM_LBUTTONDOWN:
@@ -607,7 +601,7 @@ bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel()
 
 bool EditorWindow::CanDeleteOrAddEntity()
 {
-	return !m_level.IsNull() && m_currentEntity.get();
+	return !m_level.IsNull() && m_currentEntity;
 }
 
 bool EditorWindow::CanLevelBeSaved()

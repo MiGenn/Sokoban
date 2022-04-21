@@ -1,6 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "EditorWindow.h"
+#include "Simulator.h"
 
 class Editor final : public Application
 {
@@ -22,12 +23,17 @@ private:
 		LevelSimulation
 	};
 
-	EditorWindow m_window;
 	EditorState m_state{ EditorState::Editing };
+	EditorWindow m_window;
+	Simulator m_simulator;
+	std::unique_ptr<Level> m_levelCopy;
 	
 	void Simulate();
 	void Render();
 
 	void RenderGrid();
 	void RenderLevel();
+
+	void OnSimulationStartedOrEnded();
+	const Level* GetLevelForRendering() const;
 };

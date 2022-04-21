@@ -1,8 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "GameWindow.h"
-#include "Level.h"
-#include "CollisionManager.h"
+#include "Simulator.h"
 
 class Game final : public Application
 {
@@ -25,8 +24,8 @@ private:
 	GameWindow m_window;
 
 	GameState m_state = GameState::MainMenu;
-	CollisionManager m_collisionManager;
 	// Menu
+	Simulator m_simulator;
 	std::unique_ptr<Level> m_currentLevel;
 
 	void Simulate();
@@ -37,6 +36,4 @@ private:
 
 	void RenderMainMenu();
 	void RenderLevel();
-
-	int CountDeliveredBarrels();
 };
