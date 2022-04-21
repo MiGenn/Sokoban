@@ -200,7 +200,7 @@ void Graphics2D::ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG
 	ClearLayer(*m_layers[layerIndex]);
 }
 
-void Graphics2D::Fill(RenderLayer& layer, COLORREF color)
+void Graphics2D::Fill(RenderLayer& layer, COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
 	RenderRect(layer, { 0, 0, m_layersSize.x, m_layersSize.y }, color);
 }

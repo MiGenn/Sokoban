@@ -23,6 +23,7 @@ public:
 	Vector2D<T>& operator+=(const Vector2D<T>& right) noexcept;
 	Vector2D<T> operator-(const Vector2D<T>& right) const noexcept;
 	Vector2D<T>& operator-=(const Vector2D<T>& right) noexcept;
+	Vector2D<T> operator*(T right);
 	template<Number OutputT> operator Vector2D<OutputT>() const;
 
 	void ClampSelf(Vector2D<T> min, Vector2D<T> max) noexcept;
@@ -96,6 +97,12 @@ template<Number T>
 inline Vector2D<T>& Vector2D<T>::operator-=(const Vector2D<T>& right) noexcept
 {
 	return (*this) = (*this) - right;
+}
+
+template<Number T>
+inline Vector2D<T> Vector2D<T>::operator*(T right)
+{
+	return { x * right, y * right};
 }
 
 template<Number T>

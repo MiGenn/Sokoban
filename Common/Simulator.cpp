@@ -1,7 +1,7 @@
 #include "Simulator.h"
 
-Simulator::Simulator(Keyboard& keyboard, Mouse& mouse) noexcept :
-	m_keyboard(keyboard), m_mouse(mouse)
+Simulator::Simulator(Keyboard& keyboard) noexcept :
+	m_keyboard(keyboard)
 {
 
 }

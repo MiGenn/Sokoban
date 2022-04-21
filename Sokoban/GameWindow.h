@@ -2,13 +2,13 @@
 #include <optional>
 #include "WindowClass.h"
 #include "Graphics2D.h"
-#include "Mouse.h"
 #include "Keyboard.h"
+
+class Game;
 
 class GameWindow final : public Window
 {
 public:
-	Mouse mouse;
 	Keyboard keyboard;
 	Graphics2D graphics;
 
@@ -18,11 +18,17 @@ public:
 	GameWindow& operator=(const GameWindow&) = delete;
 
 	void Resize(Vector2i size) override;
+	void SubscribeToRestartButtonClick(std::function<void()> onFunction);
 
 private:
+	std::vector<std::function<void()>> m_subscribedFunctions;
+
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
 
 	void OnClose() noexcept;
+	void OnCommand(int controlID);
+
+	void OnRestartButtonClick();
 
 	class Class final : public WindowClass
 	{

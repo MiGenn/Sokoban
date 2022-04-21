@@ -5,7 +5,7 @@
 const std::wstring Editor::ModulePath{ WinapiUntilities::GetModulePath(NULL) };
 
 Editor::Editor() :
-	m_window({ 1280, 720 }), m_simulator(m_window.keyboard, m_window.mouse)
+	m_window({ 1280, 720 }), m_simulator(m_window.keyboard)
 {
 
 }

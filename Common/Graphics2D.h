@@ -7,7 +7,7 @@
 class Graphics2D
 {
 public:
-	static inline const Vector2i defaultSizeInUnits{ 32, 18 };
+	static inline const Vector2i defaultSizeInUnits{ 16, 9 };
 	static constexpr COLORREF chroma{ RGB(102, 0, 51) };
 	
 	Graphics2D(Window* renderWindow, Vector2f units = defaultSizeInUnits) NOEXCEPT_WHEN_NDEBUG;

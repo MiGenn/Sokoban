@@ -1,7 +1,6 @@
 #pragma once
 #include "WindowClass.h"
 #include "Graphics2D.h"
-#include "Mouse.h"
 #include "Keyboard.h"
 #include "Level.h"
 #include "ChangeWrapper.h"
@@ -10,7 +9,6 @@
 class EditorWindow final : public Window
 {
 public:
-	Mouse mouse;
 	Keyboard keyboard;
 	Graphics2D graphics;
 
@@ -23,8 +21,7 @@ public:
 private:
 	enum class HotKey
 	{
-		ControlS,
-		ControlZ
+		ControlS
 	};
 
 	enum class ChangeSubmenuOption

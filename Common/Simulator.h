@@ -1,12 +1,11 @@
 #pragma once
 #include "Keyboard.h"
-#include "Mouse.h"
 #include "Level.h"
 
 class Simulator
 {
 public:
-	Simulator(Keyboard& keyboard, Mouse& mouse) noexcept;
+	Simulator(Keyboard& keyboard) noexcept;
 	Simulator(const Simulator&) = delete;
 
 	Simulator& operator=(const Simulator&) = delete;
@@ -17,7 +16,6 @@ public:
 private:
 	bool m_isWin{ false };
 	Keyboard& m_keyboard;
-	Mouse& m_mouse;
 
 	Vector2i UpdateCharacter(TiledEntity& character) const noexcept;
 	static void HandleCollision(Level& level, Vector2i characterTranslation) noexcept;

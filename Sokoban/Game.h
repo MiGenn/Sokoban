@@ -6,6 +6,8 @@
 class Game final : public Application
 {
 public:
+	static const std::wstring ModulePath;
+
 	Game();
 	Game(const Game&) = delete;
 
@@ -14,26 +16,18 @@ public:
 	int Run() override;
 
 private:
-	enum class GameState : char
-	{
-		MainMenu,
-		EscMenu,
-		Level
-	};
-
 	GameWindow m_window;
 
-	GameState m_state = GameState::MainMenu;
-	// Menu
 	Simulator m_simulator;
 	std::unique_ptr<Level> m_currentLevel;
+	const std::wstring* m_currentLevelFullPath;
+	const std::vector<std::wstring> m_levelsFullPaths;
 
 	void Simulate();
 	void Render();
 
-	void SimulateMainMenu();
-	void SimulateLevel();
-
-	void RenderMainMenu();
-	void RenderLevel();
+	std::vector<std::wstring> FindLevelsFullPahts();
+	std::unique_ptr<Level> LoadLevel(const std::wstring& fullPath);
+	void LoadNextLevel();
+	void ReloadCurrentLevel();
 };

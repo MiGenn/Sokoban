@@ -19,7 +19,7 @@ const std::wstring EditorWindow::m_levelHintText{ L"Enter level name" };
 EditorWindow::EditorWindow(Vector2i size) : Window(size),
 	graphics(this)
 {
-	const HINSTANCE moduleHandle{ GetModuleHandle(nullptr) };
+	const auto moduleHandle{ GetModuleHandle(nullptr) };
 	constexpr DWORD windowStyle{ WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_VISIBLE };
 
 	RECT windowRect{ 0, 0, size.x, size.y };
@@ -79,16 +79,7 @@ LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_LBUTTONDOWN:
-		mouse.OnLeftButtonPressed();
 		OnLeftButtonClick(MAKEPOINTS(lParam));
-		return 0;
-
-	case WM_RBUTTONDOWN:
-		OnRightButtonClick(MAKEPOINTS(lParam));
-		return 0;
-
-	case WM_MOUSEMOVE:
-		mouse.OnMouseMove(MAKEPOINTS(lParam));
 		return 0;
 
 	case WM_KEYDOWN:
@@ -122,7 +113,6 @@ LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void EditorWindow::RegisterHotKeys()
 {
 	RegisterHotKey(m_handle, (int)HotKey::ControlS, MOD_CONTROL, 'S');
-	RegisterHotKey(m_handle, (int)HotKey::ControlZ, MOD_CONTROL, 'Z');
 }
 
 void EditorWindow::OnClose()
@@ -204,9 +194,6 @@ void EditorWindow::OnHotkey(HotKey hotKey)
 	{
 	case HotKey::ControlS:
 		OnSaveButtonClick();
-		break;
-
-	case HotKey::ControlZ:
 		break;
 	}
 }

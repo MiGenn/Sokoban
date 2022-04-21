@@ -64,6 +64,17 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // remains consistent on all systems.
 IDI_ICON                ICON                    "C:\\Users\\User\\source\\repos\\Sokoban\\Debug\\Icon.ico"
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_GAME_MENU MENU
+BEGIN
+    MENUITEM "Restart",                     ID_RESTART
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

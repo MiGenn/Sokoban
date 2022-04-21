@@ -42,7 +42,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StringBinarySerializer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics2D.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Level.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.cpp" />
@@ -87,7 +86,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StringBinarySerializer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics2D.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyException.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SpriteRenderInfo.h" />

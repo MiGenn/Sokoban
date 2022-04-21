@@ -177,9 +177,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Serializers.h">
       <Filter>Header Files\Binary Serialization\DefaultTypeSerializers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
-      <Filter>Header Files\Game Layer\Input</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Keyboard.h">
       <Filter>Header Files\Game Layer\Input</Filter>
     </ClInclude>
@@ -306,9 +303,6 @@
       <Filter>Source Files\Game Layer\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Keyboard.cpp">
-      <Filter>Source Files\Game Layer\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
       <Filter>Source Files\Game Layer\Input</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MyException.cpp">
