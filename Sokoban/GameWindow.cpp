@@ -18,6 +18,8 @@ GameWindow::GameWindow(Vector2i size) :
 
 	if (!m_handle)
 		throw WINAPI_LAST_EXCEPTION();
+
+	RegisterHotKey(m_handle, (int)HotKey::Restart, NULL, 'R');
 }
 
 void GameWindow::Resize(Vector2i size)
@@ -54,6 +56,10 @@ LRESULT GameWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		OnCommand((int)wParam);
 		return 0;
 
+	case WM_HOTKEY:
+		OnHotKey((HotKey)wParam);
+		break;
+
 	case WM_CLOSE:
 		OnClose();
 		return 0;
@@ -82,6 +88,16 @@ void GameWindow::OnRestartButtonClick()
 {
 	for (auto& subscribedFunction : m_subscribedFunctions)
 		subscribedFunction();
+}
+
+void GameWindow::OnHotKey(HotKey hotKey)
+{
+	switch (hotKey)
+	{
+	case HotKey::Restart:
+		OnRestartButtonClick();
+		break;
+	}
 }
 
 const GameWindow::Class GameWindow::Class::gameWindow;

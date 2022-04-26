@@ -21,6 +21,11 @@ public:
 	void SubscribeToRestartButtonClick(std::function<void()> onFunction);
 
 private:
+	enum class HotKey
+	{
+		Restart
+	};
+
 	std::vector<std::function<void()>> m_subscribedFunctions;
 
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
@@ -29,6 +34,7 @@ private:
 	void OnCommand(int controlID);
 
 	void OnRestartButtonClick();
+	void OnHotKey(HotKey hotKey);
 
 	class Class final : public WindowClass
 	{
