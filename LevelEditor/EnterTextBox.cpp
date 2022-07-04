@@ -3,7 +3,7 @@
 #include "EditorResourceMacros.h"
 
 EnterTextBox::EnterTextBox(const Window* parent, const std::wstring& hintText) : 
-	CustomDialogBox(parent), hintText(hintText)
+	CustomDialogBox(parent), m_hintText(hintText)
 {
 	HWND parentHandle{ NULL };
 	if (parent)
@@ -51,7 +51,7 @@ INT_PTR EnterTextBox::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void EnterTextBox::OnInit()
 {
 	auto hintTextHandle{ GetDlgItem(m_handle, ID_ENTER_TEXT_TEXT) };
-	SetWindowText(hintTextHandle, hintText.c_str());
+	SetWindowText(hintTextHandle, m_hintText.c_str());
 
 	RegisterHotKey(m_handle, (int)HotKey::Enter, NULL, VK_RETURN);
 	RegisterHotKey(m_handle, (int)HotKey::Escape, NULL, VK_ESCAPE);

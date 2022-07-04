@@ -2,7 +2,7 @@
 #include "IFileBox.h"
 #include "Window.h"
 
-class StandardFileBox : public IFileBox
+class StandardFileBox final : public IFileBox
 {
 public:
 	enum class Type
@@ -22,10 +22,10 @@ public:
 
 	StandardFileBox& operator=(const StandardFileBox&) = delete;
 
-	const std::wstring& GetFileFullPath() const noexcept override final;
+	const std::wstring& GetFileFullPath() const noexcept override;
 
-	bool IsOKButtonPressed() const noexcept override final;
-	bool IsCancelButtonPressed() const noexcept override final;
+	bool IsOKButtonPressed() const noexcept override;
+	bool IsCancelButtonPressed() const noexcept override;
 
 private:
 	bool m_isOKButtonPressed{ false };

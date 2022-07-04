@@ -33,10 +33,10 @@ void RenderLayer::Resize(HDC referenceContext, Vector2i newSize) NOEXCEPT_WHEN_N
 	assert(newSize.x > 0 && newSize.y > 0);
 	m_isUsed = false;
 	m_size = newSize;
-	m_contextSelect.Reset();
+	m_bitmapSelectWrapper.Reset();
 
 	m_context.Reset(CreateCompatibleDC(referenceContext));
-	assert(m_context.Get() != NULL);
+	assert(m_context.Get());
 	m_bitmap.reset(CreateCompatibleBitmap(referenceContext, newSize.x, newSize.y));
-	m_contextSelect.Reset(m_context.Get(), m_bitmap.get());
+	m_bitmapSelectWrapper.Reset(m_context.Get(), m_bitmap.get());
 }

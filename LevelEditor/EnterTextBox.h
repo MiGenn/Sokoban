@@ -20,7 +20,7 @@ private:
 		Escape
 	};
 
-	const std::wstring hintText;
+	const std::wstring m_hintText;
 
 	bool m_isCancelButtonPressed{ false };
 	std::wstring m_enteredText;

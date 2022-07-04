@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace FileUtilities
+namespace Utilities::Cpp::Path
 {
 	bool IsPathValid(const std::wstring& fileFullPath) noexcept;
 };

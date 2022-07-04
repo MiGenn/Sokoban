@@ -1,11 +1,17 @@
 #pragma once
 #include "TiledEntity.h"
 
-namespace TiledEntityFactory
+class TiledEntityFactory
 {
-	std::unique_ptr<TiledEntity> CreateWall();
-	std::unique_ptr<TiledEntity> CreateRoad();
-	std::unique_ptr<TiledEntity> CreateBarrel();
-	std::unique_ptr<TiledEntity> CreateCross();
-	std::unique_ptr<TiledEntity> CreateCharacter();
-}
+public:
+	TiledEntityFactory() = delete;
+	TiledEntityFactory(const TiledEntityFactory&) = delete;
+
+	TiledEntityFactory& operator=(const TiledEntityFactory&) = delete;
+
+	static std::unique_ptr<TiledEntity> CreateWall();
+	static std::unique_ptr<TiledEntity> CreateRoad();
+	static std::unique_ptr<TiledEntity> CreateBarrel();
+	static std::unique_ptr<TiledEntity> CreateCross();
+	static std::unique_ptr<TiledEntity> CreateCharacter();
+};

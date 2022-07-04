@@ -10,12 +10,16 @@ public:
 	Sprite() noexcept = default;
 	Sprite(const std::wstring& fullPath);
 	Sprite(Sprite&& sprite) noexcept;
+	Sprite(const Sprite& sprite) noexcept;
 
 	Sprite& operator=(Sprite&& right) noexcept;
+	Sprite& operator=(const Sprite& right) noexcept;
 
 	const std::wstring& GetFullPath() const noexcept;
 	HBITMAP GetBitmap() const noexcept;
 	bool IsEmpty() const noexcept;
+
+	void SerializeIDToOpenedFile(std::ofstream& file) const override;
 
 	void SerializeToOpenedFile(std::ofstream& file) const override;
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;

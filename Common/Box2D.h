@@ -18,6 +18,8 @@ public:
 	Vector2D<T> GetSize() const noexcept;
 	Vector2D<T> GetPosition() const noexcept;
 
+	void SerializeIDToOpenedFile(std::ofstream& file) const override;
+
 	void SerializeToOpenedFile(std::ofstream& file) const override;
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
 
@@ -78,6 +80,12 @@ template<Number T>
 inline Vector2D<T> Box2D<T>::GetPosition() const noexcept
 {
 	return m_position;
+}
+
+template<Number T>
+inline void Box2D<T>::SerializeIDToOpenedFile(std::ofstream& file) const
+{
+	IBinarySerializable::SerializeIDToOpenedFile<Box2D>(file);
 }
 
 template<Number T>

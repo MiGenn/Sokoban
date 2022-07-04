@@ -1,6 +1,6 @@
 #pragma once
 
-namespace BuildInfo
+namespace Utilities::BuildInfo
 {
 	constexpr bool isDebug =
 		#ifdef _DEBUG
@@ -11,4 +11,4 @@ namespace BuildInfo
 		;
 }
 
-#define NOEXCEPT_WHEN_NDEBUG noexcept(!BuildInfo::isDebug)
+#define NOEXCEPT_WHEN_NDEBUG noexcept(!Utilities::BuildInfo::isDebug)

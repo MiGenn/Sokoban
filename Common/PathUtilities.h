@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace PathUtilities
+namespace Utilities::Cpp::Path
 {
 	std::wstring ExtractPath(const std::wstring& fullPath);
 	std::wstring ExtractName(const std::wstring& fullPath);

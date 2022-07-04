@@ -3,12 +3,18 @@
 #include "WindowClass.h"
 #include "Graphics2D.h"
 #include "Keyboard.h"
+#include "Mouse.h"
+#include "Event.h"
 
 class Game;
 
 class GameWindow final : public Window
 {
 public:
+	Utilities::Cpp::Event<> reloadButtonIsClicked;
+	Utilities::Cpp::Event<std::wstring> loadLevelButtonIsClicked;
+
+	Mouse mouse;
 	Keyboard keyboard;
 	Graphics2D graphics;
 
@@ -18,7 +24,6 @@ public:
 	GameWindow& operator=(const GameWindow&) = delete;
 
 	void Resize(Vector2i size) override;
-	void SubscribeToRestartButtonClick(std::function<void()> onFunction);
 
 private:
 	enum class HotKey
@@ -26,7 +31,7 @@ private:
 		Restart
 	};
 
-	std::vector<std::function<void()>> m_subscribedFunctions;
+	static constexpr const wchar_t* m_levelFilter{ L"Level Files\0*.lvl\0" };
 
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
 
@@ -34,6 +39,7 @@ private:
 	void OnCommand(int controlID);
 
 	void OnRestartButtonClick();
+	void OnLoadLevelButtonClick();
 	void OnHotKey(HotKey hotKey);
 
 	class Class final : public WindowClass

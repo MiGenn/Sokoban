@@ -1,6 +1,6 @@
 #include "StaticConstuctor.h"
 
-StaticConstructor::StaticConstructor(void(*constructingFunction)())
+Utilities::Cpp::StaticConstructor::StaticConstructor(void(*constructingFunction)())
 {
 	constructingFunction();
 }

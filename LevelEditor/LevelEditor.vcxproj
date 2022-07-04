@@ -166,8 +166,6 @@
   <ItemGroup>
     <ClCompile Include="CustomDialogBox.cpp" />
     <ClCompile Include="MenuHelper.cpp" />
-    <ClCompile Include="StandardFileBox.cpp" />
-    <ClCompile Include="IFileBox.cpp" />
     <ClCompile Include="SelectFolderBox.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
@@ -178,8 +176,6 @@
   <ItemGroup>
     <ClInclude Include="CustomDialogBox.h" />
     <ClInclude Include="MenuHelper.h" />
-    <ClInclude Include="StandardFileBox.h" />
-    <ClInclude Include="IFileBox.h" />
     <ClInclude Include="SelectFolderBox.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="EditorWindow.h" />

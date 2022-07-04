@@ -10,8 +10,8 @@ public:
 	using iterator = std::vector<std::unique_ptr<TiledEntity>>::iterator;
 	using const_iterator = std::vector<std::unique_ptr<TiledEntity>>::const_iterator;
 
-	static const std::wstring FolderRelativePath;
-	static const std::wstring FileExtension;
+	static const std::wstring levelsFolderRelativePath;
+	static const std::wstring fileExtension;
 
 	Level() noexcept = default;
 	Level(std::ifstream& file);
@@ -32,7 +32,9 @@ public:
 	TiledEntity* GetCharacter() noexcept;
 	std::vector<TiledEntity*>& GetBarrels() noexcept;
 	std::vector<TiledEntity*>& GetCrosses() noexcept;
-	int GetEntitiesCount() const noexcept;
+	size_t GetEntitiesCount() const noexcept;
+
+	void SerializeIDToOpenedFile(std::ofstream& file) const override;
 
 	void SerializeToOpenedFile(std::ofstream& file) const override;
 	void DeserializeFromOpenedFileToSelf(std::ifstream& file) override;
@@ -47,9 +49,9 @@ public:
 private:
 	std::vector<std::unique_ptr<TiledEntity>> m_entities;
 
-	mutable TiledEntity* m_character{ nullptr };
-	mutable std::vector<TiledEntity*> m_barrels;
-	mutable std::vector<TiledEntity*> m_crosses;
+	mutable TiledEntity* m_cachedCharacterPointer{ nullptr };
+	mutable std::vector<TiledEntity*> m_cachedBarrelPointers;
+	mutable std::vector<TiledEntity*> m_cachedCrossPointers;
 
 	static bool IsWallOrBarrel(TiledEntity::Tag tag);
 
@@ -57,6 +59,6 @@ private:
 	void RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept;
 	void RecacheEntitiesWhenDeleting(const TiledEntity* entity) const noexcept;
 
-	void EraseCashedPointer(const TiledEntity* entity, 
-		std::vector<TiledEntity*>& cashedEntities) const noexcept;
+	void EraseCachedPointer(const TiledEntity* entity, 
+		std::vector<TiledEntity*>& cachedEntities) const noexcept;
 };

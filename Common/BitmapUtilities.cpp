@@ -1,6 +1,6 @@
 #include "BitmapUtilities.h"
 
-HBITMAP BitmapUtilities::LoadBMP(const std::wstring& fullPath)
+HBITMAP Utilities::Winapi::Bitmap::LoadBMP(const std::wstring& fullPath)
 {
     HANDLE bitmap{ LoadImage(NULL, fullPath.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE) };
     if (!bitmap)
@@ -9,7 +9,7 @@ HBITMAP BitmapUtilities::LoadBMP(const std::wstring& fullPath)
     return static_cast<HBITMAP>(bitmap);
 }
 
-void BitmapUtilities::UnloadBMP(HBITMAP sprite)
+void Utilities::Winapi::Bitmap::UnloadBMP(HBITMAP sprite)
 {
     if (!DeleteObject(sprite))
         throw WINAPI_LAST_EXCEPTION();

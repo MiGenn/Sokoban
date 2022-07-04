@@ -1,7 +1,7 @@
 #pragma once
-#include "MemoryDCWrapper.h"
+#include "MemoryDC.h"
 #include "SelectWrapper.h"
-#include "UniqueAny.h"
+#include "UniqueGDIOBJ.h"
 #include "Vector2D.h"
 #include "BuildInfo.h"
 
@@ -24,7 +24,7 @@ private:
 	bool m_isUsed;
 	Vector2i m_size;
 
-	MemoryDCWrapper m_context;
-	UniqueGDIOBJ<HBITMAP> m_bitmap;
-	SelectWrapper m_contextSelect;
+	Utilities::Winapi::SmartPointer::MemoryDC m_context;
+	Utilities::Winapi::SmartPointer::UniqueGDIOBJ<HBITMAP> m_bitmap;
+	Utilities::Winapi::Wrapper::SelectWrapper m_bitmapSelectWrapper;
 };

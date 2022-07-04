@@ -1,13 +1,15 @@
 #include "Editor.h"
 #include "StringUtilities.h"
 
-int WINAPI wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR fullPath, _In_ int)
+// Змінна fullPathWithQuotationMarks може містити шлях до файлу, який користувач передав відкриваючи файл через LevelEditor
+int WINAPI wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR fullPathWithQuotationMarks, _In_ int)
 {
 	static constexpr UINT messageBoxType{ MB_OK | MB_ICONEXCLAMATION };
 
 	try
 	{
-		return Editor(StringUtilities::DeleteQuotationMarks(fullPath)).Run();
+		auto fullPath = Utilities::Cpp::String::DeleteFirstAndLastSymbols(fullPathWithQuotationMarks);
+		return Editor(fullPath).Run();
 	}
 	catch (const MyException& e)
 	{

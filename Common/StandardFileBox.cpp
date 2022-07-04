@@ -1,6 +1,6 @@
 #include "StandardFileBox.h"
 
-#include "CstringUntilities.h"
+#include "CstringUtilities.h"
 #include "PathUtilities.h"
 
 #define THROW_IF_DIALOG_BOX_EXCEPTION if (CommDlgExtendedError()) throw WINAPI_EXCEPTION(CommDlgExtendedError())

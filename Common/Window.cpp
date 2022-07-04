@@ -1,7 +1,7 @@
 #include "Window.h"
 
 #include <cassert>
-#include "WindowDCWrapper.h"
+#include "WindowDC.h"
 
 Window::Window(Vector2i size) NOEXCEPT_WHEN_NDEBUG :
 	m_size(size)
@@ -19,14 +19,14 @@ void Window::Resize(Vector2i size)
 	m_size = size;
 }
 
+Utilities::Winapi::SmartPointer::WindowDC Window::GetDeviceContext() noexcept
+{
+	return { this };
+}
+
 HWND Window::GetHandle() const noexcept
 {
 	return m_handle;
-}
-
-WindowDCWrapper Window::GetDeviceContext() noexcept
-{
-	return { this };
 }
 
 Vector2i Window::GetSize() const noexcept

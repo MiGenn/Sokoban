@@ -2,10 +2,10 @@
 
 #include "PlainTypeBinarySerializer.h"
 
-void CstringBinarySerializer::SerializeToOpenedFile(const char* sourceCstring, std::ofstream& file, int size)
+void CstringBinarySerializer::SerializeToOpenedFile(const char* sourceCstring, std::ofstream& file, size_t size)
 {
-	if (size == 0)
-		size = (int)strlen(sourceCstring) + 1;
+	if (size <= 0ull)
+		size = strlen(sourceCstring) + 1ull;
 
 	PlainTypeBinarySerializer::SerializeToOpenedFile(size, file);
 	file.write(sourceCstring, size);
@@ -13,7 +13,7 @@ void CstringBinarySerializer::SerializeToOpenedFile(const char* sourceCstring, s
 
 void CstringBinarySerializer::DeserializeFromOpenedFile(char*& destinationCstringPointer, std::ifstream& file)
 {
-	int stringSizeInBytes;
+	size_t stringSizeInBytes{ 0ull };
 	PlainTypeBinarySerializer::DeserializeFromOpenedFile(stringSizeInBytes, file);
 	auto cstring{ std::make_unique<char[]>(stringSizeInBytes)};
 	file.read(cstring.get(), stringSizeInBytes);

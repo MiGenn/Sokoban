@@ -1,6 +1,8 @@
 #include "GameWindow.h"
 
 #include "GameResourceMacros.h"
+#include "Game.h"
+#include "StandardFileBox.h"
 
 GameWindow::GameWindow(Vector2i size) :
 	Window(size), graphics(this)
@@ -28,18 +30,20 @@ void GameWindow::Resize(Vector2i size)
 	graphics.ResizeLayers(size);
 }
 
-void GameWindow::SubscribeToRestartButtonClick(std::function<void()> onFunction)
-{
-	m_subscribedFunctions.emplace_back(onFunction);
-}
-
 LRESULT GameWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (keyboard.IsProcessed())
+	if (keyboard.m_isProcessed)
 		keyboard.ResetState();
+
+	if (mouse.m_isProcessed)
+		mouse.ResetState();
 
 	switch (message)
 	{
+	case WM_MOUSEWHEEL:
+		mouse.OnMouseScroll(GET_WHEEL_DELTA_WPARAM(wParam));
+		return 0;
+
 	case WM_KEYDOWN:
 		keyboard.OnKeyDown(static_cast<unsigned char>(wParam), (lParam & 0x40000000));
 		return 0;
@@ -50,6 +54,7 @@ LRESULT GameWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_KILLFOCUS:
 		keyboard.ResetState();
+		mouse.ResetState();
 		return 0;
 
 	case WM_COMMAND:
@@ -81,13 +86,23 @@ void GameWindow::OnCommand(int controlID)
 	case ID_RESTART:
 		OnRestartButtonClick();
 		break;
+
+	case ID_LOAD_LEVEL:
+		OnLoadLevelButtonClick();
+		break;
 	}
 }
 
 void GameWindow::OnRestartButtonClick()
 {
-	for (auto& subscribedFunction : m_subscribedFunctions)
-		subscribedFunction();
+	reloadButtonIsClicked.Trigger();
+}
+
+void GameWindow::OnLoadLevelButtonClick()
+{
+	StandardFileBox openFileBox(this, Game::modulePath, m_levelFilter, StandardFileBox::Type::Open);
+	if (openFileBox.IsOKButtonPressed())
+		loadLevelButtonIsClicked.Trigger(openFileBox.GetFileFullPath());
 }
 
 void GameWindow::OnHotKey(HotKey hotKey)

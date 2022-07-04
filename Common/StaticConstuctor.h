@@ -1,10 +1,13 @@
 #pragma once
 
-class StaticConstructor
+namespace Utilities::Cpp
 {
-public:
-	StaticConstructor(void(*constructingFunction)());
-	StaticConstructor(const StaticConstructor&) = delete;
+	class StaticConstructor final
+	{
+	public:
+		StaticConstructor(void(*constructingFunction)());
+		StaticConstructor(const StaticConstructor&) = delete;
 
-	StaticConstructor& operator=(const StaticConstructor&) = delete;
-};
+		StaticConstructor& operator=(const StaticConstructor&) = delete;
+	};
+}

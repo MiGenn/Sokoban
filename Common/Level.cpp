@@ -3,8 +3,8 @@
 #include "VectorBinarySerializer.h"
 #include "VectorUtilities.h"
 
-const std::wstring Level::FolderRelativePath{ L"\\Content\\Levels\\" };
-const std::wstring Level::FileExtension{ L".lvl" };
+const std::wstring Level::levelsFolderRelativePath{ L"\\Content\\Levels\\" };
+const std::wstring Level::fileExtension{ L".lvl" };
 
 Level::Level(std::ifstream& file)
 {
@@ -18,7 +18,7 @@ Level::Level(const Level& level)
 
 Level& Level::operator=(const Level& right)
 {
-	m_entities = VectorUtilities::Duplicate(right.m_entities);
+	m_entities = Utilities::Cpp::Container::Duplicate(right.m_entities);
 	CacheEntities();
 
 	return *this;
@@ -31,8 +31,7 @@ TiledEntity& Level::operator[](int i)
 
 bool Level::Add(std::unique_ptr<TiledEntity>&& entity) noexcept
 {
-	if (entity->GetTag() == TiledEntity::Tag::Character &&
-		m_character != nullptr)
+	if (entity->GetTag() == TiledEntity::Tag::Character && m_cachedCharacterPointer)
 		return false;
 
 	if (!IsPlaceOccupied(*entity))
@@ -81,7 +80,7 @@ bool Level::IsPlaceOccupied(const TiledEntity& entity) const noexcept
 	auto entityIterator{ std::find_if(m_entities.begin(), m_entities.end(),
 		[&entity](const std::unique_ptr<TiledEntity>& otherEntity)
 		{
-			if (otherEntity->GetPosition() == entity.GetPosition())
+			if (otherEntity->IsCollision(entity))
 				return !CanEntitiesBeInTheSamePosition(entity, *otherEntity);
 
 			return false;
@@ -111,28 +110,35 @@ Level::const_iterator Level::FindEquivalent(const TiledEntity& entity) const noe
 	return std::find_if(m_entities.begin(), m_entities.end(),
 		[&entity](const std::unique_ptr<TiledEntity>& otherEntity)
 		{
-			return (*otherEntity) == entity;
+			return otherEntity->IsInTheSamePosition(entity) &&
+				otherEntity->GetTag() == entity.GetTag() &&
+				otherEntity->GetRenderInfo().GetBitmap() == entity.GetRenderInfo().GetBitmap();
 		});
 }
 
 TiledEntity* Level::GetCharacter() noexcept
 {
-	return m_character;
+	return m_cachedCharacterPointer;
 }
 
 std::vector<TiledEntity*>& Level::GetBarrels() noexcept
 {
-	return m_barrels;
+	return m_cachedBarrelPointers;
 }
 
 std::vector<TiledEntity*>& Level::GetCrosses() noexcept
 {
-	return m_crosses;
+	return m_cachedCrossPointers;
 }
 
-int Level::GetEntitiesCount() const noexcept
+size_t Level::GetEntitiesCount() const noexcept
 {
-	return (int)m_entities.size();
+	return m_entities.size();
+}
+
+void Level::SerializeIDToOpenedFile(std::ofstream& file) const
+{
+	IBinarySerializable::SerializeIDToOpenedFile<Level>(file);
 }
 
 void Level::SerializeToOpenedFile(std::ofstream& file) const
@@ -178,12 +184,12 @@ Level::const_iterator Level::cend() const noexcept
 
 void Level::CacheEntities() const NOEXCEPT_WHEN_NDEBUG
 {
-	m_barrels = FindByTag(TiledEntity::Tag::Barrel);
-	m_crosses = FindByTag(TiledEntity::Tag::Cross);
-	assert(m_barrels.size() == m_crosses.size());
-	auto character{ FindByTag(TiledEntity::Tag::Character) };
-	assert(character.size() == 1);
-	m_character = character[0];
+	m_cachedBarrelPointers = FindByTag(TiledEntity::Tag::Barrel);
+	m_cachedCrossPointers = FindByTag(TiledEntity::Tag::Cross);
+	assert(m_cachedBarrelPointers.size() == m_cachedCrossPointers.size());
+	auto characters{ FindByTag(TiledEntity::Tag::Character) };
+	assert(characters.size() == 1);
+	m_cachedCharacterPointer = characters[0];
 }
 
 bool Level::IsWallOrBarrel(TiledEntity::Tag tag)
@@ -197,15 +203,15 @@ void Level::RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept
 	switch (entity->GetTag())
 	{
 	case TiledEntity::Tag::Barrel:
-		m_barrels.push_back(entity);
+		m_cachedBarrelPointers.push_back(entity);
 		break;
 
 	case TiledEntity::Tag::Cross:
-		m_crosses.push_back(entity);
+		m_cachedCrossPointers.push_back(entity);
 		break;
 
 	case TiledEntity::Tag::Character:
-		m_character = entity;
+		m_cachedCharacterPointer = entity;
 		break;
 	}
 }
@@ -215,19 +221,19 @@ void Level::RecacheEntitiesWhenDeleting(const TiledEntity* entity) const noexcep
 	switch (entity->GetTag())
 	{
 	case TiledEntity::Tag::Barrel:
-		EraseCashedPointer(entity, m_barrels);
+		EraseCachedPointer(entity, m_cachedBarrelPointers);
 		break;
 
 	case TiledEntity::Tag::Cross:
-		EraseCashedPointer(entity, m_crosses);
+		EraseCachedPointer(entity, m_cachedCrossPointers);
 		break;
 	}
 }
 
-void Level::EraseCashedPointer(const TiledEntity* entity, 
-	std::vector<TiledEntity*>& cashedEntities) const noexcept
+void Level::EraseCachedPointer(const TiledEntity* entity, 
+	std::vector<TiledEntity*>& cachedEntityPointers) const noexcept
 {
-	cashedEntities.erase(std::find_if(cashedEntities.begin(), cashedEntities.end(),
+	cachedEntityPointers.erase(std::find_if(cachedEntityPointers.begin(), cachedEntityPointers.end(),
 		[entity](const TiledEntity* cashedEntity)
 		{
 			return cashedEntity == entity;

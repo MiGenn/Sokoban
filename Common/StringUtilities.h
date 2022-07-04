@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 
-namespace StringUtilities
+namespace Utilities::Cpp::String
 {
 	static const std::wstring empty;
 
-	std::wstring DeleteQuotationMarks(const std::wstring& string);
+	std::wstring DeleteFirstAndLastSymbols(const std::wstring& string);
 };

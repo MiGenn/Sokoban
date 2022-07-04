@@ -6,7 +6,7 @@
 class Editor final : public Application
 {
 public:
-	static const std::wstring ModulePath;
+	static const std::wstring modulePath;
 
 	Editor();
 	Editor(const std::wstring& levelFileFullPath);
@@ -20,13 +20,13 @@ private:
 	enum class EditorState : char
 	{
 		Editing,
-		LevelSimulation
+		Simulation
 	};
 
 	EditorState m_state{ EditorState::Editing };
 	EditorWindow m_window;
 	Simulator m_simulator;
-	std::unique_ptr<Level> m_levelCopy;
+	std::unique_ptr<Level> m_levelCopyForSimulation;
 	
 	void Simulate();
 	void Render();
@@ -34,6 +34,8 @@ private:
 	void RenderGrid();
 	void RenderLevel();
 
-	void OnSimulationStartedOrEnded();
 	const Level* GetLevelForRendering() const;
+
+	void OnSimulationStarted();
+	void OnSimulationEnded();
 };

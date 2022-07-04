@@ -2,14 +2,13 @@
 #include <unordered_map>
 #include "WinapiException.h"
 
-class BitmapManager
+class BitmapProvider
 {
 public:
+	BitmapProvider() = delete;
+	BitmapProvider(const BitmapProvider&) = delete;
 
-	BitmapManager() = delete;
-	BitmapManager(const BitmapManager&) = delete;
-
-	BitmapManager& operator=(const BitmapManager&) = delete;
+	BitmapProvider& operator=(const BitmapProvider&) = delete;
 
 	static HBITMAP GetBitmap(const std::wstring& fullPath);
 

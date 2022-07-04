@@ -1,8 +1,11 @@
 #include "TiledEntity.h"
 
 #include <stdexcept>
+#include <limits>
+#include "NumberComparison.h"
 #include "Serializers.h"
 #include "TypeRegistrator.h"
+#include "Collision2D.h"
 
 static TypeRegistrator<TiledEntity> registrator;
 
@@ -17,10 +20,10 @@ TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag) :
 
 }
 
-TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2i positionInUnits) :
+TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2f position) :
 	TiledEntity(renderInfo, tag)
 {
-	m_positionInUnits = positionInUnits;
+	m_position = position;
 }
 
 TiledEntity::TiledEntity(const TiledEntity& entity)
@@ -31,7 +34,7 @@ TiledEntity::TiledEntity(const TiledEntity& entity)
 TiledEntity& TiledEntity::operator=(const TiledEntity& right)
 {
 	m_renderInfo = right.m_renderInfo;
-	m_positionInUnits = right.m_positionInUnits;
+	m_position = right.m_position;
 	m_tag = right.m_tag;
 
 	return *this;
@@ -39,37 +42,46 @@ TiledEntity& TiledEntity::operator=(const TiledEntity& right)
 
 bool TiledEntity::operator==(const TiledEntity& right) noexcept
 {
-	return m_positionInUnits == right.m_positionInUnits &&
-		m_tag == right.m_tag;
+	return this == &right;
 }
 
-bool TiledEntity::operator!=(const TiledEntity& right) noexcept
+bool TiledEntity::IsCollision(const TiledEntity& otherEntity) const noexcept
 {
-	return !(*this == right);
+	return Collision2D::IsCollision(m_position, m_renderInfo.GetSize(),
+		otherEntity.GetPosition(), otherEntity.GetRenderInfo().GetSize());
+}
+
+bool TiledEntity::IsInTheSamePosition(const TiledEntity& otherEntity) const noexcept
+{
+	static const auto epsilon{ std::numeric_limits<float>::epsilon() };
+	auto otherEntityPosition{ otherEntity.GetPosition() };
+
+	return Utilities::Cpp::AreEqual(m_position.x, otherEntityPosition.x, epsilon) &&
+		Utilities::Cpp::AreEqual(m_position.y, otherEntityPosition.y, epsilon);
 }
 
 void TiledEntity::SerializeToOpenedFile(std::ofstream& file) const
 {
-	m_positionInUnits.SerializeToOpenedFile(file);
+	m_position.SerializeToOpenedFile(file);
 	PlainTypeBinarySerializer::SerializeToOpenedFile(m_tag, file);
 	m_renderInfo.SerializeToOpenedFile(file);
 }
 
 void TiledEntity::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
-	m_positionInUnits.DeserializeFromOpenedFileToSelf(file);
+	m_position.DeserializeFromOpenedFileToSelf(file);
 	PlainTypeBinarySerializer::DeserializeFromOpenedFile(m_tag, file);
 	m_renderInfo.DeserializeFromOpenedFileToSelf(file);
 }
 
-void TiledEntity::SetPosition(Vector2f newPositionInUnits) noexcept
+void TiledEntity::SetPosition(Vector2f newPosition) noexcept
 {
-	m_positionInUnits = newPositionInUnits;
+	m_position = newPosition;
 }
 
 Vector2f TiledEntity::GetPosition() const noexcept
 {
-	return m_positionInUnits;
+	return m_position;
 }
 
 TiledEntity::Tag TiledEntity::GetTag() const noexcept
@@ -79,12 +91,16 @@ TiledEntity::Tag TiledEntity::GetTag() const noexcept
 
 const SpriteRenderInfo& TiledEntity::GetRenderInfo() const noexcept
 {
-	m_renderInfo.SetPosition(m_positionInUnits);
-
+	m_renderInfo.SetPosition(m_position);
 	return m_renderInfo;
 }
 
-void TiledEntity::Move(Vector2i translation) noexcept
+void TiledEntity::SerializeIDToOpenedFile(std::ofstream& file) const
 {
-	m_positionInUnits += translation;	
+	IBinarySerializable::SerializeIDToOpenedFile<TiledEntity>(file);
+}
+
+void TiledEntity::Move(Vector2f translation) noexcept
+{
+	m_position += translation;	
 }

@@ -3,6 +3,11 @@
 #include "Vector2D.h"
 #include "BuildInfo.h"
 
+namespace Utilities::Winapi::SmartPointer
+{
+	class WindowDC;
+}
+
 class Window
 {
 public:
@@ -14,7 +19,7 @@ public:
 	Window& operator=(const Window&) = delete;
 
 	virtual void Resize(Vector2i size);
-	class WindowDCWrapper GetDeviceContext() noexcept;
+	Utilities::Winapi::SmartPointer::WindowDC GetDeviceContext() noexcept;
 	HWND GetHandle() const noexcept;
 	Vector2i GetSize() const noexcept;
 

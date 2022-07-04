@@ -3,18 +3,12 @@
 #include <cassert>
 #include "Serializers.h"
 
-SpriteRenderInfo::SpriteRenderInfo() noexcept :
-    m_sprite(std::make_shared<Sprite>())
+SpriteRenderInfo::SpriteRenderInfo(std::shared_ptr<Sprite> sprite, Box2i boundingBox, int layerIndex,
+    bool isPreservingAspectRatio, Vector2f size) NOEXCEPT_WHEN_NDEBUG :
+    m_sprite(std::move(sprite)), m_boundingBox(boundingBox), m_layerIndex(layerIndex),
+    m_isPreservingAspectRatio(isPreservingAspectRatio), m_size(size)
 {
-
-}
-
-SpriteRenderInfo::SpriteRenderInfo(std::shared_ptr<Sprite> sprite, 
-    Box2i boundingBox, float sizeInUnits, int layerIndex) NOEXCEPT_WHEN_NDEBUG :
-    m_sprite(std::move(sprite)), m_boundingBox(boundingBox), 
-    m_sizeInUnits(sizeInUnits), m_layerIndex(layerIndex)
-{
-    assert(m_sizeInUnits > 0);
+    assert(m_size.x >= 0 && m_size.y >= 0);
     assert(m_sprite->IsEmpty() != true);
     assert(boundingBox.GetPosition().x >= 0 && 
         boundingBox.GetPosition().y >= 0);
@@ -29,21 +23,27 @@ SpriteRenderInfo& SpriteRenderInfo::operator=(const SpriteRenderInfo& right) noe
 {
     m_sprite = right.m_sprite;
     m_boundingBox = right.m_boundingBox;
-    m_positionInUnits = right.m_positionInUnits;
-    m_sizeInUnits = right.m_sizeInUnits;
+    m_position = right.m_position;
+    m_size = right.m_size;
     m_layerIndex = right.m_layerIndex;
+    m_isPreservingAspectRatio = right.m_isPreservingAspectRatio;
 
     return *this;
 }
 
-void SpriteRenderInfo::SetPosition(Vector2f newPositionInUnits) noexcept
+void SpriteRenderInfo::SetPosition(Vector2f newPosition) noexcept
 {
-    m_positionInUnits = newPositionInUnits;
+    m_position = newPosition;
 }
 
 void SpriteRenderInfo::SetBoundingBox(Box2i newBoundingBox) noexcept
 {
     m_boundingBox = newBoundingBox;
+}
+
+void SpriteRenderInfo::SetSize(Vector2f newSize) noexcept
+{
+    m_size = newSize;
 }
 
 void SpriteRenderInfo::SetLayerIndex(int newLayerIndex) noexcept
@@ -68,12 +68,17 @@ Box2i SpriteRenderInfo::GetBoundingBox() const noexcept
 
 Vector2f SpriteRenderInfo::GetPosition() const noexcept
 {
-    return m_positionInUnits;
+    return m_position;
 }
 
-float SpriteRenderInfo::GetSizeInUnits() const noexcept
+Vector2f SpriteRenderInfo::GetSize() const noexcept
 {
-    return m_sizeInUnits;
+    return m_size;
+}
+
+bool SpriteRenderInfo::IsPreservingAspectRatio() const noexcept
+{
+    return m_isPreservingAspectRatio;
 }
 
 int SpriteRenderInfo::GetLayerIndex() const noexcept
@@ -81,20 +86,27 @@ int SpriteRenderInfo::GetLayerIndex() const noexcept
     return m_layerIndex;
 }
 
+void SpriteRenderInfo::SerializeIDToOpenedFile(std::ofstream& file) const
+{
+    IBinarySerializable::SerializeIDToOpenedFile<SpriteRenderInfo>(file);
+}
+
 void SpriteRenderInfo::SerializeToOpenedFile(std::ofstream& file) const
 {
     m_sprite->SerializeToOpenedFile(file);
     m_boundingBox.SerializeToOpenedFile(file);
-    m_positionInUnits.SerializeToOpenedFile(file);
-    PlainTypeBinarySerializer::SerializeToOpenedFile(m_sizeInUnits, file);
+    m_position.SerializeToOpenedFile(file);
+    m_size.SerializeToOpenedFile(file);
     PlainTypeBinarySerializer::SerializeToOpenedFile(m_layerIndex, file);
+    PlainTypeBinarySerializer::SerializeToOpenedFile(m_isPreservingAspectRatio, file);
 }
 
 void SpriteRenderInfo::DeserializeFromOpenedFileToSelf(std::ifstream& file)
 {
     m_sprite->DeserializeFromOpenedFileToSelf(file);
     m_boundingBox.DeserializeFromOpenedFileToSelf(file);
-    m_positionInUnits.DeserializeFromOpenedFileToSelf(file);
-    PlainTypeBinarySerializer::DeserializeFromOpenedFile(m_sizeInUnits, file);
+    m_position.DeserializeFromOpenedFileToSelf(file);
+    m_size.DeserializeFromOpenedFileToSelf(file);
     PlainTypeBinarySerializer::DeserializeFromOpenedFile(m_layerIndex, file);
+    PlainTypeBinarySerializer::DeserializeFromOpenedFile(m_isPreservingAspectRatio, file);
 }

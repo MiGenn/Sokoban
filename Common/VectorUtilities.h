@@ -3,7 +3,7 @@
 #include <memory>
 #include "UniquePointerUtilities.h"
 
-namespace VectorUtilities
+namespace Utilities::Cpp::Container
 {
 	template<std::copyable T>
 	std::vector<std::unique_ptr<T>> Duplicate(const std::vector<std::unique_ptr<T>>& vector)
@@ -11,7 +11,7 @@ namespace VectorUtilities
 		std::vector<std::unique_ptr<T>> outputVector;
 		outputVector.reserve(vector.size());
 		for (auto& element : vector)
-			outputVector.push_back(UniquePointerUtilities::Duplicate(element)); 
+			outputVector.push_back(Utilities::Cpp::SmartPointer::Duplicate(element)); 
 
 		return outputVector;
 	}

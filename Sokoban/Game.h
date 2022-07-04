@@ -6,7 +6,7 @@
 class Game final : public Application
 {
 public:
-	static const std::wstring ModulePath;
+	static const std::wstring modulePath;
 
 	Game();
 	Game(const Game&) = delete;
@@ -17,17 +17,19 @@ public:
 
 private:
 	GameWindow m_window;
-
 	Simulator m_simulator;
+
 	std::unique_ptr<Level> m_currentLevel;
 	const std::wstring* m_currentLevelFullPath;
-	const std::vector<std::wstring> m_levelsFullPaths;
+	size_t m_nextLevelFullPathIndex{ 0ull };
+	std::vector<std::wstring> m_levelFullPaths;
 
 	void Simulate();
 	void Render();
 
-	std::vector<std::wstring> FindLevelsFullPahts();
+	std::vector<std::wstring> FindLevelFullPahts(const std::wstring& levelFolderPath);
 	std::unique_ptr<Level> LoadLevel(const std::wstring& fullPath);
 	void LoadNextLevel();
 	void ReloadCurrentLevel();
+	void OnLoadLevelButtonClicked(const std::wstring& levelFileFullPath);
 };

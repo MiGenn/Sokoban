@@ -2,14 +2,20 @@
 #include "WindowClass.h"
 #include "Graphics2D.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 #include "Level.h"
 #include "ChangeWrapper.h"
 #include "Path.h"
+#include "Event.h"
 
 class EditorWindow final : public Window
 {
 public:
+	Utilities::Cpp::Event<> simulationStarted;
+	Utilities::Cpp::Event<> simulationEnded;
+
 	Keyboard keyboard;
+	Mouse mouse;
 	Graphics2D graphics;
 
 	EditorWindow(Vector2i size);
@@ -34,10 +40,13 @@ private:
 	static constexpr const wchar_t* m_levelFilter{ L"Level Files\0*.lvl\0" };
 	static const std::wstring m_levelHintText;
 
-	ChangeWrapper<Level> m_level{ nullptr };
-	Path m_levelPath;
+	Utilities::ChangeWrapper<Level> m_level{ nullptr };
+	Utilities::Cpp::Path::Path m_levelPath;
 	std::unique_ptr<TiledEntity> m_currentEntity;
 	bool m_isSimulation{ false };
+	Vector2f m_cameraPositionBeforeSimulation;
+	float m_scrollSensitivity{ 0.1f };
+	float m_drawingOriginMoveSensitivity{ 1.f };
 
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
 	void RegisterHotKeys();
@@ -47,6 +56,7 @@ private:
 	void OnHotkey(HotKey hotKey);
 	void OnLeftButtonClick(POINTS position);
 	void OnRightButtonClick(POINTS position);
+	void OnMouseScroll();
 
 	void OnCreateButtonClick();
 	void OnLoadButtonClick();
@@ -68,9 +78,10 @@ private:
 	void OnLevelPathChanged();
 	void ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option);
 	void ChangeSubmenusWhenSimulation(ChangeSubmenuOption option);
-	void SetCurrentEntityPosition(POINTS positionInPixels);
 
-	std::pair<std::wstring, std::wstring> GetLevelSplittedFullPathFromUser();
+	void SetCurrentEntityPosition(POINTS screenCoords);
+	void MoveLevel();
+
 	std::wstring GetPathFromUser();
 	std::wstring GetLevelFullNameFromUser();
 
@@ -80,7 +91,7 @@ private:
 	bool TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName);
 	bool CanContinueBeforeDeletingOrResetingLevel();
 	bool CanDeleteOrAddEntity();
-	bool CanLevelBeSaved();
+	bool IsLevelValid();
 
 	class Class : public WindowClass
 	{

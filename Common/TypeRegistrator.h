@@ -1,11 +1,5 @@
 #pragma once
-#include "SerializableObjectFactory.h"
-
-template<class T>
-concept RegistredType = BinarySerializable<T> && requires(T instance)
-{
-	{ instance.IsRegistred() } -> std::same_as<bool>; //////////
-};
+#include "BinaryDeserializer.h"
 
 template<BinarySerializableAndConstructibleFromOpenedFile T>
 class TypeRegistrator
@@ -20,5 +14,5 @@ public:
 template<BinarySerializableAndConstructibleFromOpenedFile T>
 inline TypeRegistrator<T>::TypeRegistrator() noexcept
 {
-	SerializableObjectFactory::RegisterType<T>();
+	BinaryDeserializer::RegisterType<T>();
 }

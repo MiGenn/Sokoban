@@ -13,9 +13,6 @@
     <Filter Include="Header Files\Utilities\Cpp">
       <UniqueIdentifier>{77833c02-c950-48f4-aebd-44a1dfc7411a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Utilities\Game">
-      <UniqueIdentifier>{b94f9097-7336-4075-83a7-14b59cc6d6c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utilities\Others">
       <UniqueIdentifier>{7340b5b3-3a6d-445c-a583-9136bea85039}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     </Filter>
     <Filter Include="Source Files\Utilities\Cpp">
       <UniqueIdentifier>{a6364042-df7c-4847-9726-b8466ca38adc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utilities\Game">
-      <UniqueIdentifier>{10dbd052-df52-437f-afa1-a2ac2d898a56}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Utilities\Others">
       <UniqueIdentifier>{281fe835-d8a9-4fc9-bd08-281103bcee24}</UniqueIdentifier>
@@ -124,6 +118,24 @@
     <Filter Include="Header Files\Game Layer\Input">
       <UniqueIdentifier>{255be183-0575-44e9-9ebd-f053b2634803}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Layer\Collision">
+      <UniqueIdentifier>{534d86f5-1074-4177-bc14-640658ce830b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Layer\Collision">
+      <UniqueIdentifier>{75334618-b927-42fe-8294-0532a640e766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Winapi Layer\Dialog Boxes">
+      <UniqueIdentifier>{cebd14fd-2ceb-423d-b5ed-e8950ed9adc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Winapi Layer\Dialog Boxes\File Boxes">
+      <UniqueIdentifier>{0305e99f-59ab-4973-979c-1e6655a6bab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Winapi Layer\Dialog Boxes">
+      <UniqueIdentifier>{3a0b5853-3210-452d-a2aa-62e508bc6ac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Winapi Layer\Dialog Boxes\File Boxes">
+      <UniqueIdentifier>{0ac14903-c15d-457a-a718-08b7faa9ac76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Level.h">
@@ -156,7 +168,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IBinarySerializable.h">
       <Filter>Header Files\Binary Serialization\PolymorphicSerialization</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)SerializableObjectFactory.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)BinaryDeserializer.h">
       <Filter>Header Files\Binary Serialization\PolymorphicSerialization</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TypeRegistrator.h">
@@ -201,7 +213,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BitmapUtilities.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)UniqueAny.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)UniqueGDIOBJ.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StaticConstuctor.h">
@@ -210,17 +222,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CstringUntilities.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)CstringUtilities.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUntilities.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinapiUtilities.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)WindowDCWrapper.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)WindowDC.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h">
-      <Filter>Header Files\Utilities\Game</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
@@ -240,7 +249,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Path.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapManager.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)BitmapProvider.h">
       <Filter>Header Files\Winapi Layer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtilities.h">
@@ -249,7 +258,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectWrapper.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryDC.h">
       <Filter>Header Files\Utilities\Winapi</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Simulator.h">
@@ -257,6 +266,30 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)VectorUtilities.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TiledEntityFactory.h">
+      <Filter>Header Files\Game Layer\TiledEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NumberComparison.h">
+      <Filter>Header Files\Utilities\Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Event.h">
+      <Filter>Header Files\Utilities\Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h">
+      <Filter>Header Files\Game Layer\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Collision2D.h">
+      <Filter>Header Files\Game Layer\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Rect.h">
+      <Filter>Header Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IFileBox.h">
+      <Filter>Header Files\Winapi Layer\Dialog Boxes\File Boxes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StandardFileBox.h">
+      <Filter>Header Files\Winapi Layer\Dialog Boxes\File Boxes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,7 +311,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PlainTypeBinarySerializer.cpp">
       <Filter>Source Files\Binary Serialization\DefaultTypeSerializers</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)SerializableObjectFactory.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)BinaryDeserializer.cpp">
       <Filter>Source Files\Binary Serialization\PolymorphicSerialization</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)VectorBinarySerializer.cpp">
@@ -326,23 +359,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BitmapUtilities.cpp">
       <Filter>Source Files\Utilities\Winapi</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUntilities.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinapiUtilities.cpp">
       <Filter>Source Files\Utilities\Winapi</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WindowDCWrapper.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)WindowDC.cpp">
       <Filter>Source Files\Utilities\Winapi</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StaticConstuctor.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CstringUntilities.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)CstringUtilities.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)UniquePointerUtilities.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp">
-      <Filter>Source Files\Utilities\Game</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
@@ -359,7 +389,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Path.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapManager.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)BitmapProvider.cpp">
       <Filter>Source Files\Winapi Layer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StringUtilities.cpp">
@@ -368,7 +398,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)SelectWrapper.cpp">
       <Filter>Source Files\Utilities\Winapi</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryDCWrapper.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryDC.cpp">
       <Filter>Source Files\Utilities\Winapi</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Simulator.cpp">
@@ -376,6 +406,27 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)VectorUtilities.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TiledEntityFactory.cpp">
+      <Filter>Source Files\Game Layer\TiledEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NumberComparison.cpp">
+      <Filter>Source Files\Utilities\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Event.cpp">
+      <Filter>Source Files\Utilities\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp">
+      <Filter>Source Files\Game Layer\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Collision2D.cpp">
+      <Filter>Source Files\Game Layer\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IFileBox.cpp">
+      <Filter>Source Files\Winapi Layer\Dialog Boxes\File Boxes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StandardFileBox.cpp">
+      <Filter>Source Files\Winapi Layer\Dialog Boxes\File Boxes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

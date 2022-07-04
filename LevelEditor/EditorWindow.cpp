@@ -10,7 +10,7 @@
 #include "FileUtilities.h"
 #include "TiledEntityFactory.h"
 #include "UnsafeUtilities.h"
-#include "WinapiUntilities.h"
+#include "WinapiUtilities.h"
 
 const EditorWindow::Class EditorWindow::Class::editorClass;
 const std::wstring EditorWindow::m_editorName{ L"Level Editor" };
@@ -39,11 +39,11 @@ EditorWindow::EditorWindow(Vector2i size) : Window(size),
 bool EditorWindow::TryLoadLevel(const std::wstring& fullPath)
 {
 	auto fullPathSize{ fullPath.size() };
-	auto levelFileExtensionSize{ Level::FileExtension.size() };
+	auto levelFileExtensionSize{ Level::fileExtension.size() };
 	if (fullPathSize > levelFileExtensionSize)
 	{
 		auto fileExtension{ fullPath.substr(fullPathSize - levelFileExtensionSize, levelFileExtensionSize) };
-		if (fileExtension == Level::FileExtension)
+		if (fileExtension == Level::fileExtension)
 		{
 			if (TryLoadLevelFromFile(fullPath))
 			{
@@ -73,8 +73,11 @@ bool EditorWindow::IsSimulation() const noexcept
 
 LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (keyboard.IsProcessed())
+	if (keyboard.m_isProcessed)
 		keyboard.ResetState();
+
+	if (mouse.m_isProcessed)
+		mouse.ResetState();
 
 	switch (message)
 	{
@@ -82,8 +85,18 @@ LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		OnLeftButtonClick(MAKEPOINTS(lParam));
 		return 0;
 
+	case WM_RBUTTONDOWN:
+		OnRightButtonClick(MAKEPOINTS(lParam));
+		return 0;
+
+	case WM_MOUSEWHEEL:
+		mouse.OnMouseScroll(GET_WHEEL_DELTA_WPARAM(wParam));
+		OnMouseScroll();
+		return 0;
+
 	case WM_KEYDOWN:
 		keyboard.OnKeyDown(static_cast<unsigned char>(wParam), (lParam & 0x40000000));
+		MoveLevel();
 		return 0;
 
 	case WM_KEYUP:
@@ -92,6 +105,7 @@ LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_KILLFOCUS:
 		keyboard.ResetState();
+		mouse.ResetState();
 		return 0;
 
 	case WM_COMMAND:
@@ -207,12 +221,9 @@ void EditorWindow::OnLeftButtonClick(POINTS position)
 	bool isAlreadyChanged{ m_level.IsChanged() };
 	auto& level{ m_level.GetForEditing() };
 
-	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character &&
-		!level.IsPlaceOccupied(*m_currentEntity))
-	{	
+	if (m_currentEntity->GetTag() == TiledEntity::Tag::Character && !level.IsPlaceOccupied(*m_currentEntity))
 		if (auto character{ level.GetCharacter() }; character)
 			character->SetPosition(m_currentEntity->GetPosition());
-	}
 
 	if (!level.Add(std::make_unique<TiledEntity>(*m_currentEntity)))
 		m_level.ResetState();
@@ -239,6 +250,28 @@ void EditorWindow::OnRightButtonClick(POINTS position)
 		m_level.GetForEditing();
 }
 
+void EditorWindow::OnMouseScroll()
+{
+	if (IsSimulation())
+		return;
+
+	static constexpr auto zoomMin{ 0.05f };
+	static constexpr auto zoomMax{ 20.f };
+
+	auto zoom{ graphics.GetZoom() };
+	auto scrollsCountAndDirection{ mouse.GetScrollsCountAndDirection() };
+
+	while (scrollsCountAndDirection.first > 0)
+	{
+		zoom += zoom * m_scrollSensitivity * (int)scrollsCountAndDirection.second;
+		--scrollsCountAndDirection.first;
+	}
+
+	zoom = std::clamp(zoom, zoomMin, zoomMax);
+	graphics.SetZoom(zoom);
+	mouse.m_isProcessed = false;
+}
+
 void EditorWindow::OnCreateButtonClick()
 {
 	if (!CanContinueBeforeDeletingOrResetingLevel())
@@ -251,7 +284,7 @@ void EditorWindow::OnCreateButtonClick()
 	}
 	else if (enterTextBox.IsOKButtonPressed())
 	{
-		auto newName{ enterTextBox.GetText() + Level::FileExtension };
+		auto newName{ enterTextBox.GetText() + Level::fileExtension };
 		if (!m_levelPath.IsPathEmpty())
 		{
 			QuestionBox questionBox(this, L"Do you want to use the previous folder?");
@@ -261,7 +294,7 @@ void EditorWindow::OnCreateButtonClick()
 					return;
 
 				if (TryValidateFullPathIfAnotherFileExists(m_levelPath.GetPath(), newName))
-					newName = UnsafeUtilities::MakeNonConstForMove(m_levelPath.GetFullName());
+					newName = Utilities::Cpp::Unsafe::MakeNonConstForMove(m_levelPath.GetFullName());
 				else
 					return;
 			}
@@ -282,12 +315,9 @@ void EditorWindow::OnLoadButtonClick()
 	if (!CanContinueBeforeDeletingOrResetingLevel())
 		return;
 
-	StandardFileBox openFileBox(this, Editor::ModulePath, 
-		m_levelFilter, StandardFileBox::Type::Open);
+	StandardFileBox openFileBox(this, Editor::modulePath, m_levelFilter, StandardFileBox::Type::Open);
 	if (openFileBox.IsOKButtonPressed())
-	{
 		TryLoadLevelFromFile(openFileBox.GetFileFullPath());
-	}
 }
 
 void EditorWindow::OnUnloadButtonClick()
@@ -316,7 +346,7 @@ void EditorWindow::OnSaveButtonClick()
 	else
 	{
 		assert(m_levelPath.IsFullNameEmpty() != true);
-		if (!m_level.IsChanged() || !CanLevelBeSaved())
+		if (!m_level.IsChanged() || !IsLevelValid())
 			return;
 
 		if (m_levelPath.IsPathEmpty())
@@ -350,14 +380,14 @@ void EditorWindow::OnSaveAsButtonClick()
 	}
 	else
 	{
-		if (!CanLevelBeSaved())
+		if (!IsLevelValid())
 			return;
 
-		StandardFileBox saveFileBox(this, Editor::ModulePath, m_levelFilter,
+		StandardFileBox saveFileBox(this, Editor::modulePath, m_levelFilter,
 			StandardFileBox::Type::Save, StandardFileBox::Flag::OverwritePrompt, m_levelPath.GetFullName());
 		if (saveFileBox.IsOKButtonPressed())
 		{
-			m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
+			m_levelPath.SetFullPath(Utilities::Cpp::Unsafe::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
 			TrySaveLevelIntoFile();
 		}
 	}
@@ -378,10 +408,10 @@ void EditorWindow::OnRenameButtonClick()
 	}
 	else if (enterTextBox.IsOKButtonPressed())
 	{
-		auto newName{ enterTextBox.GetText() + Level::FileExtension };
+		auto newName{ enterTextBox.GetText() + Level::fileExtension };
 		if (!m_levelPath.GetFullPath().empty())
 		{
-			if (!m_levelPath.GetPath().empty() && !FileUtilities::IsPathValid(m_levelPath.GetPath()))
+			if (!m_levelPath.GetPath().empty() && !Utilities::Cpp::Path::IsPathValid(m_levelPath.GetPath()))
 			{
 				MessageBox(m_handle, L"Cannot find the folder", L"Error", MB_ICONERROR);
 				m_levelPath.ClearPath();
@@ -426,14 +456,23 @@ void EditorWindow::OnCharacterButtonClick()
 
 void EditorWindow::OnPlayButtonClick()
 {
-	m_isSimulation = true;
-	ChangeSubmenusWhenSimulation(ChangeSubmenuOption::Disable);
+	if (IsLevelValid())
+	{
+		m_isSimulation = true;
+		ChangeSubmenusWhenSimulation(ChangeSubmenuOption::Disable);
+		m_cameraPositionBeforeSimulation = graphics.GetCameraPosition();
+
+		simulationStarted.Trigger();
+	}
 }
 
 void EditorWindow::OnStopButtonClick()
 {
 	m_isSimulation = false;
 	ChangeSubmenusWhenSimulation(ChangeSubmenuOption::Enable);
+	graphics.SetCameraPosition(m_cameraPositionBeforeSimulation);
+
+	simulationEnded.Trigger();
 }
 
 void EditorWindow::OnLevelDeletedOrLoaded()
@@ -461,7 +500,7 @@ void EditorWindow::ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption 
 	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | (int)option);
 	EnableMenuItem(menuHandle, ID_SIMULATION, MF_BYPOSITION | (int)option);
 
-	InvalidateRect(WinapiUntilities::FindMenuWindow(m_handle), NULL, true);
+	InvalidateRect(Utilities::Winapi::FindMenuWindow(m_handle), NULL, true);
 }
 
 void EditorWindow::ChangeSubmenusWhenSimulation(ChangeSubmenuOption option)
@@ -471,26 +510,49 @@ void EditorWindow::ChangeSubmenusWhenSimulation(ChangeSubmenuOption option)
 	EnableMenuItem(menuHandle, ID_FILE, MF_BYPOSITION | (int)option);
 	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | (int)option);
 
-	InvalidateRect(WinapiUntilities::FindMenuWindow(m_handle), NULL, true);
+	InvalidateRect(Utilities::Winapi::FindMenuWindow(m_handle), NULL, true);
 }
 
-void EditorWindow::SetCurrentEntityPosition(POINTS positionInPixels)
+void EditorWindow::SetCurrentEntityPosition(POINTS screenCoords)
 {
-	auto position{ graphics.ConvertPixelsToUnits({ positionInPixels.x, positionInPixels.y }) };
-	Vector2f entityPosition{ floor(position.x), floor(position.y) };
-	m_currentEntity->SetPosition(entityPosition);
+	auto worldCoords{ graphics.ConvertScreenToWorldCoords({ screenCoords.x, screenCoords.y }) };
+	Vector2f positionInGrid{ floor(worldCoords.x), ceil(worldCoords.y) };
+	m_currentEntity->SetPosition(positionInGrid);
+}
+
+void EditorWindow::MoveLevel()
+{
+	if (IsSimulation())
+		return;
+
+	Vector2f translation;
+
+	if (keyboard.IsKeyPressed('W'))
+		translation += Vector2f(0.f, -1.f);
+
+	if (keyboard.IsKeyPressed('S'))
+		translation += Vector2f(0.f, 1.f);
+
+	if (keyboard.IsKeyPressed('A'))
+		translation += Vector2f(1.f, 0.f);
+
+	if (keyboard.IsKeyPressed('D'))
+		translation += Vector2f(-1.f, 0.f);
+
+	graphics.SetCameraPosition(graphics.GetCameraPosition() + translation * m_drawingOriginMoveSensitivity);
+	keyboard.m_isProcessed = false;
 }
 
 std::wstring EditorWindow::GetPathFromUser()
 {
 	SelectFolderBox selectFolderBox(this);
-	return UnsafeUtilities::MakeNonConstForMove(selectFolderBox.GetFolderFullPathWithTrailingBackslash());
+	return Utilities::Cpp::Unsafe::MakeNonConstForMove(selectFolderBox.GetFolderFullPathWithTrailingBackslash());
 }
 
 std::wstring EditorWindow::GetLevelFullNameFromUser()
 {
 	EnterTextBox enterTextBox(this, m_levelHintText);
-	return enterTextBox.GetText() + Level::FileExtension;
+	return enterTextBox.GetText() + Level::fileExtension;
 }
 
 bool EditorWindow::TrySaveLevelIntoFile()
@@ -534,7 +596,7 @@ bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
 
 bool EditorWindow::TryValidateLevelPathIfInvalid()
 {
-	if (!FileUtilities::IsPathValid(m_levelPath.GetPath()))
+	if (!Utilities::Cpp::Path::IsPathValid(m_levelPath.GetPath()))
 	{
 		MessageBox(m_handle, L"The folder is invalid. Choose a new one", L"Error", MB_ICONERROR);
 		m_levelPath.SetPath(GetPathFromUser());
@@ -548,7 +610,7 @@ bool EditorWindow::TryValidateLevelPathIfInvalid()
 bool EditorWindow::TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName)
 {
 	auto fullPath{ validNewPath + newFullName };
-	if (FileUtilities::IsPathValid(fullPath))
+	if (Utilities::Cpp::Path::IsPathValid(fullPath))
 	{
 		QuestionBox questionBox(this, newFullName + L" already exists in the folder. Do you want to replace it?");
 		if (questionBox.IsCancelButtonPressed())
@@ -557,7 +619,7 @@ bool EditorWindow::TryValidateFullPathIfAnotherFileExists(const std::wstring& va
 				StandardFileBox::Type::Save, StandardFileBox::Flag::OverwritePrompt, newFullName);
 			if (saveFileBox.IsOKButtonPressed())
 			{
-				m_levelPath.SetFullPath(UnsafeUtilities::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
+				m_levelPath.SetFullPath(Utilities::Cpp::Unsafe::MakeNonConstForMove(saveFileBox.GetFileFullPath()));
 				return true;
 			}
 			else
@@ -591,23 +653,23 @@ bool EditorWindow::CanDeleteOrAddEntity()
 	return !m_level.IsNull() && m_currentEntity;
 }
 
-bool EditorWindow::CanLevelBeSaved()
+bool EditorWindow::IsLevelValid()
 {
-	bool canBeSaved{ true };
+	bool isValid{ true };
 	auto& level{ m_level.GetForEditing() };
-	if (level.GetCharacter() == nullptr)
+	if (!level.GetCharacter())
 	{
 		MessageBox(m_handle, L"The level must contain the character", L"Error", MB_ICONERROR);
-		canBeSaved = false;
+		isValid = false;
 	}
 
 	if (level.GetBarrels().size() != level.GetCrosses().size())
 	{
 		MessageBox(m_handle, L"The level must contain the same number of barrels and crosses", L"Error", MB_ICONERROR);
-		canBeSaved = false;
+		isValid = false;
 	}
 
-	return canBeSaved;
+	return isValid;
 }
 
 EditorWindow::Class::Class() : WindowClass(L"SokobanEditor")

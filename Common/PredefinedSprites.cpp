@@ -15,7 +15,7 @@ const std::wstring PredefinedSprites::characterFullPath{
 	L"Content\\Textures\\GameObjects\\Character.bmp" };
 
 std::vector<std::shared_ptr<Sprite>> PredefinedSprites::m_sprites;
-StaticConstructor PredefinedSprites::m_constructor(Construct);
+Utilities::Cpp::StaticConstructor PredefinedSprites::m_constructor(Construct);
 
 std::shared_ptr<Sprite> PredefinedSprites::GetSprite(const std::wstring& spriteFullPath) NOEXCEPT_WHEN_NDEBUG
 {

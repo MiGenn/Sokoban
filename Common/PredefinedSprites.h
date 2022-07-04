@@ -24,7 +24,7 @@ public:
 
 private:
 	static std::vector<std::shared_ptr<Sprite>> m_sprites;
-	static StaticConstructor m_constructor;
+	static Utilities::Cpp::StaticConstructor m_constructor;
 
 	static void Construct() noexcept;
 };

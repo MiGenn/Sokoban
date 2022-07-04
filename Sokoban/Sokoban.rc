@@ -73,6 +73,7 @@ IDI_ICON                ICON                    "C:\\Users\\User\\source\\repos\
 IDR_GAME_MENU MENU
 BEGIN
     MENUITEM "Restart",                     ID_RESTART
+    MENUITEM "Load Level",                  ID_LOAD_LEVEL
 END
 
 #endif    // English (United States) resources

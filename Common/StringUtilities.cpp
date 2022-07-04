@@ -1,9 +1,9 @@
 #include "StringUtilities.h"
 
-std::wstring StringUtilities::DeleteQuotationMarks(const std::wstring& string)
+std::wstring Utilities::Cpp::String::DeleteFirstAndLastSymbols(const std::wstring& string)
 {
-	if (string.size() <= 2)
+	if (string.size() <= 2ul)
 		return empty;
 
-	return string.substr(1, string.size() - 2);
+	return string.substr(1ul, string.size() - 2ul);
 }

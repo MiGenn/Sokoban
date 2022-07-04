@@ -2,7 +2,7 @@
 
 #include "WinapiException.h"
 
-std::wstring PathUtilities::ExtractPath(const std::wstring& fullPath)
+std::wstring Utilities::Cpp::Path::ExtractPath(const std::wstring& fullPath)
 {
     static constexpr int driveDesignatorSize{ 3 };
 
@@ -13,7 +13,7 @@ std::wstring PathUtilities::ExtractPath(const std::wstring& fullPath)
     return { pathBuffer };
 }
 
-std::wstring PathUtilities::ExtractName(const std::wstring& fullPath)
+std::wstring Utilities::Cpp::Path::ExtractName(const std::wstring& fullPath)
 {
     static constexpr int nameBufferSize{ 64 };
     wchar_t nameBuffer[nameBufferSize];
@@ -22,7 +22,7 @@ std::wstring PathUtilities::ExtractName(const std::wstring& fullPath)
     return { nameBuffer };
 }
 
-std::wstring PathUtilities::ExtractExtension(const std::wstring& fullPath)
+std::wstring Utilities::Cpp::Path::ExtractExtension(const std::wstring& fullPath)
 {
     static constexpr int extensionBufferSize{ 32 };
     wchar_t extensionBuffer[extensionBufferSize];
@@ -31,7 +31,7 @@ std::wstring PathUtilities::ExtractExtension(const std::wstring& fullPath)
     return { extensionBuffer };
 }
 
-std::wstring PathUtilities::ExtractFullName(const std::wstring& fullPath)
+std::wstring Utilities::Cpp::Path::ExtractFullName(const std::wstring& fullPath)
 {
     return ExtractName(fullPath) + ExtractExtension(fullPath);
 }

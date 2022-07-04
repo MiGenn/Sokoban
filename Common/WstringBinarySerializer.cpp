@@ -5,13 +5,12 @@
 void WstringBinarySerializer::SerializeToOpenedFile(const std::wstring& sourceString, std::ofstream& file)
 {
 	CstringBinarySerializer::SerializeToOpenedFile(
-		reinterpret_cast<const char*>(sourceString.c_str()), file,
-		((int)sourceString.size() + 1) * 2);
+		reinterpret_cast<const char*>(sourceString.c_str()), file, (sourceString.size() + 1ull) * 1ull);
 }
 
 void WstringBinarySerializer::DeserializeFromOpenedFile(std::wstring& destinationString, std::ifstream& file)
 {
-	char* stringBuffer;
+	char* stringBuffer{ nullptr };
 	CstringBinarySerializer::DeserializeFromOpenedFile(stringBuffer, file);
 	destinationString.clear();
 	destinationString = reinterpret_cast<wchar_t*>(stringBuffer);
