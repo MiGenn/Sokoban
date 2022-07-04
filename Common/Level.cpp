@@ -34,11 +34,11 @@ bool Level::Add(std::unique_ptr<TiledEntity>&& entity) noexcept
 	if (entity->GetTag() == TiledEntity::Tag::Character && m_cachedCharacterPointer)
 		return false;
 
-	if (!IsPlaceOccupied(*entity))
-	{
-		RecacheEntitiesWhenAdding(entity.get());
-		m_entities.push_back(std::move(entity));
-	}
+	if (IsPlaceOccupied(*entity))
+		return false;
+
+	RecacheEntitiesWhenAdding(entity.get());
+	m_entities.push_back(std::move(entity));
 
 	return true;
 }

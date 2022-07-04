@@ -90,14 +90,12 @@ void EnterTextBox::OnHotKey(HotKey hotKey)
 void EnterTextBox::OnOKButton()
 {
 	m_enteredText = ParseEnterTextControl();
-
 	EndDialog(m_handle, true);
 }
 
 void EnterTextBox::OnCancelButton()
 {
 	m_isCancelButtonPressed = true;
-
 	EndDialog(m_handle, true);
 }
 

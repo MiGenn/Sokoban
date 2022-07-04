@@ -1,7 +1,6 @@
 #include "TiledEntity.h"
 
 #include <stdexcept>
-#include <limits>
 #include "NumberComparison.h"
 #include "Serializers.h"
 #include "TypeRegistrator.h"
@@ -53,7 +52,7 @@ bool TiledEntity::IsCollision(const TiledEntity& otherEntity) const noexcept
 
 bool TiledEntity::IsInTheSamePosition(const TiledEntity& otherEntity) const noexcept
 {
-	static const auto epsilon{ std::numeric_limits<float>::epsilon() };
+	static const auto epsilon{ Utilities::Cpp::epsilonF };
 	auto otherEntityPosition{ otherEntity.GetPosition() };
 
 	return Utilities::Cpp::AreEqual(m_position.x, otherEntityPosition.x, epsilon) &&
