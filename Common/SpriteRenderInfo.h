@@ -7,7 +7,7 @@ class SpriteRenderInfo : public IBinarySerializable
 {
 public:
 	SpriteRenderInfo() noexcept = default;
-	SpriteRenderInfo(std::shared_ptr<Sprite> sprite, Box2i boundingBox, int layerIndex,
+	SpriteRenderInfo(std::shared_ptr<Sprite> sprite, const Box2i& boundingBox, int layerIndex,
 		bool isPreservingAspectRatio = true, Vector2f size = Vector2f(1.f, 1.f)) NOEXCEPT_WHEN_NDEBUG;
 	SpriteRenderInfo(const SpriteRenderInfo& spriteRenderInfo) noexcept;
 

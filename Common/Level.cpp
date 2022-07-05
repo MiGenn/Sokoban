@@ -60,7 +60,7 @@ bool Level::CanEntityBeOverlapped(const TiledEntity& entity) noexcept
 	switch (entity.GetTag())
 	{
 	case TiledEntity::Tag::Road:
-	case TiledEntity::Tag::Cross:
+	case TiledEntity::Tag::Point:
 		return true;
 	}
 
@@ -121,14 +121,14 @@ TiledEntity* Level::GetCharacter() noexcept
 	return m_cachedCharacterPointer;
 }
 
-std::vector<TiledEntity*>& Level::GetBarrels() noexcept
+std::vector<TiledEntity*>& Level::GetBoxes() noexcept
 {
-	return m_cachedBarrelPointers;
+	return m_cachedBoxPointers;
 }
 
-std::vector<TiledEntity*>& Level::GetCrosses() noexcept
+std::vector<TiledEntity*>& Level::GetPointes() noexcept
 {
-	return m_cachedCrossPointers;
+	return m_cachedPointPointers;
 }
 
 size_t Level::GetEntitiesCount() const noexcept
@@ -184,30 +184,30 @@ Level::const_iterator Level::cend() const noexcept
 
 void Level::CacheEntities() const NOEXCEPT_WHEN_NDEBUG
 {
-	m_cachedBarrelPointers = FindByTag(TiledEntity::Tag::Barrel);
-	m_cachedCrossPointers = FindByTag(TiledEntity::Tag::Cross);
-	assert(m_cachedBarrelPointers.size() == m_cachedCrossPointers.size());
+	m_cachedBoxPointers = FindByTag(TiledEntity::Tag::Box);
+	m_cachedPointPointers = FindByTag(TiledEntity::Tag::Point);
+	assert(m_cachedBoxPointers.size() == m_cachedPointPointers.size());
 	auto characters{ FindByTag(TiledEntity::Tag::Character) };
 	assert(characters.size() == 1);
 	m_cachedCharacterPointer = characters[0];
 }
 
-bool Level::IsWallOrBarrel(TiledEntity::Tag tag)
+bool Level::IsWallOrBox(TiledEntity::Tag tag)
 {
 	return tag == TiledEntity::Tag::Wall ||
-		tag == TiledEntity::Tag::Barrel;
+		tag == TiledEntity::Tag::Box;
 }
 
 void Level::RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept
 {
 	switch (entity->GetTag())
 	{
-	case TiledEntity::Tag::Barrel:
-		m_cachedBarrelPointers.push_back(entity);
+	case TiledEntity::Tag::Box:
+		m_cachedBoxPointers.push_back(entity);
 		break;
 
-	case TiledEntity::Tag::Cross:
-		m_cachedCrossPointers.push_back(entity);
+	case TiledEntity::Tag::Point:
+		m_cachedPointPointers.push_back(entity);
 		break;
 
 	case TiledEntity::Tag::Character:
@@ -220,12 +220,12 @@ void Level::RecacheEntitiesWhenDeleting(const TiledEntity* entity) const noexcep
 {
 	switch (entity->GetTag())
 	{
-	case TiledEntity::Tag::Barrel:
-		EraseCachedPointer(entity, m_cachedBarrelPointers);
+	case TiledEntity::Tag::Box:
+		EraseCachedPointer(entity, m_cachedBoxPointers);
 		break;
 
-	case TiledEntity::Tag::Cross:
-		EraseCachedPointer(entity, m_cachedCrossPointers);
+	case TiledEntity::Tag::Point:
+		EraseCachedPointer(entity, m_cachedPointPointers);
 		break;
 	}
 }

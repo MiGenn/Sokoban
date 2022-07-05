@@ -13,9 +13,9 @@ void Simulator::Simulate(Level& level) NOEXCEPT_WHEN_NDEBUG
 
 	auto characterTranslation{ UpdateCharacterState(*character) };
 	HandleCollision(level, characterTranslation);
-	FollowCharacter(*character);
+	//FollowCharacter(*character);
 	ZoomCamera();
-	m_isWin = AreBarrelsDelivered(level);
+	m_isWin = AreBoxesDelivered(level);
 }
 
 bool Simulator::IsWin() const noexcept
@@ -74,8 +74,8 @@ void Simulator::HandleCollision(Level& level, Vector2f characterTranslation) noe
 	{
 		switch (collidedEntity->GetTag())
 		{
-		case TiledEntity::Tag::Barrel:
-			ResolveCollisionWithBarrel(level, character, characterTranslation, *collidedEntity);
+		case TiledEntity::Tag::Box:
+			ResolveCollisionWithBox(level, character, characterTranslation, *collidedEntity);
 			break;
 
 		case TiledEntity::Tag::Wall:
@@ -85,22 +85,22 @@ void Simulator::HandleCollision(Level& level, Vector2f characterTranslation) noe
 	}
 }
 
-bool Simulator::AreBarrelsDelivered(Level& level) noexcept
+bool Simulator::AreBoxesDelivered(Level& level) noexcept
 {
-	auto deliveredBarrelsCount{ 0 };
-	for (auto barrel : level.GetBarrels())
+	auto deliveredBoxesCount{ 0 };
+	for (auto box : level.GetBoxes())
 	{
-		for (auto cross : level.GetCrosses())
+		for (auto point : level.GetPointes())
 		{
-			if (barrel->IsCollision(*cross))
+			if (box->IsCollision(*point))
 			{
-				++deliveredBarrelsCount;
+				++deliveredBoxesCount;
 				break;
 			}
 		}
 	}
 
-	return deliveredBarrelsCount == (int)level.GetBarrels().size();
+	return deliveredBoxesCount == (int)level.GetBoxes().size();
 }
 
 bool Simulator::IsCollision(const TiledEntity& entity, const TiledEntity& otherEntity) noexcept
@@ -124,14 +124,14 @@ TiledEntity* Simulator::FindCollidedEntity(const Level& level, const TiledEntity
 	return collidedEntityIterator->get();
 }
 
-void Simulator::ResolveCollisionWithBarrel(Level& level, TiledEntity& character,
-	Vector2f characterTranslation, TiledEntity& barrel) noexcept
+void Simulator::ResolveCollisionWithBox(Level& level, TiledEntity& character,
+	Vector2f characterTranslation, TiledEntity& box) noexcept
 {
-	barrel.Move(characterTranslation);
-	auto collidedEntity{ FindCollidedEntity(level, barrel) };
+	box.Move(characterTranslation);
+	auto collidedEntity{ FindCollidedEntity(level, box) };
 	if (collidedEntity)
 	{
-		barrel.Move(-characterTranslation);
+		box.Move(-characterTranslation);
 		character.Move(-characterTranslation);
 	}
 }

@@ -67,8 +67,8 @@ private:
 
 	void OnWallButtonClick();
 	void OnRoadButtonClick();
-	void OnCrossButtonClick();
-	void OnBarrelButtonClick();
+	void OnPointButtonClick();
+	void OnBoxButtonClick();
 	void OnCharacterButtonClick();
 
 	void OnPlayButtonClick();

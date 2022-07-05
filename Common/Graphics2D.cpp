@@ -18,7 +18,7 @@ Graphics2D::Graphics2D(Window* renderWindow) NOEXCEPT_WHEN_NDEBUG :
 	m_layersSize = renderWindow->GetSize();
 	m_pixelsAmountPerWorldUnit = CalculatePixelsAmountPerWorldUnit(m_layersSize);
 	AddOrNotNewLayer(m_mainLayerIndex);
-	Fill(m_mainLayerIndex, RGB(0, 0, 0));
+	Fill(m_mainLayerIndex, RGB(117, 140, 142));
 
 	AddOrNotNewLayer(1);
 }
@@ -278,11 +278,6 @@ void Graphics2D::ClearLayer(RenderLayer& layer) NOEXCEPT_WHEN_NDEBUG
 {
 	Fill(layer, chroma);
 	layer.SetUsed(false);
-}
-
-void Graphics2D::ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG
-{
-	ClearLayer(*m_layers[layerIndex]);
 }
 
 void Graphics2D::Fill(RenderLayer& layer, COLORREF color) NOEXCEPT_WHEN_NDEBUG

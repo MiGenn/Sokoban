@@ -77,8 +77,8 @@ BEGIN
     BEGIN
         MENUITEM "Wall",                        ID_GAMEOBJECTS_WALL
         MENUITEM "Road",                        ID_GAMEOBJECTS_ROAD
-        MENUITEM "Cross",                       ID_GAMEOBJECTS_CROSS
-        MENUITEM "Barrel",                      ID_GAMEOBJECTS_BARREL
+        MENUITEM "Point",                       ID_GAMEOBJECTS_CROSS
+        MENUITEM "Box",                      ID_GAMEOBJECTS_BARREL
         MENUITEM "Character",                   ID_GAMEOBJECTS_CHARACTER
     END
     POPUP "Simulation", GRAYED

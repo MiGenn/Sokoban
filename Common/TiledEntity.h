@@ -9,12 +9,10 @@ public:
 		Unknown,
 		Wall,
 		Road,
-		Cross,
-		Barrel,
+		Box,
+		Point,
 		Character
 	};
-
-	static constexpr int tileSize{ 24 };
 
 	TiledEntity() noexcept = default;
 	TiledEntity(std::ifstream& file);

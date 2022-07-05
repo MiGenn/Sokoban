@@ -49,13 +49,13 @@ void Editor::Render()
 	}
 
 	m_window.graphics.Present();
-	m_window.graphics.Clear();
+	m_window.graphics.Clear(RGB(117, 140, 142));
 }
 
 void Editor::RenderGrid()
 {
 	static constexpr int layerIndex{ 0 };
-	static constexpr COLORREF lineColor{ RGB(128, 128, 128) };
+	static constexpr COLORREF lineColor{ RGB(0, 0, 0) };
 	
 	m_window.graphics.RenderGrid(layerIndex, lineColor);
 }

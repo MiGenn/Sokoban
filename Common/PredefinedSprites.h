@@ -4,16 +4,20 @@
 #include <vector>
 #include "StaticConstuctor.h"
 #include "Sprite.h"
+#include "Box2D.h"
 #include "BuildInfo.h"
 
 class PredefinedSprites
 {
 public:
-	static const std::wstring wallFullPath;
-	static const std::wstring roadFullPath;
-	static const std::wstring crossFullPath;
-	static const std::wstring barrelFullPath;
-	static const std::wstring characterFullPath;
+	static constexpr int tileSizeInPixels{ 64 };
+	static const std::wstring relativeFullPath;
+
+	static const Box2i wallBoundingBox;
+	static const Box2i roadBoundingBox;
+	static const Box2i boxBoundingBox;
+	static const Box2i pointBoundingBox;
+	static const Box2i characterBoundingBox;
 
 	PredefinedSprites() = delete;
 	PredefinedSprites(const PredefinedSprites&) = delete;

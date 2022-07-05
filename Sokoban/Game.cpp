@@ -17,8 +17,7 @@ Game::Game() :
 	m_window.loadLevelButtonIsClicked += 
 		[this](const std::wstring& levelFileFullPath) { OnLoadLevelButtonClicked(levelFileFullPath); };
 
-	std::sort(m_levelFullPaths.begin(), m_levelFullPaths.end());
-	LoadNextLevel();
+	m_currentLevel = LoadNextLevel();
 	if (!m_currentLevel)
 		MessageBox(m_window.GetHandle(), L"The default level's folder is empty", L"Error", MB_ICONERROR);
 }
@@ -35,7 +34,7 @@ int Game::Run()
 			Simulate();
 			Render();
 		}
-
+		
 		WaitMessage();
 	}
 }
@@ -45,25 +44,36 @@ void Game::Simulate()
 	m_simulator.Simulate(*m_currentLevel);
 	if (m_simulator.IsWin())
 	{
-		LoadNextLevel();
-		if (!m_currentLevel)
-		{
-			std::wstring message{ L"New levels are over. Do you want to start from the first one?" };
-			if (MessageBox(m_window.GetHandle(), message.c_str(), L"", MB_OKCANCEL) == IDOK)
-				LoadNextLevel();
-			else
-				m_levelFullPaths.clear();
-		}
+		auto nextLevel{ LoadNextLevel() };
+		if (!(isGameOver = !nextLevel))
+			m_currentLevel = std::move(nextLevel);
 	}
 }
 
 void Game::Render()
-{
-	m_window.graphics.Clear(RGB(0, 128, 0));
+{	
 	for (auto& entity : *m_currentLevel)
 		m_window.graphics.RenderSprite(entity->GetRenderInfo());
 
-	m_window.graphics.Present();	
+	m_window.graphics.Present();
+	m_window.graphics.Clear(RGB(140, 115, 60));
+
+	if (isGameOver)
+	{
+		std::wstring message{ L"New levels are over. Do you want to start from the first one?" };
+		if (MessageBox(m_window.GetHandle(), message.c_str(), L"", MB_OKCANCEL) == IDOK)
+		{
+			m_currentLevel = LoadNextLevel();
+		}
+		else
+		{
+			m_levelFullPaths.clear();
+			m_currentLevel.reset();
+		}
+
+		isGameOver = false;
+		m_window.graphics.Present();
+	}
 }
 
 std::vector<std::wstring> Game::FindLevelFullPahts(const std::wstring& levelFolderPath)
@@ -81,6 +91,12 @@ std::vector<std::wstring> Game::FindLevelFullPahts(const std::wstring& levelFold
 		levelFullPaths.emplace_back(levelFolderPath + findData.cFileName);
 	} 
 	while (FindNextFile(findHandle, &findData));
+
+	std::sort(levelFullPaths.begin(), levelFullPaths.end(),
+		[](const std::wstring& first, const std::wstring& second)
+		{
+			return first.size() < second.size();
+		});
 
 	return levelFullPaths;
 }
@@ -105,24 +121,27 @@ std::unique_ptr<Level> Game::LoadLevel(const std::wstring& fullPath)
 	}
 }
 
-void Game::LoadNextLevel()
+std::unique_ptr<Level> Game::LoadNextLevel()
 {
+	static std::wstring* currentLevelFullPath{ nullptr };
+
 	if (m_nextLevelFullPathIndex >= m_levelFullPaths.size())
 	{
-		m_currentLevel.reset();
-		m_currentLevelFullPath = nullptr;
+		currentLevelFullPath = nullptr;
 		m_nextLevelFullPathIndex = 0ull;
-		return;
+		return nullptr;
 	}
 
-	m_currentLevelFullPath = &m_levelFullPaths[m_nextLevelFullPathIndex++];
-	m_currentLevel = LoadLevel(*m_currentLevelFullPath);	
+	currentLevelFullPath = &m_levelFullPaths[m_nextLevelFullPathIndex++];
+	return LoadLevel(*currentLevelFullPath);
 }
 
 void Game::ReloadCurrentLevel()
 {
-	if (m_currentLevelFullPath)
-		m_currentLevel = LoadLevel(*m_currentLevelFullPath);
+	if (m_nextLevelFullPathIndex > 0)
+		--m_nextLevelFullPathIndex;
+	
+	m_currentLevel = LoadNextLevel();
 }
 
 void Game::OnLoadLevelButtonClicked(const std::wstring& selectedLevelFullPath)
@@ -130,12 +149,15 @@ void Game::OnLoadLevelButtonClicked(const std::wstring& selectedLevelFullPath)
 	auto levelFolderPath{ Utilities::Cpp::Path::ExtractPath(selectedLevelFullPath) };
 	auto levelFullPaths{ FindLevelFullPahts(levelFolderPath) };
 	auto levelsCount{ (int)levelFullPaths.size() };
-	if (levelsCount > 1ull)
-		for (int i{ 0 }; i < levelsCount; ++i)
-			if (levelFullPaths[i] == selectedLevelFullPath)
-				std::swap(levelFullPaths[i], levelFullPaths[0]);
+	for (int i{ 0 }; i < levelsCount; ++i)
+	{
+		if (levelFullPaths[i] == selectedLevelFullPath)
+		{
+			m_nextLevelFullPathIndex = i;
+			break;
+		}
+	}
 
 	m_levelFullPaths = std::move(levelFullPaths);
-	m_nextLevelFullPathIndex = 0ull;
-	LoadNextLevel();
+	m_currentLevel = LoadNextLevel();
 }

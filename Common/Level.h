@@ -30,8 +30,8 @@ public:
 	const_iterator FindEquivalent(const TiledEntity& entity) const noexcept;
 
 	TiledEntity* GetCharacter() noexcept;
-	std::vector<TiledEntity*>& GetBarrels() noexcept;
-	std::vector<TiledEntity*>& GetCrosses() noexcept;
+	std::vector<TiledEntity*>& GetBoxes() noexcept;
+	std::vector<TiledEntity*>& GetPointes() noexcept;
 	size_t GetEntitiesCount() const noexcept;
 
 	void SerializeIDToOpenedFile(std::ofstream& file) const override;
@@ -50,10 +50,10 @@ private:
 	std::vector<std::unique_ptr<TiledEntity>> m_entities;
 
 	mutable TiledEntity* m_cachedCharacterPointer{ nullptr };
-	mutable std::vector<TiledEntity*> m_cachedBarrelPointers;
-	mutable std::vector<TiledEntity*> m_cachedCrossPointers;
+	mutable std::vector<TiledEntity*> m_cachedBoxPointers;
+	mutable std::vector<TiledEntity*> m_cachedPointPointers;
 
-	static bool IsWallOrBarrel(TiledEntity::Tag tag);
+	static bool IsWallOrBox(TiledEntity::Tag tag);
 
 	void CacheEntities() const NOEXCEPT_WHEN_NDEBUG;
 	void RecacheEntitiesWhenAdding(TiledEntity* entity) const noexcept;

@@ -176,11 +176,11 @@ void EditorWindow::OnCommand(int controlID)
 		break;
 
 	case ID_GAMEOBJECTS_CROSS:
-		OnCrossButtonClick();
+		OnPointButtonClick();
 		break;
 
 	case ID_GAMEOBJECTS_BARREL:
-		OnBarrelButtonClick();
+		OnBoxButtonClick();
 		break;
 
 	case ID_GAMEOBJECTS_CHARACTER:
@@ -439,14 +439,14 @@ void EditorWindow::OnRoadButtonClick()
 	m_currentEntity = TiledEntityFactory::CreateRoad();
 }
 
-void EditorWindow::OnCrossButtonClick()
+void EditorWindow::OnPointButtonClick()
 {
-	m_currentEntity = TiledEntityFactory::CreateCross();
+	m_currentEntity = TiledEntityFactory::CreatePoint();
 }
 
-void EditorWindow::OnBarrelButtonClick()
+void EditorWindow::OnBoxButtonClick()
 {
-	m_currentEntity = TiledEntityFactory::CreateBarrel();
+	m_currentEntity = TiledEntityFactory::CreateBox();
 }
 
 void EditorWindow::OnCharacterButtonClick()
@@ -481,6 +481,7 @@ void EditorWindow::OnLevelDeletedOrLoaded()
 	if (m_level.IsNull())
 		option = ChangeSubmenuOption::Disable;
 
+	graphics.SetCameraPosition({ 0.0f, 0.0f });
 	ChangeSubmenusWhenLevelIsDeletedOrLoaded(option);
 }
 
@@ -528,18 +529,20 @@ void EditorWindow::MoveLevel()
 	Vector2f translation;
 
 	if (keyboard.IsKeyPressed('W'))
-		translation += Vector2f(0.f, -1.f);
-
-	if (keyboard.IsKeyPressed('S'))
 		translation += Vector2f(0.f, 1.f);
 
-	if (keyboard.IsKeyPressed('A'))
-		translation += Vector2f(1.f, 0.f);
+	if (keyboard.IsKeyPressed('S'))
+		translation += Vector2f(0.f, -1.f);
 
-	if (keyboard.IsKeyPressed('D'))
+	if (keyboard.IsKeyPressed('A'))
 		translation += Vector2f(-1.f, 0.f);
 
-	graphics.SetCameraPosition(graphics.GetCameraPosition() + translation * m_drawingOriginMoveSensitivity);
+	if (keyboard.IsKeyPressed('D'))
+		translation += Vector2f(1.f, 0.f);
+
+	for (auto& entity : m_level.GetForEditing())
+		entity->Move(translation);
+
 	keyboard.m_isProcessed = false;
 }
 
@@ -663,9 +666,9 @@ bool EditorWindow::IsLevelValid()
 		isValid = false;
 	}
 
-	if (level.GetBarrels().size() != level.GetCrosses().size())
+	if (level.GetBoxes().size() != level.GetPointes().size())
 	{
-		MessageBox(m_handle, L"The level must contain the same number of barrels and crosses", L"Error", MB_ICONERROR);
+		MessageBox(m_handle, L"The level must contain the same number of boxes and points", L"Error", MB_ICONERROR);
 		isValid = false;
 	}
 

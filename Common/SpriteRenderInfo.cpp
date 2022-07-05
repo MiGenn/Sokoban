@@ -3,7 +3,7 @@
 #include <cassert>
 #include "Serializers.h"
 
-SpriteRenderInfo::SpriteRenderInfo(std::shared_ptr<Sprite> sprite, Box2i boundingBox, int layerIndex,
+SpriteRenderInfo::SpriteRenderInfo(std::shared_ptr<Sprite> sprite, const Box2i& boundingBox, int layerIndex,
     bool isPreservingAspectRatio, Vector2f size) NOEXCEPT_WHEN_NDEBUG :
     m_sprite(std::move(sprite)), m_boundingBox(boundingBox), m_layerIndex(layerIndex),
     m_isPreservingAspectRatio(isPreservingAspectRatio), m_size(size)

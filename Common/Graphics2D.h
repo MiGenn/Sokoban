@@ -57,7 +57,6 @@ private:
 	std::unique_ptr<RenderLayer> CreateCompatibleLayer();
 	void MergeTwoLayers(HDC destinationLayerContext, HDC sourceLayerContext);
 	void MergeLayers();
-	void ClearLayer(int layerIndex) NOEXCEPT_WHEN_NDEBUG;
 	void ClearLayer(RenderLayer& layer) NOEXCEPT_WHEN_NDEBUG;
 	
 	void RenderSprite(HDC layerContext, HDC spriteContext, const SpriteRenderInfo& renderInfo);

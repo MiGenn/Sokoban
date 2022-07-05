@@ -27,10 +27,10 @@ private:
 	void ZoomCamera();
 
 	static void HandleCollision(Level& level, Vector2f characterTranslation) noexcept;
-	static bool AreBarrelsDelivered(Level& level) noexcept;
+	static bool AreBoxesDelivered(Level& level) noexcept;
 
 	static bool IsCollision(const TiledEntity& entity, const TiledEntity& otherEntity) noexcept;
 	static TiledEntity* FindCollidedEntity(const Level& level, const TiledEntity& entity);
-	static void ResolveCollisionWithBarrel(Level& level, TiledEntity& character,
-		Vector2f characterTranslation, TiledEntity& barrel) noexcept;
+	static void ResolveCollisionWithBox(Level& level, TiledEntity& character,
+		Vector2f characterTranslation, TiledEntity& box) noexcept;
 };

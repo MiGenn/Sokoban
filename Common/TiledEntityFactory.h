@@ -11,7 +11,7 @@ public:
 
 	static std::unique_ptr<TiledEntity> CreateWall();
 	static std::unique_ptr<TiledEntity> CreateRoad();
-	static std::unique_ptr<TiledEntity> CreateBarrel();
-	static std::unique_ptr<TiledEntity> CreateCross();
+	static std::unique_ptr<TiledEntity> CreateBox();
+	static std::unique_ptr<TiledEntity> CreatePoint();
 	static std::unique_ptr<TiledEntity> CreateCharacter();
 };

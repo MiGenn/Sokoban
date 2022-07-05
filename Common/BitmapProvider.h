@@ -10,7 +10,7 @@ public:
 
 	BitmapProvider& operator=(const BitmapProvider&) = delete;
 
-	static HBITMAP GetBitmap(const std::wstring& fullPath);
+	static HBITMAP GetBitmap(const std::wstring& relativeFullPath);
 
 private:
 	static std::unordered_map<std::wstring, HBITMAP> m_bitmaps;
