@@ -49,7 +49,7 @@ void Editor::Render()
 	}
 
 	m_window.graphics.Present();
-	m_window.graphics.Clear(RGB(117, 140, 142));
+	m_window.graphics.Clear(RGB(140, 115, 60));
 }
 
 void Editor::RenderGrid()
