@@ -11,11 +11,7 @@ namespace Utilities::Cpp
 	public:
 		using Function = std::function<void(FunctionParams...)>;
 
-		Event() noexcept
-		{
-
-		}
-
+		Event() noexcept {};
 		Event(const Event&) = delete;
 
 		Event& operator=(const Event&) = delete;
@@ -31,17 +27,17 @@ namespace Utilities::Cpp
 			return functionID;
 		}
 
-		void operator-=(unsigned long long unsubscribingFunctionID)
+		void operator-=(unsigned long long unsubscribingFunctionID) noexcept
 		{
 			auto unsubscribingFunctionIterator{ m_subscribingFunctions.find(unsubscribingFunctionID) };
 			if (unsubscribingFunctionIterator != m_subscribingFunctions.end())
 				m_subscribingFunctions.erase(unsubscribingFunctionIterator);
 		}
 
-		void Trigger(FunctionParams... args) noexcept
+		void Trigger(FunctionParams... args) const noexcept
 		{
-			for (auto iterator : m_subscribingFunctions)
-				iterator.second(args...);
+			for (auto& IDAndFunction : m_subscribingFunctions)
+				IDAndFunction.second(args...);
 		}
 
 	private:

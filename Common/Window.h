@@ -25,7 +25,7 @@ public:
 
 protected:
 	Vector2i m_size;
-	HWND m_handle{ NULL };
+	HWND m_handle{ nullptr };
 
 	virtual LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 };

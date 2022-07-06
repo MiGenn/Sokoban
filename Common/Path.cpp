@@ -12,45 +12,39 @@ Utilities::Cpp::Path::Path::Path(std::wstring&& fullPath)
 	SetFullPath(std::move(fullPath));
 }
 
-void Utilities::Cpp::Path::Path::SetFullPath(const std::wstring& fullPath) noexcept
+void Utilities::Cpp::Path::Path::SetFullPath(const std::wstring& fullPath)
 {
 	m_fullPath = fullPath;
-
 	UpdatePathParts();
 }
 
-void Utilities::Cpp::Path::Path::SetFullPath(std::wstring&& fullPath) noexcept
+void Utilities::Cpp::Path::Path::SetFullPath(std::wstring&& fullPath)
 {
 	m_fullPath = std::move(fullPath);
-
 	UpdatePathParts();
 }
 
 void Utilities::Cpp::Path::Path::SetPath(const std::wstring& path) noexcept
 {
 	m_path = path;
-
 	UpdateFullPath();
 }
 
 void Utilities::Cpp::Path::Path::SetPath(std::wstring&& path) noexcept
 {
 	m_path = std::move(path);
-
 	UpdateFullPath();
 }
 
 void Utilities::Cpp::Path::Path::SetFullName(const std::wstring& fullName) noexcept
 {
 	m_fullName = fullName;
-
 	UpdateFullPath();
 }
 
 void Utilities::Cpp::Path::Path::SetFullName(std::wstring&& fullName) noexcept
 {
 	m_fullName = std::move(fullName);
-
 	UpdateFullPath();
 }
 
@@ -72,21 +66,18 @@ const std::wstring& Utilities::Cpp::Path::Path::GetFullName() const noexcept
 void Utilities::Cpp::Path::Path::ClearFullPath() noexcept
 {
 	m_fullPath.clear();
-
 	UpdatePathParts();
 }
 
 void Utilities::Cpp::Path::Path::ClearPath() noexcept
 {
 	m_path.clear();
-
 	UpdateFullPath();
 }
 
 void Utilities::Cpp::Path::Path::ClearFullName() noexcept
 {
 	m_fullName.clear();
-
 	UpdateFullPath();
 }
 
@@ -121,7 +112,7 @@ void Utilities::Cpp::Path::Path::UpdateFullPath() noexcept
 	m_fullPath = m_path + m_fullName;
 }
 
-void Utilities::Cpp::Path::Path::UpdatePathParts() noexcept
+void Utilities::Cpp::Path::Path::UpdatePathParts()
 {
 	m_path = Utilities::Cpp::Path::ExtractPath(m_fullPath);
 	m_fullName = Utilities::Cpp::Path::ExtractFullName(m_fullPath);

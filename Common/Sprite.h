@@ -4,16 +4,16 @@
 #include "WinapiException.h"
 #include "BuildInfo.h"
 
-class Sprite : public IBinarySerializable
+class Sprite final : public IBinarySerializable
 {
 public:
 	Sprite() noexcept = default;
 	Sprite(const std::wstring& fullPath);
-	Sprite(Sprite&& sprite) noexcept;
 	Sprite(const Sprite& sprite) noexcept;
+	Sprite(Sprite&& sprite) noexcept;
 
-	Sprite& operator=(Sprite&& right) noexcept;
 	Sprite& operator=(const Sprite& right) noexcept;
+	Sprite& operator=(Sprite&& right) noexcept;
 
 	const std::wstring& GetFullPath() const noexcept;
 	HBITMAP GetBitmap() const noexcept;
@@ -26,7 +26,7 @@ public:
 
 private:
 	std::wstring m_fullPath;
-	HBITMAP m_bitmap{ NULL };
+	HBITMAP m_bitmap{ nullptr };
 
 	void InitializeBitmap();
 };

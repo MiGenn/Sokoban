@@ -13,10 +13,10 @@ namespace Utilities::Winapi::Wrapper
 
 		SelectWrapper& operator=(const SelectWrapper&) = delete;
 
-		void Reset(HDC context = NULL, HGDIOBJ object = NULL) noexcept;
+		void Reset(HDC context = nullptr, HGDIOBJ object = nullptr) noexcept;
 
 	private:
-		HDC m_context{ NULL };
-		HGDIOBJ m_previousObject{ NULL };
+		HDC m_context{ nullptr };
+		HGDIOBJ m_previousObject{ nullptr };
 	};
 }

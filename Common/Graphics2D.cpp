@@ -67,12 +67,15 @@ void Graphics2D::RenderLine(int layerIndex,
 	Utilities::Winapi::SmartPointer::UniqueGDIOBJ<HPEN> pen(CreatePen(penStyle, penWidth, color));
 	Utilities::Winapi::Wrapper::SelectWrapper selectWrapper(layerContext, pen.get());
 
-	MoveToEx(layerContext, startPositionInScreenCoords.x, startPositionInScreenCoords.y, NULL);
+	MoveToEx(layerContext, startPositionInScreenCoords.x, startPositionInScreenCoords.y, nullptr);
 	LineTo(layerContext, endPositionInScreenCoords.x, endPositionInScreenCoords.y);
 }
 
 void Graphics2D::RenderGrid(int layerIndex, COLORREF color) NOEXCEPT_WHEN_NDEBUG
 {
+	assert(layerIndex >= 0);
+	AddOrNotNewLayer(layerIndex);
+
 	const auto halfScreenSizeInWorldUnits{ ConvertScreenToWorldUnits({ m_layersSize.x / 2, m_layersSize.y / 2 }) };
 	const auto pixelsAmountPerWorldUnit{ m_pixelsAmountPerWorldUnit * m_zoom };
 

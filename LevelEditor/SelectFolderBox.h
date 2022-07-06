@@ -2,10 +2,10 @@
 #include <string_view>
 #include "Window.h"
 
-class SelectFolderBox
+class SelectFolderBox final
 {
 public:
-	SelectFolderBox(const Window* parent);
+	SelectFolderBox(const Window* parent) noexcept;
 	SelectFolderBox(const SelectFolderBox&) = delete;
 
 	SelectFolderBox& operator=(const SelectFolderBox&) = delete;

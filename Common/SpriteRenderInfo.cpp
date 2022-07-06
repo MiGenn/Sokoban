@@ -36,13 +36,16 @@ void SpriteRenderInfo::SetPosition(Vector2f newPosition) noexcept
     m_position = newPosition;
 }
 
-void SpriteRenderInfo::SetBoundingBox(Box2i newBoundingBox) noexcept
+void SpriteRenderInfo::SetBoundingBox(const Box2i& newBoundingBox) noexcept
 {
     m_boundingBox = newBoundingBox;
 }
 
-void SpriteRenderInfo::SetSize(Vector2f newSize) noexcept
+void SpriteRenderInfo::SetSize(Vector2f newSize)
 {
+    if (newSize.x < 0.f || newSize.y || 0.f)
+        std::logic_error("The size is incorrect");
+
     m_size = newSize;
 }
 

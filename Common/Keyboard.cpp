@@ -2,7 +2,7 @@
 
 #include "WinapiException.h"
 
-bool Keyboard::IsKeyPressed(unsigned char keycode) noexcept
+bool Keyboard::IsKeyPressed(unsigned char keycode) const noexcept
 {
     m_isProcessed = true;
     return m_keysPressedStates[keycode];

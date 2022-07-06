@@ -11,14 +11,27 @@ Level::Level(std::ifstream& file)
 	DeserializeFromOpenedFileToSelf(file);	
 }
 
-Level::Level(const Level& level)
+Level::Level(const Level& level) noexcept
 {
 	(*this) = level;
 }
 
-Level& Level::operator=(const Level& right)
+Level::Level(Level&& level) noexcept
+{
+	(*this) = std::move(level);
+}
+
+Level& Level::operator=(const Level& right) noexcept
 {
 	m_entities = Utilities::Cpp::Container::Duplicate(right.m_entities);
+	CacheEntities();
+
+	return *this;
+}
+
+Level& Level::operator=(Level&& right) noexcept
+{
+	m_entities = std::move(right.m_entities);
 	CacheEntities();
 
 	return *this;
@@ -31,6 +44,9 @@ TiledEntity& Level::operator[](int i)
 
 bool Level::Add(std::unique_ptr<TiledEntity>&& entity) noexcept
 {
+	if (!entity)
+		return false;
+
 	if (entity->GetTag() == TiledEntity::Tag::Character && m_cachedCharacterPointer)
 		return false;
 
@@ -43,7 +59,7 @@ bool Level::Add(std::unique_ptr<TiledEntity>&& entity) noexcept
 	return true;
 }
 
-bool Level::Delete(const_iterator& entityIterator) noexcept
+bool Level::Delete(const_iterator& entityIterator)
 {
 	auto entity{ entityIterator->get() };
 	if (entity->GetTag() == TiledEntity::Tag::Character)
@@ -126,7 +142,7 @@ std::vector<TiledEntity*>& Level::GetBoxes() noexcept
 	return m_cachedBoxPointers;
 }
 
-std::vector<TiledEntity*>& Level::GetPointes() noexcept
+std::vector<TiledEntity*>& Level::GetPoints() noexcept
 {
 	return m_cachedPointPointers;
 }

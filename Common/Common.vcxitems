@@ -22,7 +22,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)IFileBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NumberComparison.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryDC.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Path.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp" />
@@ -69,7 +68,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IFileBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NumberComparison.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryDC.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Path.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h" />

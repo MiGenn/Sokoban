@@ -2,7 +2,7 @@
 #include "Vector2D.h"
 
 template<Number T>
-class Rect
+class Rect final
 {
 public:
 	Vector2D<T> topLeft;

@@ -7,7 +7,7 @@
 #include "WinapiUtilities.h"
 #include "PathUtilities.h"
 
-const std::wstring Game::modulePath{ Utilities::Winapi::GetModulePath(NULL) };
+const std::wstring Game::modulePath{ Utilities::Winapi::GetModulePath(nullptr) };
 
 Game::Game() :
 	m_window({ 1280, 720 }), m_simulator(m_window.keyboard, m_window.mouse, m_window.graphics), 
@@ -39,7 +39,7 @@ int Game::Run()
 	}
 }
 
-void Game::Simulate()
+void Game::Simulate() NOEXCEPT_WHEN_NDEBUG
 {
 	m_simulator.Simulate(*m_currentLevel);
 	if (m_simulator.IsWin())
@@ -76,7 +76,7 @@ void Game::Render()
 	}
 }
 
-std::vector<std::wstring> Game::FindLevelFullPahts(const std::wstring& levelFolderPath)
+std::vector<std::wstring> Game::FindLevelFullPahts(const std::wstring& levelFolderPath) noexcept
 {
 	static const std::wstring pathAndFilter(levelFolderPath + L"*.lvl");
 
@@ -101,7 +101,7 @@ std::vector<std::wstring> Game::FindLevelFullPahts(const std::wstring& levelFold
 	return levelFullPaths;
 }
 
-std::unique_ptr<Level> Game::LoadLevel(const std::wstring& fullPath)
+std::unique_ptr<Level> Game::LoadLevel(const std::wstring& fullPath) const noexcept
 {
 	std::ifstream file(fullPath, std::ios::binary);
 	if (!file.is_open())
@@ -121,7 +121,7 @@ std::unique_ptr<Level> Game::LoadLevel(const std::wstring& fullPath)
 	}
 }
 
-std::unique_ptr<Level> Game::LoadNextLevel()
+std::unique_ptr<Level> Game::LoadNextLevel() noexcept
 {
 	static std::wstring* currentLevelFullPath{ nullptr };
 
@@ -136,7 +136,7 @@ std::unique_ptr<Level> Game::LoadNextLevel()
 	return LoadLevel(*currentLevelFullPath);
 }
 
-void Game::ReloadCurrentLevel()
+void Game::ReloadCurrentLevel() noexcept
 {
 	if (m_nextLevelFullPathIndex > 0)
 		--m_nextLevelFullPathIndex;
@@ -144,7 +144,7 @@ void Game::ReloadCurrentLevel()
 	m_currentLevel = LoadNextLevel();
 }
 
-void Game::OnLoadLevelButtonClicked(const std::wstring& selectedLevelFullPath)
+void Game::OnLoadLevelButtonClicked(const std::wstring& selectedLevelFullPath) noexcept
 {
 	auto levelFolderPath{ Utilities::Cpp::Path::ExtractPath(selectedLevelFullPath) };
 	auto levelFullPaths{ FindLevelFullPahts(levelFolderPath) };

@@ -7,7 +7,7 @@ namespace Utilities::Cpp::Unsafe
 	concept MoveConstructible = std::is_move_constructible_v<T>;
 
 	template <MoveConstructible T>
-	T&& MakeNonConstForMove(const T& object)
+	T&& MakeNonConstForMove(const T& object) noexcept
 	{
 		return std::move(const_cast<T&>(object));
 	}

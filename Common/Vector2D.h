@@ -13,7 +13,7 @@ public:
 
 	Vector2D() noexcept = default;
 	Vector2D(T x, T y) noexcept;
-	Vector2D(const Vector2D<T>& vector);
+	Vector2D(const Vector2D<T>& vector) noexcept;
 
 	bool operator==(const Vector2D<T>& right) const noexcept;
 	Vector2D<T> operator-() noexcept;
@@ -22,11 +22,9 @@ public:
 	Vector2D<T>& operator+=(const Vector2D<T>& right) noexcept;
 	Vector2D<T> operator-(const Vector2D<T>& right) const noexcept;
 	Vector2D<T>& operator-=(const Vector2D<T>& right) noexcept;
-	Vector2D<T> operator*(T right);
+	Vector2D<T> operator*(T right) noexcept;
 	Vector2D<T> operator/(T right);
-	template<Number OutputT> operator Vector2D<OutputT>() const;
-
-	void ClampSelf(Vector2D<T> min, Vector2D<T> max) noexcept;
+	template<Number OutputT> operator Vector2D<OutputT>() const noexcept;
 
 	void SerializeIDToOpenedFile(std::ofstream& file) const override;
 
@@ -45,7 +43,7 @@ inline Vector2D<T>::Vector2D(T x, T y) noexcept
 }
 
 template<Number T>
-inline Vector2D<T>::Vector2D(const Vector2D<T>& vector)
+inline Vector2D<T>::Vector2D(const Vector2D<T>& vector) noexcept
 {
 	(*this) = vector;
 }
@@ -96,7 +94,7 @@ inline Vector2D<T>& Vector2D<T>::operator-=(const Vector2D<T>& right) noexcept
 }
 
 template<Number T>
-inline Vector2D<T> Vector2D<T>::operator*(T right)
+inline Vector2D<T> Vector2D<T>::operator*(T right) noexcept
 {
 	return { x * right, y * right};
 }
@@ -109,16 +107,9 @@ inline Vector2D<T> Vector2D<T>::operator/(T right)
 
 template<Number T>
 template<Number OutputT>
-inline Vector2D<T>::operator Vector2D<OutputT>() const
+inline Vector2D<T>::operator Vector2D<OutputT>() const noexcept
 {
 	return { OutputT(x), OutputT(y) };
-}
-
-template<Number T>
-inline void Vector2D<T>::ClampSelf(Vector2D<T> min, Vector2D<T> max) noexcept
-{
-	x = std::clamp(x, min.x, max.x);
-	y = std::clamp(y, min.y, max.y);
 }
 
 template<Number T>

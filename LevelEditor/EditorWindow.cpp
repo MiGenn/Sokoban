@@ -7,7 +7,7 @@
 #include "QuestionBox.h"
 #include "SelectFolderBox.h"
 #include "StandardFileBox.h"
-#include "FileUtilities.h"
+#include "PathUtilities.h"
 #include "TiledEntityFactory.h"
 #include "UnsafeUtilities.h"
 #include "WinapiUtilities.h"
@@ -36,7 +36,7 @@ EditorWindow::EditorWindow(Vector2i size) : Window(size),
 	RegisterHotKeys();
 }
 
-bool EditorWindow::TryLoadLevel(const std::wstring& fullPath)
+bool EditorWindow::TryLoadLevel(const std::wstring& fullPath) noexcept
 {
 	auto fullPathSize{ fullPath.size() };
 	auto levelFileExtensionSize{ Level::fileExtension.size() };
@@ -124,12 +124,12 @@ LRESULT EditorWindow::HandleMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(m_handle, message, wParam, lParam);
 }
 
-void EditorWindow::RegisterHotKeys()
+void EditorWindow::RegisterHotKeys() noexcept
 {
 	RegisterHotKey(m_handle, (int)HotKey::ControlS, MOD_CONTROL, 'S');
 }
 
-void EditorWindow::OnClose()
+void EditorWindow::OnClose() noexcept
 {
 	if (!CanContinueBeforeDeletingOrResetingLevel())
 		return;
@@ -139,7 +139,7 @@ void EditorWindow::OnClose()
 	DestroyWindow(m_handle);
 }
 
-void EditorWindow::OnCommand(int controlID)
+void EditorWindow::OnCommand(int controlID) NOEXCEPT_WHEN_NDEBUG
 {
 	switch (controlID)
 	{
@@ -199,7 +199,7 @@ void EditorWindow::OnCommand(int controlID)
 	if (MenuHelper::IsOwned(controlID, ID_FILE))
 		OnLevelPathChanged();
 }
-void EditorWindow::OnHotkey(HotKey hotKey)
+void EditorWindow::OnHotkey(HotKey hotKey) noexcept
 {
 	if (GetFocus() != m_handle)
 		return;
@@ -212,7 +212,7 @@ void EditorWindow::OnHotkey(HotKey hotKey)
 	}
 }
 
-void EditorWindow::OnLeftButtonClick(POINTS position)
+void EditorWindow::OnLeftButtonClick(POINTS position) noexcept
 {
 	if (!CanDeleteOrAddEntity())
 		return;
@@ -232,7 +232,7 @@ void EditorWindow::OnLeftButtonClick(POINTS position)
 		m_level.GetForEditing();
 }
 
-void EditorWindow::OnRightButtonClick(POINTS position)
+void EditorWindow::OnRightButtonClick(POINTS position) noexcept
 {
 	if (!CanDeleteOrAddEntity())
 		return;
@@ -250,7 +250,7 @@ void EditorWindow::OnRightButtonClick(POINTS position)
 		m_level.GetForEditing();
 }
 
-void EditorWindow::OnMouseScroll()
+void EditorWindow::OnMouseScroll() noexcept
 {
 	if (IsSimulation())
 		return;
@@ -272,7 +272,7 @@ void EditorWindow::OnMouseScroll()
 	mouse.m_isProcessed = false;
 }
 
-void EditorWindow::OnCreateButtonClick()
+void EditorWindow::OnCreateButtonClick() noexcept
 {
 	if (!CanContinueBeforeDeletingOrResetingLevel())
 		return;
@@ -310,7 +310,7 @@ void EditorWindow::OnCreateButtonClick()
 	}
 }
 
-void EditorWindow::OnLoadButtonClick()
+void EditorWindow::OnLoadButtonClick() noexcept
 {
 	if (!CanContinueBeforeDeletingOrResetingLevel())
 		return;
@@ -320,7 +320,7 @@ void EditorWindow::OnLoadButtonClick()
 		TryLoadLevelFromFile(openFileBox.GetFileFullPath());
 }
 
-void EditorWindow::OnUnloadButtonClick()
+void EditorWindow::OnUnloadButtonClick() noexcept
 {
 	if (m_level.IsNull())
 	{
@@ -337,7 +337,7 @@ void EditorWindow::OnUnloadButtonClick()
 	}
 }
 
-void EditorWindow::OnSaveButtonClick()
+void EditorWindow::OnSaveButtonClick() noexcept
 {
 	if (m_level.IsNull())
 	{
@@ -372,7 +372,7 @@ void EditorWindow::OnSaveButtonClick()
 	}
 }
 
-void EditorWindow::OnSaveAsButtonClick()
+void EditorWindow::OnSaveAsButtonClick() noexcept
 {
 	if (m_level.IsNull())
 	{
@@ -393,7 +393,7 @@ void EditorWindow::OnSaveAsButtonClick()
 	}
 }
 
-void EditorWindow::OnRenameButtonClick()
+void EditorWindow::OnRenameButtonClick() noexcept
 {
 	if (m_level.IsNull())
 	{
@@ -429,32 +429,32 @@ void EditorWindow::OnRenameButtonClick()
 	}
 }
 
-void EditorWindow::OnWallButtonClick()
+void EditorWindow::OnWallButtonClick() NOEXCEPT_WHEN_NDEBUG
 {
 	m_currentEntity = TiledEntityFactory::CreateWall();
 }
 
-void EditorWindow::OnRoadButtonClick()
+void EditorWindow::OnRoadButtonClick() NOEXCEPT_WHEN_NDEBUG
 {
 	m_currentEntity = TiledEntityFactory::CreateRoad();
 }
 
-void EditorWindow::OnPointButtonClick()
+void EditorWindow::OnPointButtonClick() NOEXCEPT_WHEN_NDEBUG
 {
 	m_currentEntity = TiledEntityFactory::CreatePoint();
 }
 
-void EditorWindow::OnBoxButtonClick()
+void EditorWindow::OnBoxButtonClick() NOEXCEPT_WHEN_NDEBUG
 {
 	m_currentEntity = TiledEntityFactory::CreateBox();
 }
 
-void EditorWindow::OnCharacterButtonClick()
+void EditorWindow::OnCharacterButtonClick()  NOEXCEPT_WHEN_NDEBUG
 {
 	m_currentEntity = TiledEntityFactory::CreateCharacter();
 }
 
-void EditorWindow::OnPlayButtonClick()
+void EditorWindow::OnPlayButtonClick() noexcept
 {
 	if (IsLevelValid())
 	{
@@ -466,7 +466,7 @@ void EditorWindow::OnPlayButtonClick()
 	}
 }
 
-void EditorWindow::OnStopButtonClick()
+void EditorWindow::OnStopButtonClick() noexcept
 {
 	m_isSimulation = false;
 	ChangeSubmenusWhenSimulation(ChangeSubmenuOption::Enable);
@@ -475,7 +475,7 @@ void EditorWindow::OnStopButtonClick()
 	simulationEnded.Trigger();
 }
 
-void EditorWindow::OnLevelDeletedOrLoaded()
+void EditorWindow::OnLevelDeletedOrLoaded() noexcept
 {
 	auto option{ ChangeSubmenuOption::Enable };
 	if (m_level.IsNull())
@@ -485,7 +485,7 @@ void EditorWindow::OnLevelDeletedOrLoaded()
 	ChangeSubmenusWhenLevelIsDeletedOrLoaded(option);
 }
 
-void EditorWindow::OnLevelPathChanged()
+void EditorWindow::OnLevelPathChanged() noexcept
 {
 	std::wstring additionalInfo;
 	if (!m_levelPath.IsFullPathEmpty())
@@ -494,34 +494,34 @@ void EditorWindow::OnLevelPathChanged()
 	SetWindowText(m_handle, (m_editorName + additionalInfo).c_str());;
 }
 
-void EditorWindow::ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option)
+void EditorWindow::ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option) noexcept
 {
 	auto menuHandle{ GetMenu(m_handle) };
 
 	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | (int)option);
 	EnableMenuItem(menuHandle, ID_SIMULATION, MF_BYPOSITION | (int)option);
 
-	InvalidateRect(Utilities::Winapi::FindMenuWindow(m_handle), NULL, true);
+	InvalidateRect(Utilities::Winapi::FindMenuWindow(m_handle), nullptr, true);
 }
 
-void EditorWindow::ChangeSubmenusWhenSimulation(ChangeSubmenuOption option)
+void EditorWindow::ChangeSubmenusWhenSimulation(ChangeSubmenuOption option) noexcept
 {
 	auto menuHandle{ GetMenu(m_handle) };
 
 	EnableMenuItem(menuHandle, ID_FILE, MF_BYPOSITION | (int)option);
 	EnableMenuItem(menuHandle, ID_GAMEOBJECTS, MF_BYPOSITION | (int)option);
 
-	InvalidateRect(Utilities::Winapi::FindMenuWindow(m_handle), NULL, true);
+	InvalidateRect(Utilities::Winapi::FindMenuWindow(m_handle), nullptr, true);
 }
 
-void EditorWindow::SetCurrentEntityPosition(POINTS screenCoords)
+void EditorWindow::SetCurrentEntityPosition(POINTS screenCoords) noexcept
 {
 	auto worldCoords{ graphics.ConvertScreenToWorldCoords({ screenCoords.x, screenCoords.y }) };
 	Vector2f positionInGrid{ floor(worldCoords.x), ceil(worldCoords.y) };
 	m_currentEntity->SetPosition(positionInGrid);
 }
 
-void EditorWindow::MoveLevel()
+void EditorWindow::MoveLevel() noexcept
 {
 	if (IsSimulation())
 		return;
@@ -546,32 +546,39 @@ void EditorWindow::MoveLevel()
 	keyboard.m_isProcessed = false;
 }
 
-std::wstring EditorWindow::GetPathFromUser()
+std::wstring EditorWindow::GetPathFromUser() noexcept
 {
 	SelectFolderBox selectFolderBox(this);
 	return Utilities::Cpp::Unsafe::MakeNonConstForMove(selectFolderBox.GetFolderFullPathWithTrailingBackslash());
 }
 
-std::wstring EditorWindow::GetLevelFullNameFromUser()
+std::wstring EditorWindow::GetLevelFullNameFromUser() noexcept
 {
 	EnterTextBox enterTextBox(this, m_levelHintText);
 	return enterTextBox.GetText() + Level::fileExtension;
 }
 
-bool EditorWindow::TrySaveLevelIntoFile()
+bool EditorWindow::TrySaveLevelIntoFile() noexcept
 {
 	std::ofstream file(m_levelPath.GetFullPath(), std::ios::binary);
 	if (file.is_open())
 	{
-		m_level.Get().SerializeToOpenedFile(file);
-		m_level.ResetState();
-		return true;
+		try
+		{
+			m_level.Get().SerializeToOpenedFile(file);
+			m_level.ResetState();
+			return true;
+		}
+		catch (...)
+		{
+			MessageBox(m_handle, L"Cannot save the level into file", L"Error", MB_ICONERROR);
+		}
 	}
 
 	return false;
 }
 
-bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
+bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath) noexcept
 {
 	std::ifstream levelFile(fullPath, std::ios::binary);
 	if (levelFile.is_open())
@@ -597,7 +604,7 @@ bool EditorWindow::TryLoadLevelFromFile(const std::wstring& fullPath)
 	return false;
 }
 
-bool EditorWindow::TryValidateLevelPathIfInvalid()
+bool EditorWindow::TryValidateLevelPathIfInvalid() noexcept
 {
 	if (!Utilities::Cpp::Path::IsPathValid(m_levelPath.GetPath()))
 	{
@@ -610,7 +617,7 @@ bool EditorWindow::TryValidateLevelPathIfInvalid()
 	return true;
 }
 
-bool EditorWindow::TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName)
+bool EditorWindow::TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName) noexcept
 {
 	auto fullPath{ validNewPath + newFullName };
 	if (Utilities::Cpp::Path::IsPathValid(fullPath))
@@ -636,7 +643,7 @@ bool EditorWindow::TryValidateFullPathIfAnotherFileExists(const std::wstring& va
 	return true;
 }
 
-bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel()
+bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel() noexcept
 {
 	if (!m_level.IsNull() && m_level.IsChanged())
 	{
@@ -651,12 +658,12 @@ bool EditorWindow::CanContinueBeforeDeletingOrResetingLevel()
 	return true;
 }
 
-bool EditorWindow::CanDeleteOrAddEntity()
+bool EditorWindow::CanDeleteOrAddEntity() const noexcept
 {
 	return !m_level.IsNull() && m_currentEntity;
 }
 
-bool EditorWindow::IsLevelValid()
+bool EditorWindow::IsLevelValid() noexcept
 {
 	bool isValid{ true };
 	auto& level{ m_level.GetForEditing() };
@@ -666,7 +673,7 @@ bool EditorWindow::IsLevelValid()
 		isValid = false;
 	}
 
-	if (level.GetBoxes().size() != level.GetPointes().size())
+	if (level.GetBoxes().size() != level.GetPoints().size())
 	{
 		MessageBox(m_handle, L"The level must contain the same number of boxes and points", L"Error", MB_ICONERROR);
 		isValid = false;
@@ -679,7 +686,7 @@ EditorWindow::Class::Class() : WindowClass(L"SokobanEditor")
 {
 	WNDCLASSEX wcex{ sizeof(wcex) };
 	wcex.lpszClassName = GetName();
-	wcex.hInstance = GetModuleHandle(NULL);
+	wcex.hInstance = GetModuleHandle(nullptr);
 	wcex.lpfnWndProc = SetupMessageHandling;
 	wcex.hIcon = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));

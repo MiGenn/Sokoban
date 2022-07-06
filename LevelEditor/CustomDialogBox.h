@@ -4,14 +4,14 @@
 class CustomDialogBox
 {
 public:
-	CustomDialogBox(const Window* parent);
+	CustomDialogBox(const Window* parent) noexcept;
 	CustomDialogBox(const CustomDialogBox&) = delete;
 
 	CustomDialogBox& operator=(const CustomDialogBox&) = delete;
 
 protected:
 	const Window* const m_parent;
-	HWND m_handle{ NULL };
+	HWND m_handle{ nullptr };
 
 	static INT_PTR SetupMessageHandling(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual INT_PTR HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;

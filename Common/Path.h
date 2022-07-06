@@ -10,8 +10,8 @@ namespace Utilities::Cpp::Path
 		Path(const std::wstring& fullPath);
 		Path(std::wstring&& fullPath);
 
-		void SetFullPath(const std::wstring& fullPath) noexcept;
-		void SetFullPath(std::wstring&& fullPath) noexcept;
+		void SetFullPath(const std::wstring& fullPath);
+		void SetFullPath(std::wstring&& fullPath);
 		void SetPath(const std::wstring& path) noexcept;
 		void SetPath(std::wstring&& path) noexcept;
 		void SetFullName(const std::wstring& fullName) noexcept;
@@ -37,6 +37,6 @@ namespace Utilities::Cpp::Path
 		std::wstring m_fullName;
 
 		void UpdateFullPath() noexcept;
-		void UpdatePathParts() noexcept;
+		void UpdatePathParts();
 	};
 }

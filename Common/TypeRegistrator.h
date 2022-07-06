@@ -2,7 +2,7 @@
 #include "BinaryDeserializer.h"
 
 template<BinarySerializableAndConstructibleFromOpenedFile T>
-class TypeRegistrator
+class TypeRegistrator final
 {
 public:
 	TypeRegistrator() noexcept;

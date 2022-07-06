@@ -3,14 +3,16 @@
 #include "Vector2D.h"
 
 template <Number T>
-class Box2D : public IBinarySerializable
+class Box2D final : public IBinarySerializable
 {
 public:
 	Box2D() noexcept = default;
 	Box2D(Vector2D<T> position, Vector2D<T> size);
-	Box2D(const Box2D<T>& box);
+	Box2D(const Box2D<T>& box) noexcept;
+	Box2D(Box2D<T>&& box) noexcept;
 
-	Box2D<T>& operator=(const Box2D<T>& right);
+	Box2D<T>& operator=(const Box2D<T>& right) noexcept;
+	Box2D<T>& operator=(Box2D<T>&& right) noexcept;
 
 	void SetPosition(Vector2D<T> newPosition) noexcept;
 	void SetSize(Vector2D<T> newSize);
@@ -39,18 +41,31 @@ inline Box2D<T>::Box2D(Vector2D<T> position, Vector2D<T> size)
 }
 
 template<Number T>
-inline Box2D<T>::Box2D(const Box2D<T>& box)
+inline Box2D<T>::Box2D(const Box2D<T>& box) noexcept
 {
 	(*this) = box;
 }
 
 template<Number T>
-inline Box2D<T>& Box2D<T>::operator=(const Box2D<T>& right)
+inline Box2D<T>::Box2D(Box2D<T>&& box) noexcept
+{
+	(*this) = std::move(box);
+}
+
+template<Number T>
+inline Box2D<T>& Box2D<T>::operator=(const Box2D<T>& right) noexcept
 {
 	m_position = right.m_position;
 	m_size = right.m_size;
 
 	return *this;
+}
+
+template<Number T>
+inline Box2D<T>& Box2D<T>::operator=(Box2D<T>&& right) noexcept
+{
+	m_position = right.m_position;
+	m_size = right.m_size;
 }
 
 template<Number T>
@@ -63,7 +78,6 @@ template<Number T>
 inline void Box2D<T>::SetSize(Vector2D<T> newSize)
 {
 	static constexpr int zero{ T() };
-
 	if (newSize.x < zero || newSize.y < zero)
 		throw std::logic_error("The size is incorrect!");
 

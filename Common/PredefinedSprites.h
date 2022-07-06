@@ -11,7 +11,7 @@ class PredefinedSprites
 {
 public:
 	static constexpr int tileSizeInPixels{ 64 };
-	static const std::wstring relativeFullPath;
+	static const std::wstring tileSetRelativeFullPath;
 
 	static const Box2i wallBoundingBox;
 	static const Box2i roadBoundingBox;
@@ -24,7 +24,7 @@ public:
 
 	PredefinedSprites& operator=(const PredefinedSprites&) = delete;
 
-	static std::shared_ptr<Sprite> GetSprite(const std::wstring& spriteFullRelativePath) NOEXCEPT_WHEN_NDEBUG;
+	static std::shared_ptr<Sprite> GetSprite(const std::wstring& relativeFullPath) NOEXCEPT_WHEN_NDEBUG;
 
 private:
 	static std::vector<std::shared_ptr<Sprite>> m_sprites;

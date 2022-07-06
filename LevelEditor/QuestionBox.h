@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 
-class QuestionBox
+class QuestionBox final
 {
 public:
 	QuestionBox(const Window* parent, const std::wstring& text) noexcept;

@@ -17,6 +17,6 @@ namespace Utilities::Winapi::SmartPointer
 
 	private:
 		const Window* const m_window;
-		const HDC m_windowContext;
+		HDC m_windowContext;
 	};
 }

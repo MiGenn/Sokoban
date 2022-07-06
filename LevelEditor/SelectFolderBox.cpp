@@ -1,9 +1,9 @@
 #include "SelectFolderBox.h"
 
-SelectFolderBox::SelectFolderBox(const Window* parent)
+SelectFolderBox::SelectFolderBox(const Window* parent) noexcept
 {
 	BROWSEINFOW browseInfo{};
-	browseInfo.hwndOwner = parent ? parent->GetHandle() : NULL;
+	browseInfo.hwndOwner = parent ? parent->GetHandle() : nullptr;
 	browseInfo.ulFlags = BIF_USENEWUI;
 
 	auto selectedFolder{ SHBrowseForFolder(&browseInfo) };

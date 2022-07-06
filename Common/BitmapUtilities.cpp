@@ -2,7 +2,7 @@
 
 HBITMAP Utilities::Winapi::Bitmap::LoadBMP(const std::wstring& fullPath)
 {
-    HANDLE bitmap{ LoadImage(NULL, fullPath.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE) };
+    HANDLE bitmap{ LoadImage(nullptr, fullPath.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE) };
     if (!bitmap)
         throw WINAPI_LAST_EXCEPTION();
 

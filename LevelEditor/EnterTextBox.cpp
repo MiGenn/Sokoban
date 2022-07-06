@@ -2,14 +2,14 @@
 
 #include "EditorResourceMacros.h"
 
-EnterTextBox::EnterTextBox(const Window* parent, const std::wstring& hintText) : 
+EnterTextBox::EnterTextBox(const Window* parent, const std::wstring& hintText) noexcept :
 	CustomDialogBox(parent), m_hintText(hintText)
 {
-	HWND parentHandle{ NULL };
+	HWND parentHandle{ nullptr };
 	if (parent)
 		parentHandle = parent->GetHandle();
 
-	DialogBoxParam(NULL, MAKEINTRESOURCE(IDD_ENTER_TEXT_BOX),
+	DialogBoxParam(nullptr, MAKEINTRESOURCE(IDD_ENTER_TEXT_BOX),
 		parentHandle, SetupMessageHandling, reinterpret_cast<LPARAM>(this));
 }
 

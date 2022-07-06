@@ -8,10 +8,10 @@ class Editor final : public Application
 public:
 	static const std::wstring modulePath;
 
-	Editor();
+	Editor() noexcept;
 	Editor(const std::wstring& levelFileFullPath);
 	Editor(const Editor&) = delete;
-
+	
 	Editor& operator=(const Editor&) = delete;
 
 	int Run() override;
@@ -28,14 +28,14 @@ private:
 	Simulator m_simulator;
 	std::unique_ptr<Level> m_levelCopyForSimulation;
 	
-	void Simulate();
+	void Simulate() NOEXCEPT_WHEN_NDEBUG;
 	void Render();
 
-	void RenderGrid();
-	void RenderLevel();
+	void RenderGrid() noexcept;
+	void RenderLevel() noexcept;
 
-	const Level* GetLevelForRendering() const;
+	const Level* GetLevelForRendering() const noexcept;
 
-	void OnSimulationStarted();
-	void OnSimulationEnded();
+	void OnSimulationStarted() noexcept;
+	void OnSimulationEnded() noexcept;
 };

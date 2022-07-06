@@ -15,13 +15,15 @@ public:
 
 	Level() noexcept = default;
 	Level(std::ifstream& file);
-	Level(const Level& level);
+	Level(const Level& level) noexcept;
+	Level(Level&& level) noexcept;
 
-	Level& operator=(const Level& right);
+	Level& operator=(const Level& right) noexcept;
+	Level& operator=(Level&& right) noexcept;
 	TiledEntity& operator[](int i);
 
 	bool Add(std::unique_ptr<TiledEntity>&& entity) noexcept;
-	bool Delete(const_iterator& entity) noexcept;
+	bool Delete(const_iterator& entity);
 
 	static bool CanEntityBeOverlapped(const TiledEntity& entity) noexcept;
 	static bool CanEntitiesBeInTheSamePosition(const TiledEntity& entity, const TiledEntity& otherEntity) noexcept;
@@ -31,7 +33,7 @@ public:
 
 	TiledEntity* GetCharacter() noexcept;
 	std::vector<TiledEntity*>& GetBoxes() noexcept;
-	std::vector<TiledEntity*>& GetPointes() noexcept;
+	std::vector<TiledEntity*>& GetPoints() noexcept;
 	size_t GetEntitiesCount() const noexcept;
 
 	void SerializeIDToOpenedFile(std::ofstream& file) const override;

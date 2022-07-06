@@ -1,6 +1,6 @@
 #include "StringUtilities.h"
 
-std::wstring Utilities::Cpp::String::DeleteFirstAndLastSymbols(const std::wstring& string)
+std::wstring Utilities::Cpp::String::DeleteFirstAndLastSymbols(const std::wstring& string) noexcept
 {
 	if (string.size() <= 2ul)
 		return empty;

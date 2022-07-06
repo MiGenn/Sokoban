@@ -20,7 +20,7 @@ public:
 
 	EditorWindow(Vector2i size);
 
-	bool TryLoadLevel(const std::wstring& fullPath);
+	bool TryLoadLevel(const std::wstring& fullPath) noexcept;
 	const Level* GetLevel() const noexcept;
 	bool IsSimulation() const noexcept;
 
@@ -49,49 +49,49 @@ private:
 	float m_drawingOriginMoveSensitivity{ 1.f };
 
 	LRESULT HandleMessage(UINT message, WPARAM wParam, LPARAM lParam) override;
-	void RegisterHotKeys();
+	void RegisterHotKeys() noexcept;
 
-	void OnClose();
-	void OnCommand(int controlID);
-	void OnHotkey(HotKey hotKey);
-	void OnLeftButtonClick(POINTS position);
-	void OnRightButtonClick(POINTS position);
-	void OnMouseScroll();
+	void OnClose() noexcept;
+	void OnCommand(int controlID) NOEXCEPT_WHEN_NDEBUG;
+	void OnHotkey(HotKey hotKey) noexcept;
+	void OnLeftButtonClick(POINTS position) noexcept;
+	void OnRightButtonClick(POINTS position) noexcept;
+	void OnMouseScroll() noexcept;
 
-	void OnCreateButtonClick();
-	void OnLoadButtonClick();
-	void OnUnloadButtonClick();
-	void OnSaveButtonClick();
-	void OnSaveAsButtonClick();
-	void OnRenameButtonClick();
+	void OnCreateButtonClick() noexcept;
+	void OnLoadButtonClick() noexcept;
+	void OnUnloadButtonClick() noexcept;
+	void OnSaveButtonClick() noexcept;
+	void OnSaveAsButtonClick() noexcept;
+	void OnRenameButtonClick() noexcept;
 
-	void OnWallButtonClick();
-	void OnRoadButtonClick();
-	void OnPointButtonClick();
-	void OnBoxButtonClick();
-	void OnCharacterButtonClick();
+	void OnWallButtonClick() NOEXCEPT_WHEN_NDEBUG;
+	void OnRoadButtonClick() NOEXCEPT_WHEN_NDEBUG;
+	void OnPointButtonClick() NOEXCEPT_WHEN_NDEBUG;
+	void OnBoxButtonClick() NOEXCEPT_WHEN_NDEBUG;
+	void OnCharacterButtonClick() NOEXCEPT_WHEN_NDEBUG;
 
-	void OnPlayButtonClick();
-	void OnStopButtonClick();
+	void OnPlayButtonClick() noexcept;
+	void OnStopButtonClick() noexcept;
 
-	void OnLevelDeletedOrLoaded();
-	void OnLevelPathChanged();
-	void ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option);
-	void ChangeSubmenusWhenSimulation(ChangeSubmenuOption option);
+	void OnLevelDeletedOrLoaded() noexcept;
+	void OnLevelPathChanged() noexcept;
+	void ChangeSubmenusWhenLevelIsDeletedOrLoaded(ChangeSubmenuOption option) noexcept;
+	void ChangeSubmenusWhenSimulation(ChangeSubmenuOption option) noexcept;
 
-	void SetCurrentEntityPosition(POINTS screenCoords);
-	void MoveLevel();
+	void SetCurrentEntityPosition(POINTS screenCoords) noexcept;
+	void MoveLevel() noexcept;
 
-	std::wstring GetPathFromUser();
-	std::wstring GetLevelFullNameFromUser();
+	std::wstring GetPathFromUser() noexcept;
+	std::wstring GetLevelFullNameFromUser() noexcept;
 
-	bool TrySaveLevelIntoFile();
-	bool TryLoadLevelFromFile(const std::wstring& fullPath);
-	bool TryValidateLevelPathIfInvalid();
-	bool TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName);
-	bool CanContinueBeforeDeletingOrResetingLevel();
-	bool CanDeleteOrAddEntity();
-	bool IsLevelValid();
+	bool TrySaveLevelIntoFile() noexcept;
+	bool TryLoadLevelFromFile(const std::wstring& fullPath) noexcept;
+	bool TryValidateLevelPathIfInvalid() noexcept;
+	bool TryValidateFullPathIfAnotherFileExists(const std::wstring& validNewPath, const std::wstring& newFullName) noexcept;
+	bool CanContinueBeforeDeletingOrResetingLevel() noexcept;
+	bool CanDeleteOrAddEntity() const noexcept;
+	bool IsLevelValid() noexcept;
 
 	class Class : public WindowClass
 	{

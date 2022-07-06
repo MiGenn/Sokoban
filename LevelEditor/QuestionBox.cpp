@@ -2,7 +2,7 @@
 
 QuestionBox::QuestionBox(const Window* parent, const std::wstring& text) noexcept
 {
-	HWND parentHandle{ NULL };
+	HWND parentHandle{ nullptr };
 	if (parent)
 		parentHandle = parent->GetHandle();
 

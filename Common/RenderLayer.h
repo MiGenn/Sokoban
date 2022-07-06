@@ -5,7 +5,7 @@
 #include "Vector2D.h"
 #include "BuildInfo.h"
 
-class RenderLayer
+class RenderLayer final
 {
 public:
 	RenderLayer(HDC referenceContext, Vector2i size) NOEXCEPT_WHEN_NDEBUG;

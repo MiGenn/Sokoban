@@ -1,10 +1,10 @@
 #pragma once
 #include "CustomDialogBox.h"
 
-class EnterTextBox : public CustomDialogBox
+class EnterTextBox final : public CustomDialogBox
 {
 public:
-	EnterTextBox(const Window* parent, const std::wstring& hintText);
+	EnterTextBox(const Window* parent, const std::wstring& hintText) noexcept;
 	EnterTextBox(const EnterTextBox&) = delete;
 
 	EnterTextBox& operator=(const EnterTextBox&) = delete;

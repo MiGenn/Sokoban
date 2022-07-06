@@ -11,7 +11,7 @@ std::wstring Utilities::Winapi::GetModulePath(HMODULE moduleHandle)
     return Utilities::Cpp::Path::ExtractPath(fullPathBuffer);
 }
 
-HWND Utilities::Winapi::FindMenuWindow(HWND parent)
+HWND Utilities::Winapi::FindMenuWindow(HWND parent) noexcept
 {
-    return FindWindowEx(parent, NULL, MAKEINTATOM(0x8000), NULL);
+    return FindWindowEx(parent, nullptr, MAKEINTATOM(0x8000), nullptr);
 }

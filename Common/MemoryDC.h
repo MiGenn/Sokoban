@@ -17,6 +17,6 @@ namespace Utilities::Winapi::SmartPointer
 		void Reset(HDC memoryContext) noexcept;
 
 	private:
-		HDC m_memoryContext{ NULL };
+		HDC m_memoryContext{ nullptr };
 	};
 }

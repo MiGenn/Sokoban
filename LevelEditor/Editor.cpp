@@ -2,9 +2,9 @@
 
 #include "WinapiUtilities.h"
 
-const std::wstring Editor::modulePath{ Utilities::Winapi::GetModulePath(NULL) };
+const std::wstring Editor::modulePath{ Utilities::Winapi::GetModulePath(nullptr) };
 
-Editor::Editor() :
+Editor::Editor() noexcept :
 	m_window({ 1280, 720 }), m_simulator(m_window.keyboard, m_window.mouse, m_window.graphics)
 {
 	m_window.simulationStarted += [this]() { OnSimulationStarted(); };
@@ -32,7 +32,7 @@ int Editor::Run()
 	}
 }
 
-void Editor::Simulate()
+void Editor::Simulate() NOEXCEPT_WHEN_NDEBUG
 {
 	m_simulator.Simulate(*m_levelCopyForSimulation);
 }
@@ -52,7 +52,7 @@ void Editor::Render()
 	m_window.graphics.Clear(RGB(140, 115, 60));
 }
 
-void Editor::RenderGrid()
+void Editor::RenderGrid() noexcept
 {
 	static constexpr int layerIndex{ 0 };
 	static constexpr COLORREF lineColor{ RGB(0, 0, 0) };
@@ -60,14 +60,14 @@ void Editor::RenderGrid()
 	m_window.graphics.RenderGrid(layerIndex, lineColor);
 }
 
-void Editor::RenderLevel()
+void Editor::RenderLevel() noexcept
 {
 	if (auto level{ GetLevelForRendering() }; level)
 		for (auto& entity : *level)
 			m_window.graphics.RenderSprite(entity->GetRenderInfo());
 }
 
-const Level* Editor::GetLevelForRendering() const
+const Level* Editor::GetLevelForRendering() const noexcept
 {
 	if (m_state == EditorState::Simulation)
 		return m_levelCopyForSimulation.get();
@@ -75,13 +75,13 @@ const Level* Editor::GetLevelForRendering() const
 	return m_window.GetLevel();
 }
 
-void Editor::OnSimulationStarted()
+void Editor::OnSimulationStarted() noexcept
 {
 	m_state = EditorState::Simulation;
 	m_levelCopyForSimulation = std::make_unique<Level>(*m_window.GetLevel());
 }
 
-void Editor::OnSimulationEnded()
+void Editor::OnSimulationEnded() noexcept
 {
 	m_state = EditorState::Editing;
 	m_levelCopyForSimulation.reset();

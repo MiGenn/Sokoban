@@ -25,12 +25,12 @@ private:
 
 	bool isGameOver{ false };
 
-	void Simulate();
+	void Simulate() NOEXCEPT_WHEN_NDEBUG;
 	void Render();
 
-	std::vector<std::wstring> FindLevelFullPahts(const std::wstring& levelFolderPath);
-	std::unique_ptr<Level> LoadLevel(const std::wstring& fullPath);
-	std::unique_ptr<Level> LoadNextLevel();
-	void ReloadCurrentLevel();
-	void OnLoadLevelButtonClicked(const std::wstring& levelFileFullPath);
+	std::vector<std::wstring> FindLevelFullPahts(const std::wstring& levelFolderPath) noexcept;
+	std::unique_ptr<Level> LoadLevel(const std::wstring& fullPath) const noexcept;
+	std::unique_ptr<Level> LoadNextLevel() noexcept;
+	void ReloadCurrentLevel() noexcept;
+	void OnLoadLevelButtonClicked(const std::wstring& levelFileFullPath) noexcept;
 };

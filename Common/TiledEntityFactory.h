@@ -9,9 +9,9 @@ public:
 
 	TiledEntityFactory& operator=(const TiledEntityFactory&) = delete;
 
-	static std::unique_ptr<TiledEntity> CreateWall();
-	static std::unique_ptr<TiledEntity> CreateRoad();
-	static std::unique_ptr<TiledEntity> CreateBox();
-	static std::unique_ptr<TiledEntity> CreatePoint();
-	static std::unique_ptr<TiledEntity> CreateCharacter();
+	static std::unique_ptr<TiledEntity> CreateWall() NOEXCEPT_WHEN_NDEBUG;
+	static std::unique_ptr<TiledEntity> CreateRoad() NOEXCEPT_WHEN_NDEBUG;
+	static std::unique_ptr<TiledEntity> CreateBox() NOEXCEPT_WHEN_NDEBUG;
+	static std::unique_ptr<TiledEntity> CreatePoint() NOEXCEPT_WHEN_NDEBUG;
+	static std::unique_ptr<TiledEntity> CreateCharacter() NOEXCEPT_WHEN_NDEBUG;
 };

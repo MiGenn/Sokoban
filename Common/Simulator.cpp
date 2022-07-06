@@ -1,6 +1,6 @@
 #include "Simulator.h"
 
-Simulator::Simulator(Keyboard& keyboard, Mouse& mouse, Graphics2D& graphics) noexcept :
+Simulator::Simulator(const Keyboard& keyboard, const Mouse& mouse, Graphics2D& graphics) noexcept :
 	m_keyboard(keyboard), m_mouse(mouse), m_graphics(graphics)
 {
 
@@ -40,7 +40,7 @@ Vector2f Simulator::UpdateCharacterState(TiledEntity& character) const noexcept
 	return translation;
 }
 
-void Simulator::FollowCharacter(const TiledEntity& character)
+void Simulator::FollowCharacter(const TiledEntity& character) const noexcept
 {
 	auto halfCharacterSize{ (Vector2f)character.GetRenderInfo().GetSize() / 2.f };
 	halfCharacterSize.y *= -1.f;
@@ -48,7 +48,7 @@ void Simulator::FollowCharacter(const TiledEntity& character)
 	m_graphics.SetCameraPosition(cameraPosition);
 }
 
-void Simulator::ZoomCamera()
+void Simulator::ZoomCamera() const noexcept
 {
 	static constexpr auto zoomMin{ 0.5f };
 	static constexpr auto zoomMax{ 10.f };
@@ -90,7 +90,7 @@ bool Simulator::AreBoxesDelivered(Level& level) noexcept
 	auto deliveredBoxesCount{ 0 };
 	for (auto box : level.GetBoxes())
 	{
-		for (auto point : level.GetPointes())
+		for (auto point : level.GetPoints())
 		{
 			if (box->IsCollision(*point))
 			{
@@ -110,7 +110,7 @@ bool Simulator::IsCollision(const TiledEntity& entity, const TiledEntity& otherE
 		&entity != &otherEntity;
 }
 
-TiledEntity* Simulator::FindCollidedEntity(const Level& level, const TiledEntity& entity)
+TiledEntity* Simulator::FindCollidedEntity(const Level& level, const TiledEntity& entity) noexcept
 {
 	auto collidedEntityIterator{ std::find_if(level.begin(), level.end(),
 		[&entity](const std::unique_ptr<TiledEntity>& otherEntity)

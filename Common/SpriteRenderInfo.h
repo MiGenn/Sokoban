@@ -3,7 +3,7 @@
 #include "Sprite.h"
 #include "Box2D.h"
 
-class SpriteRenderInfo : public IBinarySerializable
+class SpriteRenderInfo final : public IBinarySerializable
 {
 public:
 	SpriteRenderInfo() noexcept = default;
@@ -14,8 +14,8 @@ public:
 	SpriteRenderInfo& operator=(const SpriteRenderInfo& right) noexcept;
 
 	void SetPosition(Vector2f newPosition) noexcept;
-	void SetBoundingBox(Box2i newBoundingBox) noexcept;
-	void SetSize(Vector2f newSize) noexcept;
+	void SetBoundingBox(const Box2i& newBoundingBox) noexcept;
+	void SetSize(Vector2f newSize);
 	void SetLayerIndex(int newLayerIndex) noexcept;
 	bool IsEmptySprite() const noexcept;
 
@@ -36,6 +36,6 @@ private:
 	Box2i m_boundingBox;
 	Vector2f m_position;
 	Vector2f m_size;
-	bool m_isPreservingAspectRatio;
+	bool m_isPreservingAspectRatio{ false };
 	int m_layerIndex{ 0 };
 };

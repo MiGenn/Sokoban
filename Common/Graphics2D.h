@@ -4,7 +4,7 @@
 #include "SpriteRenderInfo.h"
 #include "Window.h"
 
-class Graphics2D
+class Graphics2D final
 {
 public:
 	static inline const Vector2i referenceResolution{ 1280, 720 };

@@ -13,24 +13,24 @@ TiledEntity::TiledEntity(std::ifstream& file)
 	DeserializeFromOpenedFileToSelf(file);
 }
 
-TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag) :
+TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag) noexcept :
 	m_renderInfo(renderInfo), m_tag(tag)
 {
 
 }
 
-TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2f position) :
+TiledEntity::TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2f position) noexcept :
 	TiledEntity(renderInfo, tag)
 {
 	m_position = position;
 }
 
-TiledEntity::TiledEntity(const TiledEntity& entity)
+TiledEntity::TiledEntity(const TiledEntity& entity) noexcept
 {
 	(*this) = entity;
 }
 
-TiledEntity& TiledEntity::operator=(const TiledEntity& right)
+TiledEntity& TiledEntity::operator=(const TiledEntity& right) noexcept
 {
 	m_renderInfo = right.m_renderInfo;
 	m_position = right.m_position;

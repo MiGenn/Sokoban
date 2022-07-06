@@ -1,6 +1,6 @@
 #include "CustomDialogBox.h"
 
-CustomDialogBox::CustomDialogBox(const Window* parent) :
+CustomDialogBox::CustomDialogBox(const Window* parent) noexcept :
     m_parent(parent)
 {
 

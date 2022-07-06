@@ -35,3 +35,9 @@ std::wstring Utilities::Cpp::Path::ExtractFullName(const std::wstring& fullPath)
 {
     return ExtractName(fullPath) + ExtractExtension(fullPath);
 }
+
+bool Utilities::Cpp::Path::IsPathValid(const std::wstring& fileFullPath) noexcept
+{
+    struct _stat fileInfo {};
+    return !_wstat(fileFullPath.c_str(), &fileInfo);
+}

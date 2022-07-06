@@ -1,7 +1,7 @@
 #pragma once
 #include "SpriteRenderInfo.h"
 
-class TiledEntity : public IBinarySerializable
+class TiledEntity final : public IBinarySerializable
 {
 public:
 	enum class Tag : char
@@ -16,12 +16,12 @@ public:
 
 	TiledEntity() noexcept = default;
 	TiledEntity(std::ifstream& file);
-	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag);
-	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2f position);
-	TiledEntity(const TiledEntity& entity);
+	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag) noexcept;
+	TiledEntity(const SpriteRenderInfo& renderInfo, Tag tag, Vector2f position) noexcept;
+	TiledEntity(const TiledEntity& entity) noexcept;
 	~TiledEntity() noexcept = default;
 
-	TiledEntity& operator=(const TiledEntity& right);
+	TiledEntity& operator=(const TiledEntity& right) noexcept;
 	bool operator==(const TiledEntity& right) noexcept;
 
 	bool IsCollision(const TiledEntity& otherEntity) const noexcept;

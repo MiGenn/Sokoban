@@ -10,29 +10,29 @@ Sprite::Sprite(const std::wstring& fullPath) :
 	InitializeBitmap();
 }
 
+Sprite::Sprite(const Sprite& sprite) noexcept
+{
+	(*this) = sprite;
+}
+
 Sprite::Sprite(Sprite&& sprite) noexcept
 {
 	(*this) = std::move(sprite);
 }
 
-Sprite::Sprite(const Sprite& sprite) noexcept
+Sprite& Sprite::operator=(const Sprite& right) noexcept
 {
-	(*this) = sprite;
+	m_fullPath = right.m_fullPath;
+	m_bitmap = BitmapProvider::GetBitmap(m_fullPath);
+
+	return *this;
 }
 
 Sprite& Sprite::operator=(Sprite&& right) noexcept
 {
 	m_fullPath = std::move(right.m_fullPath);
 	m_bitmap = right.m_bitmap;
-	right.m_bitmap = NULL;
-
-	return *this;
-}
-
-Sprite& Sprite::operator=(const Sprite& right) noexcept
-{
-	m_fullPath = right.m_fullPath;
-	m_bitmap = right.m_bitmap;
+	right.m_bitmap = nullptr;
 
 	return *this;
 }
@@ -49,7 +49,7 @@ HBITMAP Sprite::GetBitmap() const noexcept
 
 bool Sprite::IsEmpty() const noexcept
 {
-	return m_bitmap == NULL;
+	return !m_bitmap;
 }
 
 void Sprite::SerializeIDToOpenedFile(std::ofstream& file) const

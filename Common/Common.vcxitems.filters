@@ -234,9 +234,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PathUtilities.h">
       <Filter>Header Files\Utilities\Cpp</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtilities.h">
-      <Filter>Header Files\Utilities\Cpp</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ChangeWrapper.h">
       <Filter>Header Files\Utilities\Others</Filter>
     </ClInclude>
@@ -375,9 +372,6 @@
       <Filter>Source Files\Utilities\Cpp</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PathUtilities.cpp">
-      <Filter>Source Files\Utilities\Cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtilities.cpp">
       <Filter>Source Files\Utilities\Cpp</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChangeWrapper.cpp">

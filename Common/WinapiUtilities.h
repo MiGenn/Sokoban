@@ -4,5 +4,5 @@
 namespace Utilities::Winapi
 {
 	std::wstring GetModulePath(HMODULE moduleHandle);
-	HWND FindMenuWindow(HWND parent);
+	HWND FindMenuWindow(HWND parent) noexcept;
 }

@@ -3,7 +3,7 @@
 #include <cassert>
 #include "EditorResourceMacros.h"
 
-bool MenuHelper::IsOwned(int itemID, int subMenuID)
+bool MenuHelper::IsOwned(int itemID, int subMenuID) NOEXCEPT_WHEN_NDEBUG
 {
 	assert(subMenuID >= ID_FILE && subMenuID <= ID_SIMULATION);
 	assert((itemID >= ID_FILE_CREATE && subMenuID <= ID_FILE_RENAME) ||

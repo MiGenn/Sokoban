@@ -12,7 +12,6 @@ Window::Window(Vector2i size) NOEXCEPT_WHEN_NDEBUG :
 void Window::Resize(Vector2i size)
 {
 	assert(size.x > 0 && size.y > 0);
-
 	if (!SetWindowPos(m_handle, nullptr, NULL, NULL, size.x, size.y, SWP_NOMOVE | SWP_NOZORDER))
 		throw WINAPI_LAST_EXCEPTION();
 	

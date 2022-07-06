@@ -19,12 +19,6 @@
     <Filter Include="Source Files\Dialog Boxes">
       <UniqueIdentifier>{b6171220-b5f9-452f-9ddb-a27861d40219}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Dialog Boxes\Others">
-      <UniqueIdentifier>{b644041a-c251-49c5-a66e-ba45d696fe9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Dialog Boxes\Others">
-      <UniqueIdentifier>{960836c7-933c-4b92-a648-d485c986b3d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\WindowMenu">
       <UniqueIdentifier>{089d09aa-50e3-4bf3-81da-6736ed8429e8}</UniqueIdentifier>
     </Filter>
@@ -48,18 +42,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SelectFolderBox.cpp">
-      <Filter>Source Files\Dialog Boxes\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomDialogBox.cpp">
-      <Filter>Source Files\Dialog Boxes\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="EnterTextBox.cpp">
-      <Filter>Source Files\Dialog Boxes\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="QuestionBox.cpp">
-      <Filter>Source Files\Dialog Boxes\Others</Filter>
-    </ClCompile>
     <ClCompile Include="MenuHelper.cpp">
       <Filter>Source Files\WindowMenu</Filter>
     </ClCompile>
@@ -69,22 +51,22 @@
     <ClCompile Include="EditorWindow.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
+    <ClCompile Include="CustomDialogBox.cpp">
+      <Filter>Source Files\Dialog Boxes</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterTextBox.cpp">
+      <Filter>Source Files\Dialog Boxes</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionBox.cpp">
+      <Filter>Source Files\Dialog Boxes</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectFolderBox.cpp">
+      <Filter>Source Files\Dialog Boxes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorResourceMacros.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectFolderBox.h">
-      <Filter>Header Files\Dialog Boxes\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomDialogBox.h">
-      <Filter>Header Files\Dialog Boxes\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="EnterTextBox.h">
-      <Filter>Header Files\Dialog Boxes\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestionBox.h">
-      <Filter>Header Files\Dialog Boxes\Others</Filter>
     </ClInclude>
     <ClInclude Include="MenuHelper.h">
       <Filter>Header Files\WindowMenu</Filter>
@@ -94,6 +76,18 @@
     </ClInclude>
     <ClInclude Include="EditorWindow.h">
       <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDialogBox.h">
+      <Filter>Header Files\Dialog Boxes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterTextBox.h">
+      <Filter>Header Files\Dialog Boxes</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBox.h">
+      <Filter>Header Files\Dialog Boxes</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectFolderBox.h">
+      <Filter>Header Files\Dialog Boxes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

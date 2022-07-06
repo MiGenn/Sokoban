@@ -13,12 +13,12 @@ StandardFileBox::StandardFileBox(const Window* parent, const std::wstring& initi
 
 	OPENFILENAME fileCriterias{};
 	fileCriterias.lStructSize = sizeof(OPENFILENAME);
-	fileCriterias.hwndOwner = parent ? parent->GetHandle() : NULL;
+	fileCriterias.hwndOwner = parent ? parent->GetHandle() : nullptr;
 	fileCriterias.lpstrFilter = filter;
 	fileCriterias.lpstrFile = fileFullPathBuffer;
 	fileCriterias.nMaxFile = MAX_PATH;
 	fileCriterias.lpstrInitialDir = initialPath.c_str();
-	fileCriterias.lpstrTitle = boxTitle.empty() ? NULL : boxTitle.c_str();
+	fileCriterias.lpstrTitle = boxTitle.empty() ? nullptr : boxTitle.c_str();
 	fileCriterias.Flags = (int)flags;
 
 	decltype(&GetOpenFileName) showBoxFunction =
